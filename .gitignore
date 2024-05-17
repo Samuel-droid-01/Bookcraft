@@ -1,0 +1,7 @@
+# Ignorar el directorio del entorno virtual
+my_modules/
+
+# Ignorar todos los archivos .log
+#.log
+# Ignorar el archivo especifico
+#mi_archivo.txt
