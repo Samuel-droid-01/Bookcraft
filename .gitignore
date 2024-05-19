@@ -3,5 +3,6 @@ my_modules/
 
 # Ignorar todos los archivos .log
 #.log
+*.pyc
 # Ignorar el archivo especifico
 #mi_archivo.txt
