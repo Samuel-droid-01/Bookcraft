@@ -64,3 +64,7 @@ Recuerda que los usuarios deben tener Python y `pip` instalados en sus sistemas 
       pip install -r requirements.txt
       ```
 
+## Ejecucion de un test 
+   ```bash
+   python3 -m proyecto_frameworks_persistencia.src.test.test
+   ```
