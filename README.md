@@ -67,10 +67,10 @@ Recuerda que los usuarios deben tener Python y `pip` instalados en sus sistemas 
 ## Ejecucion de un test 
 
    ```bash
-   python3 -m proyecto_frameworks_persistencia.src.test.test
+   python3 -m proyecto_frameworks_persistencia.src.test.<nombre del archivo>
    ```
    o
 
    ```bash
-   python -m proyecto_frameworks_persistencia.src.test.test
+   python -m proyecto_frameworks_persistencia.src.test.<nombre del archivo>
    ```
