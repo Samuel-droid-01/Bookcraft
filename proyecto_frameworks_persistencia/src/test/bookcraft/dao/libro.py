@@ -1,7 +1,7 @@
 # Por el momento solo se probaran las operaciones definidas en mappers
 
 from ....main.bookcraft.bd.domain.libro import Libro
-from ....main.bookcraft.bd.mappers.libro import LibroMapper
+from ....main.bookcraft.bd.mappers.libro.libro_map import LibroMapper
 
 test_libro = Libro(
     1,

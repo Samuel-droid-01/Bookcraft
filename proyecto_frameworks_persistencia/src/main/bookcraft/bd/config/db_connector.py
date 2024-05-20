@@ -7,7 +7,7 @@ class DBConnector:
             port="3306", 
             user="root", 
             passwd="root",
-            database="bibilioteca_db"
+            database="biblioteca_db"
         )
     
     def get_connection(self):
