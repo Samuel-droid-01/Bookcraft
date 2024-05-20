@@ -1,5 +1,5 @@
 import unittest
-from ..main.bookcraft.domain.libro.libro import Libro 
+from ..main.bookcraft.bd.domain.libro import Libro 
 
 class TestLibro(unittest.TestCase):
 
