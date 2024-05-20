@@ -65,6 +65,12 @@ Recuerda que los usuarios deben tener Python y `pip` instalados en sus sistemas 
       ```
 
 ## Ejecucion de un test 
+
    ```bash
    python3 -m proyecto_frameworks_persistencia.src.test.test
+   ```
+   o
+
+   ```bash
+   python -m proyecto_frameworks_persistencia.src.test.test
    ```
