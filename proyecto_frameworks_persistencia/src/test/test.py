@@ -1,19 +1,22 @@
-from ..main.bookcraft.domain.libro.libro import Libro
+import unittest
+from ..main.bookcraft.domain.libro.libro import Libro 
 
-# Crear una instancia de la clase Libro
-mi_libro = Libro("El principito", "Antoine de Saint-Exupéry", "Ficción")
+class TestLibro(unittest.TestCase):
 
-# Imprimir los atributos del libro
-print("Título:", mi_libro.obtener_titulo())
-print("Autor:", mi_libro.obtener_autor())
-print("Género:", mi_libro.obtener_genero())
+    def setUp(self):
+        self.libro = Libro("Título inicial", "Autor inicial", "Género inicial")
 
-# Cambiar algunos atributos
-mi_libro.establecer_titulo("1984")
-mi_libro.establecer_autor("George Orwell")
-mi_libro.establecer_genero("Distopía")
+    def test_establecer_y_obtener_titulo(self):
+        self.libro.establecer_titulo("1984")
+        self.assertEqual(self.libro.obtener_titulo(), "1984")
 
-# Imprimir los atributos del libro después de cambiarlos
-print("Título:", mi_libro.obtener_titulo())
-print("Autor:", mi_libro.obtener_autor())
-print("Género:", mi_libro.obtener_genero())
+    def test_establecer_y_obtener_autor(self):
+        self.libro.establecer_autor("George Orwell")
+        self.assertEqual(self.libro.obtener_autor(), "George Orwell")
+
+    def test_establecer_y_obtener_genero(self):
+        self.libro.establecer_genero("Distopía")
+        self.assertEqual(self.libro.obtener_genero(), "Distopía")
+
+if __name__ == '__main__':
+    unittest.main()
