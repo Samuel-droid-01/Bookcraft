@@ -18,4 +18,5 @@ test_libro = Libro(
 )
 
 test_libro_mapper = LibroMapper()
-test_libro_mapper.update(test_libro)
+#test_libro_mapper.update(test_libro)
+test_libro_mapper.delete(1)

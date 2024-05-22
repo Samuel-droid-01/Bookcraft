@@ -3,9 +3,13 @@ from ...domain.libro import Libro
 
 class LibroMapperInterface(metaclass=ABCMeta):
     @abstractmethod
-    def insert(self, Libro):
+    def insert(self, libro: Libro):
         pass
 
     @abstractmethod
-    def update(self, Libro):
+    def update(self, libro: Libro):
+        pass
+
+    @abstractmethod
+    def delete(self, id):
         pass

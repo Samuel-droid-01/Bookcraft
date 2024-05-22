@@ -6,7 +6,7 @@ class LibroMapper(LibroMapperInterface):
     def __init__(self):
         self.__connection = DBConnector().get_connection()
 
-    def insert(self, Libro):
+    def insert(self, libro: Libro):
         cursor = self.__connection.cursor()
         query = """
             INSERT INTO libros (
@@ -17,16 +17,16 @@ class LibroMapper(LibroMapperInterface):
         
         try:
             cursor.execute(query, (
-                Libro.get_titulo(), 
-                Libro.get_isbn(), 
-                Libro.get_autor(), 
-                Libro.get_editorial(), 
-                Libro.get_fecha_publicacion(), 
-                Libro.get_id_categoria(), 
-                Libro.get_edicion(), 
-                Libro.get_numero_paginas(), 
-                Libro.get_numero_copias(), 
-                Libro.get_copias_disponibles()
+                libro.get_titulo(), 
+                libro.get_isbn(), 
+                libro.get_autor(), 
+                libro.get_editorial(), 
+                libro.get_fecha_publicacion(), 
+                libro.get_id_categoria(), 
+                libro.get_edicion(), 
+                libro.get_numero_paginas(), 
+                libro.get_numero_copias(), 
+                libro.get_copias_disponibles()
             ))
             self.__connection.commit()
             print("Libro insertado correctamente.")
@@ -37,7 +37,7 @@ class LibroMapper(LibroMapperInterface):
             cursor.close()
             self.__connection.close()
 
-    def update(self, Libro):
+    def update(self, libro: Libro):
         cursor = self.__connection.cursor()
         query = """
             UPDATE libros SET 
@@ -56,23 +56,40 @@ class LibroMapper(LibroMapperInterface):
 
         try:
             cursor.execute(query, (
-                Libro.get_titulo(), 
-                Libro.get_isbn(), 
-                Libro.get_autor(), 
-                Libro.get_editorial(), 
-                Libro.get_fecha_publicacion(), 
-                Libro.get_id_categoria(), 
-                Libro.get_edicion(), 
-                Libro.get_numero_paginas(), 
-                Libro.get_numero_copias(), 
-                Libro.get_copias_disponibles(),
-                Libro.get_id()
+                libro.get_titulo(), 
+                libro.get_isbn(), 
+                libro.get_autor(), 
+                libro.get_editorial(), 
+                libro.get_fecha_publicacion(), 
+                libro.get_id_categoria(), 
+                libro.get_edicion(), 
+                libro.get_numero_paginas(), 
+                libro.get_numero_copias(), 
+                libro.get_copias_disponibles(),
+                libro.get_id()
             ))
             self.__connection.commit()
             print("Libro actualizado correctamente.")
         except Exception as e:
             self.__connection.rollback()
             print(f"Error al actualizar el libro: {e}")
+        finally:
+            cursor.close()
+            self.__connection.close()
+
+    def delete(self, id):
+        cursor = self.__connection.cursor()
+        query = """
+            DELETE FROM libros WHERE id = %s
+        """
+
+        try:
+            cursor.execute(query, (id, ))
+            self.__connection.commit()
+            print("Libro eliminado correctamente")
+        except Exception as e:
+            self.__connection.rollback()
+            print(f"Error al eliminar el libro: {e}")
         finally:
             cursor.close()
             self.__connection.close()
