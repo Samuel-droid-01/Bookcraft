@@ -6,7 +6,7 @@ class UsuarioMapper(UsuarioMapperInterface):
     def __init__(self):
         self.__connection = DBConnector().get_connection()
 
-    def insert_usuario(self, usuario: Usuario):
+    def insert(self, usuario: Usuario):
         cursor = self.__connection.cursor()
         query = """
             INSERT INTO usuarios (
@@ -31,7 +31,7 @@ class UsuarioMapper(UsuarioMapperInterface):
             cursor.close()
             self.__connection.close()
 
-    def get_usuario_by_id(self, id: int) -> Usuario:
+    def get_by_id(self, id: int) -> Usuario:
         cursor = self.__connection.cursor()
         query = """
             SELECT * FROM usuarios WHERE id = %s
@@ -59,7 +59,7 @@ class UsuarioMapper(UsuarioMapperInterface):
             cursor.close()
             self.__connection.close()
 
-    def update_usuario(self, usuario: Usuario):
+    def update(self, usuario: Usuario):
         cursor = self.__connection.cursor()
         query = """
             UPDATE usuarios SET 
@@ -89,7 +89,7 @@ class UsuarioMapper(UsuarioMapperInterface):
             cursor.close()
             self.__connection.close()
 
-    def delete_usuario(self, id: int):
+    def delete(self, id: int):
         cursor = self.__connection.cursor()
         query = """
             DELETE FROM usuarios WHERE id = %s

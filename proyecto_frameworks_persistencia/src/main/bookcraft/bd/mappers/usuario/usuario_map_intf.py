@@ -3,17 +3,17 @@ from ...domain.usuario import Usuario
 
 class UsuarioMapperInterface(metaclass=ABCMeta):
     @abstractmethod
-    def insert_usuario(self, usuario: Usuario):
+    def insert(self, usuario: Usuario):
         pass
 
     @abstractmethod
-    def get_usuario_by_id(self, id: int) -> Usuario:
+    def get_by_id(self, id: int):
         pass
 
     @abstractmethod
-    def update_usuario(self, usuario: Usuario):
+    def update(self, usuario: Usuario):
         pass
 
     @abstractmethod
-    def delete_usuario(self, id: int):
+    def delete(self, id: int):
         pass
