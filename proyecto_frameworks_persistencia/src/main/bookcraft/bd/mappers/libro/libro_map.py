@@ -36,3 +36,43 @@ class LibroMapper(LibroMapperInterface):
         finally:
             cursor.close()
             self.__connection.close()
+
+    def update(self, Libro):
+        cursor = self.__connection.cursor()
+        query = """
+            UPDATE libros SET 
+                titulo = %s,
+                isbn = %s,
+                autor = %s,
+                editorial = %s,
+                fecha_publicacion = %s,
+                id_categoria = %s,
+                edicion = %s,
+                numero_paginas = %s,
+                numero_copias = %s,
+                copias_disponibles = %s
+            WHERE id = %s
+        """
+
+        try:
+            cursor.execute(query, (
+                Libro.get_titulo(), 
+                Libro.get_isbn(), 
+                Libro.get_autor(), 
+                Libro.get_editorial(), 
+                Libro.get_fecha_publicacion(), 
+                Libro.get_id_categoria(), 
+                Libro.get_edicion(), 
+                Libro.get_numero_paginas(), 
+                Libro.get_numero_copias(), 
+                Libro.get_copias_disponibles(),
+                Libro.get_id()
+            ))
+            self.__connection.commit()
+            print("Libro actualizado correctamente.")
+        except Exception as e:
+            self.__connection.rollback()
+            print(f"Error al actualizar el libro: {e}")
+        finally:
+            cursor.close()
+            self.__connection.close()
