@@ -5,7 +5,7 @@ from ....main.bookcraft.bd.mappers.libro.libro_map import LibroMapper
 
 test_libro = Libro(
     1,
-    'El Quijoton',
+    'No manches Frida',
     978,
     'Miguel de Cervantes',
     'Espasa',
@@ -18,4 +18,8 @@ test_libro = Libro(
 )
 
 test_libro_mapper = LibroMapper()
-test_libro_mapper.insert(test_libro)
+#test_libro_mapper.insert(test_libro)
+l = test_libro_mapper.get_all()
+print(l)
+l = test_libro_mapper.get_by_id(2)
+print(l)
