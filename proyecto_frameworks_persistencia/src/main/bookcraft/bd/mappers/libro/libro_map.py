@@ -93,3 +93,35 @@ class LibroMapper(LibroMapperInterface):
         finally:
             cursor.close()
             self.__connection.close()
+
+    def get_by_id(self, id):
+        cursor = self.__connection.cursor()
+        query = """
+            SELECT * FROM libros WHERE id = %s
+        """
+
+        try:
+            cursor.execute(query, (id, ))
+            libro = cursor.fetchone()
+            return libro
+        except Exception as e:
+            print(f"Error al obtener el libro: {e}")
+        finally:
+            cursor.close()
+            self.__connection.close()
+
+    def get_all(self):
+        cursor = self.__connection.cursor()
+        query = """
+            SELECT * FROM libros
+        """
+
+        try:
+            cursor.execute(query)
+            libros = cursor.fetchall()
+            return libros
+        except Exception as e:
+            print(f"Error al obtener los libros: {e}")
+        finally:
+            cursor.close()
+            self.__connection.close()

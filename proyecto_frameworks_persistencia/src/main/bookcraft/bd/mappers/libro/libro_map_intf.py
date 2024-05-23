@@ -13,3 +13,11 @@ class LibroMapperInterface(metaclass=ABCMeta):
     @abstractmethod
     def delete(self, id):
         pass
+
+    @abstractmethod
+    def get_by_id(self, id):
+        pass
+
+    @abstractmethod
+    def get_all(self):
+        pass
