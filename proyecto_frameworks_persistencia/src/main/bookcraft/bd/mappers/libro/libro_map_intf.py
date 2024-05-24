@@ -1,5 +1,6 @@
 from abc import ABCMeta, abstractmethod
 from ...domain.libro import Libro
+from typing import List
 
 class LibroMapperInterface(metaclass=ABCMeta):
     @abstractmethod
@@ -15,9 +16,21 @@ class LibroMapperInterface(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def get_by_id(self, id):
+    def get_by_id(self, id) -> Libro:
         pass
 
     @abstractmethod
-    def get_all(self):
+    def get_all(self) -> List[Libro]:
+        pass
+
+    @abstractmethod
+    def get_by_title(self, title) -> List[Libro]:
+        pass
+
+    @abstractmethod
+    def get_by_author(self, author) -> List[Libro]:
+        pass
+
+    @abstractmethod
+    def get_by_category(self, category) -> List[Libro]:
         pass
