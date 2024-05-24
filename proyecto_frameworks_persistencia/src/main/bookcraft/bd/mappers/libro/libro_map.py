@@ -1,3 +1,4 @@
+from typing import List
 from ...domain.libro import Libro
 from ...config.db_connector import DBConnector
 from .libro_map_intf import LibroMapperInterface
@@ -118,6 +119,68 @@ class LibroMapper(LibroMapperInterface):
             libros = cursor.fetchall()
             libros = [Libro(*data) for data in libros]
             return libros
+        except Exception as e:
+            print(f"Error al obtener los libros: {e}")
+        finally:
+            cursor.close()
+
+    def get_by_title(self, title) -> List[Libro]:
+        cursor = self.__connection.cursor()
+        query = """
+            SELECT * FROM libros WHERE titulo LIKE %s
+        """
+
+        try:
+            cursor.execute(query, ('%' + title + '%', ))
+            libros = cursor.fetchall()
+            if libros:
+                libros = [Libro(*data) for data in libros]
+                return libros
+            else:
+                print("No se encontraron libros con ese título.")
+        except Exception as e:
+            print(f"Error al obtener los libros: {e}")
+        finally:
+            cursor.close()
+
+    def get_by_author(self, author) -> List[Libro]:
+        cursor = self.__connection.cursor()
+        query = """
+            SELECT * FROM libros WHERE autor LIKE %s
+        """
+
+        try:
+            cursor.execute(query, ('%' + author + '%', ))
+            libros = cursor.fetchall()
+            if libros:
+                libros = [Libro(*data) for data in libros]
+                return libros
+            else:
+                print("No se encontraron libros con ese autor.")
+        except Exception as e:
+            print(f"Error al obtener los libros: {e}")
+        finally:
+            cursor.close()
+
+    def get_by_category(self, category) -> List[Libro]:
+        cursor = self.__connection.cursor()
+        query = """
+            SELECT libros.id, libros.titulo, libros.isbn, libros.autor, libros.editorial, 
+            libros.fecha_publicacion, libros.id_categoria, libros.edicion, libros.numero_paginas, 
+            libros.numero_copias, libros.copias_disponibles
+            FROM libros 
+            JOIN categorias ON libros.id_categoria = categorias.id
+            WHERE categoria = %s
+        """
+
+        try:
+            cursor.execute(query, (category, ))
+            libros = cursor.fetchall()
+            if libros:
+                libros = [Libro(*data) for data in libros]
+                return libros
+            else:
+                print("No se encontraron libros en esa categoría.")
         except Exception as e:
             print(f"Error al obtener los libros: {e}")
         finally:

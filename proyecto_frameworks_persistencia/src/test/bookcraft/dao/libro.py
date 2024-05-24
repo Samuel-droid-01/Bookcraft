@@ -20,6 +20,7 @@ test_libro = Libro(
 test_libro_mapper = LibroMapper()
 #test_libro_mapper.insert(test_libro)
 l = test_libro_mapper.get_all()
-print(l)
-l = test_libro_mapper.get_by_id(2)
-print("Get Titulo: ", l.get_titulo())
+#for i in l:
+#    print(i.get_titulo())
+l = test_libro_mapper.get_by_category("Accion")
+print(l[0].get_titulo())

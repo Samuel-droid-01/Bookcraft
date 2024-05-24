@@ -22,3 +22,15 @@ class LibroMapperInterface(metaclass=ABCMeta):
     @abstractmethod
     def get_all(self) -> List[Libro]:
         pass
+
+    @abstractmethod
+    def get_by_title(self, title) -> List[Libro]:
+        pass
+
+    @abstractmethod
+    def get_by_author(self, author) -> List[Libro]:
+        pass
+
+    @abstractmethod
+    def get_by_category(self, category) -> List[Libro]:
+        pass
