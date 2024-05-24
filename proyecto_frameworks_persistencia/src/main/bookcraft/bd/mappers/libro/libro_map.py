@@ -35,7 +35,6 @@ class LibroMapper(LibroMapperInterface):
             print(f"Error al insertar el libro: {e}")
         finally:
             cursor.close()
-            self.__connection.close()
 
     def update(self, libro: Libro):
         cursor = self.__connection.cursor()
@@ -75,7 +74,6 @@ class LibroMapper(LibroMapperInterface):
             print(f"Error al actualizar el libro: {e}")
         finally:
             cursor.close()
-            self.__connection.close()
 
     def delete(self, id):
         cursor = self.__connection.cursor()
@@ -92,7 +90,6 @@ class LibroMapper(LibroMapperInterface):
             print(f"Error al eliminar el libro: {e}")
         finally:
             cursor.close()
-            self.__connection.close()
 
     def get_by_id(self, id):
         cursor = self.__connection.cursor()
@@ -103,12 +100,12 @@ class LibroMapper(LibroMapperInterface):
         try:
             cursor.execute(query, (id, ))
             libro = cursor.fetchone()
+            libro = Libro(*libro)
             return libro
         except Exception as e:
             print(f"Error al obtener el libro: {e}")
         finally:
             cursor.close()
-            self.__connection.close()
 
     def get_all(self):
         cursor = self.__connection.cursor()
@@ -119,9 +116,9 @@ class LibroMapper(LibroMapperInterface):
         try:
             cursor.execute(query)
             libros = cursor.fetchall()
+            libros = [Libro(*data) for data in libros]
             return libros
         except Exception as e:
             print(f"Error al obtener los libros: {e}")
         finally:
             cursor.close()
-            self.__connection.close()
