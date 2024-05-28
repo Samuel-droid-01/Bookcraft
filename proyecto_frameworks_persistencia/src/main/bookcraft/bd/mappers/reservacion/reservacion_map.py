@@ -67,7 +67,7 @@ class ReservacionMapper(ReservacionMapperInterface):
         finally:
             cursor.close()
 
-    def find_by_id(self, id) -> Reservacion:
+    def get_by_id(self, id) -> Reservacion:
         cursor = self.__connection.cursor()
         query = "SELECT * FROM reservaciones WHERE id_reservacion = %s"
 
@@ -80,7 +80,7 @@ class ReservacionMapper(ReservacionMapperInterface):
         finally:
             cursor.close()
     
-    def find_all(self) -> List[Reservacion]:
+    def get_all(self) -> List[Reservacion]:
         cursor = self.__connection.cursor()
         query = "SELECT * FROM reservaciones"
 
