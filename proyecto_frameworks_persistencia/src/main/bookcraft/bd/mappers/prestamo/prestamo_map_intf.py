@@ -4,19 +4,19 @@ from typing import List
 
 class PrestamoMapperInterface(metaclass=ABCMeta):
     @abstractmethod
-    def insert(self, Prestamo):
+    def insert(self, prestamo: Prestamo):
         pass
 
     @abstractmethod
-    def delete(self, Prestamo):
+    def delete(self, id: int):
         pass
 
     @abstractmethod
-    def update(self, Prestamo):
+    def update(self,prestamo: Prestamo):
         pass
 
     @abstractmethod
-    def get_by_id(self, id)-> Prestamo:
+    def get_by_id(self, id: int)-> Prestamo:
         pass
 
     @abstractmethod
