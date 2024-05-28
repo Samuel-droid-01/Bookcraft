@@ -10,6 +10,7 @@ class SancionMapper(SancionMapperInterface):
             INSERT INTO sanciones (
                 fecha_inicio, fecha_fin, descripcion
             ) VALUES (%s, %s, %s)
+            RETURNING id
         """
         try:
             cursor.execute(query, (
@@ -18,10 +19,14 @@ class SancionMapper(SancionMapperInterface):
                 sancion.get_descripcion()
             ))
             self.__connection.commit()
+            inserted_id = cursor.fetchone()[0]
             print("Sancion insertada correctamente.")
+            return inserted_id
+            
         except Exception as e:
             self.__connection.rollback()
             print(f"Error al insertar la sancion: {e}")
+            return -1
         finally:
             cursor.close()
             
