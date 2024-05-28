@@ -26,7 +26,6 @@ class PrestamoMapper(PrestamoMapperInterface):
             print(f"Error al insertar el prestamo: {e}")
         finally:
             cursor.close()
-            self.__connection.close()
         
     def update(self, Prestamo):
         cursor = self.__connection.cursor()
@@ -49,7 +48,6 @@ class PrestamoMapper(PrestamoMapperInterface):
             print(f"Error al actualizar el prestamo: {e}")
         finally:
             cursor.close()
-            self.__connection.close()
 
     def delete(self, Prestamo):
         cursor = self.__connection.cursor()
@@ -64,38 +62,32 @@ class PrestamoMapper(PrestamoMapperInterface):
             print(f"Error al eliminar el prestamo: {e}")
         finally:
             cursor.close()
-            self.__connection.close()
 
-    def find_all(self):
+    def get_all(self):
         cursor = self.__connection.cursor()
         query = """SELECT * FROM prestamos
             """
         try:
             cursor.execute(query)
             prestamos = cursor.fetchall()
-            return [
-                Prestamo(
-                    prestamo[0],prestamo[1], prestamo[2], prestamo[3], prestamo[4], prestamo[5], prestamo[6]
-                ) for prestamo in prestamos
-            ]
+            prestamos=[Prestamo(*data) for data in prestamos]
+            return prestamos
         except Exception as e:
             print(f"Error al buscar los prestamos: {e}")
         finally:
             cursor.close()
-            self.__connection.close()
     
-    def find_by_id(self, id):#no recibe un objeto, sino un id,pero retorna un objeto de la clase Prestamo
+    def get_by_id(self, id):
         cursor = self.__connection.cursor()
-        query = """SELECT * FROM prestamos WHERE id_reservacion = %s
+        query = """SELECT * FROM prestamos WHERE id = %s
             """
         try:
             cursor.execute(query, (id,))
             prestamo = cursor.fetchone()
-            return Prestamo(
-                prestamo[0],prestamo[1], prestamo[2], prestamo[3], prestamo[4], prestamo[5], prestamo[6]
-            )
+            prestamo = Prestamo(*prestamo)
+            return prestamo
         except Exception as e:
             print(f"Error al buscar el prestamo: {e}")
         finally:
             cursor.close()
-            self.__connection.close()
+           

@@ -24,7 +24,7 @@ class SancionMapper(SancionMapperInterface):
             print(f"Error al insertar la sancion: {e}")
         finally:
             cursor.close()
-            self.__connection.close()
+            
 
     def update(self, sancion):
         cursor = self.__connection.cursor()
@@ -47,7 +47,7 @@ class SancionMapper(SancionMapperInterface):
             print(f"Error al actualizar la sancion: {e}")
         finally:
             cursor.close()
-            self.__connection.close()
+            
             
     def delete(self, sancion):
         cursor = self.__connection.cursor()
@@ -63,26 +63,26 @@ class SancionMapper(SancionMapperInterface):
             print(f"Error al eliminar la sancion: {e}")
         finally:
             cursor.close()
-            self.__connection.close()
+            
 
-    def find_by_id(self, id):#No recibe un objeto pero retorna uno de la clase Sancion
+    def get_by_id(self, id):#No recibe un objeto pero retorna uno de la clase Sancion
         cursor = self.__connection.cursor()
         query = """
             SELECT * FROM sanciones WHERE id = %s
         """
         try:
             cursor.execute(query, (id,))
-            sancion = cursor.fetchone()
-            return Sancion(
-                sancion[0],sancion[1], sancion[2], sancion[3]
-            )
+            data = cursor.fetchone()
+            if data:
+                sancion = Sancion(*data)
+                return sancion
         except Exception as e:
             print(f"Error al buscar la sancion: {e}")
         finally:
             cursor.close()
-            self.__connection.close()
+            
 
-    def find_all(self):
+    def get_all(self):
         cursor = self.__connection.cursor()
         query = """
             SELECT * FROM sanciones
@@ -90,11 +90,10 @@ class SancionMapper(SancionMapperInterface):
         try:
             cursor.execute(query)
             sanciones = cursor.fetchall()
-            return [Sancion(
-               sancion[0], sancion[1], sancion[2], sancion[3]
-            ) for sancion in sanciones]
+            sanciones = [Sancion(*data) for data in sanciones]
+            return sanciones
         except Exception as e:
             print(f"Error al buscar las sanciones: {e}")
         finally:
             cursor.close()
-            self.__connection.close()
+            

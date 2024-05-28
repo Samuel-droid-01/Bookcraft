@@ -1,7 +1,7 @@
-from ...domain.sancion import Sancion
+from ...domain.prestamo import Prestamo
 from abc import ABCMeta, abstractmethod
-
-class PrestamoMapper(metaclass=ABCMeta):
+from typing import List
+class PrestamoMapperInterface(metaclass=ABCMeta):
     @abstractmethod
     def insert(self, Prestamo):
         pass
@@ -9,7 +9,7 @@ class PrestamoMapper(metaclass=ABCMeta):
         pass
     def update(self, Prestamo):
         pass
-    def find_by_id(self, id):
+    def get_by_id(self, id)-> Prestamo:
         pass
-    def find_all(self):
+    def get_all(self)-> List[Prestamo]:
         pass

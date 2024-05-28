@@ -10,7 +10,7 @@ class ReservacionMapperInterface(metaclass=ABCMeta):
         pass
     def update(self, Prestamo):
         pass
-    def find_by_id(self, id) -> Reservacion:
+    def get_by_id(self, id) -> Reservacion:
         pass
-    def find_all(self) -> List[Reservacion]:
+    def get_all(self) -> List[Reservacion]:
         pass
