@@ -1,4 +1,4 @@
-class Biblioteca:
+class BibliotecaDAO:
     def __init__(self):
         self.__nombre = "Bookcraft"
         self.__direccion = "Calle 123, Colonia 456"
