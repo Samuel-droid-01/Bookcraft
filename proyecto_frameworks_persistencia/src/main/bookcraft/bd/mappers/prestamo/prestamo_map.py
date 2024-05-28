@@ -49,7 +49,8 @@ class PrestamoMapper(PrestamoMapperInterface):
         finally:
             cursor.close()
 
-    def delete(self, id: int):
+
+    def delete(self, id:int):
         cursor = self.__connection.cursor()
         query = """DELETE FROM prestamos WHERE id = %s
             """

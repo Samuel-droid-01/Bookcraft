@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 28-05-2024 a las 05:34:46
+-- Tiempo de generación: 28-05-2024 a las 20:22:29
 -- Versión del servidor: 8.0.31
 -- Versión de PHP: 8.0.26
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `bibilioteca_db`
+-- Base de datos: `biblioteca_db`
 --
 
 -- --------------------------------------------------------
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `categorias`;
 CREATE TABLE IF NOT EXISTS `categorias` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `categoria` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `categoria` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
@@ -59,10 +59,10 @@ INSERT INTO `categorias` (`id`, `categoria`) VALUES
 DROP TABLE IF EXISTS `libros`;
 CREATE TABLE IF NOT EXISTS `libros` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `titulo` text COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `isbn` text COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `autor` varchar(100) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `editorial` varchar(60) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `titulo` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `isbn` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `autor` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `editorial` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
   `fecha_publicacion` date NOT NULL,
   `id_categoria` int NOT NULL,
   `edicion` int NOT NULL,
@@ -119,14 +119,7 @@ INSERT INTO `prestamos` (`id`, `id_usuario`, `id_libro`, `fecha_prestamo`, `fech
 (6, 6, 6, '2024-06-01', '2024-06-15', 3, 0),
 (7, 2, 6, '2024-06-02', '0000-00-00', 0, 1),
 (8, 3, 8, '2024-06-03', '2024-06-06', 4, 0),
-(9, 1, 9, '2024-06-04', '0000-00-00', 0, 1),
-(10, 5, 4, '2024-06-05', '2024-06-07', 5, 0);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `reservas`
---
+(9, 1, 9, '2024-06-04', '0000-00-00', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -153,11 +146,16 @@ INSERT INTO `reservaciones` (`id_reservacion`, `id_usuario`, `id_libro`, `fecha_
 (4, 1, 1, '2024-10-10 10:10:10'),
 (5, 1, 1, '2024-10-10 10:10:10');
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `roles`
+--
 
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE IF NOT EXISTS `roles` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `rol` varchar(40) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `rol` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
@@ -181,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `sanciones` (
   `id` int NOT NULL AUTO_INCREMENT,
   `fecha_inicio` date NOT NULL,
   `fecha_fin` date NOT NULL,
-  `descripcion` text COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `descripcion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
@@ -193,8 +191,33 @@ INSERT INTO `sanciones` (`id`, `fecha_inicio`, `fecha_fin`, `descripcion`) VALUE
 (1, '2024-05-20', '2024-05-25', 'Entrega tardía de libro'),
 (2, '2024-05-22', '2024-05-27', 'Entrega tardía de libro'),
 (3, '2024-05-24', '2024-05-31', 'Libro entregado con daños'),
-(4, '2024-05-26', '2024-06-01', 'Entrega tardía de libro'),
-(5, '2024-05-28', '2024-05-30', 'Libro entregado con manchas');
+(4, '2024-05-26', '2024-06-01', 'Entrega tardía de libro');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `solicitudes`
+--
+
+DROP TABLE IF EXISTS `solicitudes`;
+CREATE TABLE IF NOT EXISTS `solicitudes` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_usuario` int NOT NULL,
+  `id_libro` int NOT NULL,
+  `tipo` varchar(50) NOT NULL,
+  `fecha` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `solicitudes`
+--
+
+INSERT INTO `solicitudes` (`id`, `id_usuario`, `id_libro`, `tipo`, `fecha`) VALUES
+(1, 1, 1, 'prestamo1', '2027-10-10'),
+(3, 1, 1, 'prestamo', '2027-10-10'),
+(4, 1, 1, 'prestamo', '2027-10-10'),
+(5, 1, 1, 'prestamo', '2027-10-10');
 
 -- --------------------------------------------------------
 
@@ -205,10 +228,10 @@ INSERT INTO `sanciones` (`id`, `fecha_inicio`, `fecha_fin`, `descripcion`) VALUE
 DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nombres` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `apellidos` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `nombres` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `apellidos` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
   `id_rol` int NOT NULL,
-  `correo` varchar(255) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `correo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
   `contrasena` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
@@ -232,14 +255,3 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-DROP TABLE IF EXISTS `solicitudes`;
-CREATE TABLE `solicitudes` (
-    id_usuario INT NOT NULL,
-    id_libro INT NOT NULL,
-    tipo VARCHAR(50) NOT NULL,
-    fecha DATE NOT NULL
-);
-
-INSERT INTO `solicitudes` (`id_usuario`, `id_libro`, `tipo`, `fecha`) VALUES
-(9, 9, "Reserva", "2024-06-06");

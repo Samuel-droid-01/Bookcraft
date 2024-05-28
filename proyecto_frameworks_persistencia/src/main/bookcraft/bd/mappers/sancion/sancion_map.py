@@ -49,13 +49,13 @@ class SancionMapper(SancionMapperInterface):
             cursor.close()
             
             
-    def delete(self, sancion):
+    def delete(self, id:str):
         cursor = self.__connection.cursor()
         query = """
             DELETE FROM sanciones WHERE id = %s
         """
         try:
-            cursor.execute(query, (sancion.get_id(),))
+            cursor.execute(query, (id,))
             self.__connection.commit()
             print("Sancion eliminada correctamente.")
         except Exception as e:
