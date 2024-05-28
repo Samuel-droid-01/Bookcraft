@@ -232,3 +232,14 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+DROP TABLE IF EXISTS `solicitudes`;
+CREATE TABLE `solicitudes` (
+    id_usuario INT NOT NULL,
+    id_libro INT NOT NULL,
+    tipo VARCHAR(50) NOT NULL,
+    fecha DATE NOT NULL
+);
+
+INSERT INTO `solicitudes` (`id_usuario`, `id_libro`, `tipo`, `fecha`) VALUES
+(9, 9, "Reserva", "2024-06-06");
