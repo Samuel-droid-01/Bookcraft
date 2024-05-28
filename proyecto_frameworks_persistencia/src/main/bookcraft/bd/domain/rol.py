@@ -11,6 +11,5 @@ class Rol:
     def get_rol(self):
         return self.__rol
     
-    
     def set_rol(self, rol):
         self.__rol = rol

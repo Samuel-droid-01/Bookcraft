@@ -11,6 +11,5 @@ class Categoria:
     def get_categoria(self):
         return self.__categoria
     
-    
     def set_categoria(self, categoria):
         self.__categoria = categoria
