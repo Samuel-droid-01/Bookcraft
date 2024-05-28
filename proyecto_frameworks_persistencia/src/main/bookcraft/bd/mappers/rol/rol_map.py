@@ -48,6 +48,31 @@ class RolMapper(RolMapperInterface):
             cursor.close()
             self.__connection.close()
 
+    def get_all(self):
+        cursor = self.__connection.cursor()
+        query = """
+            SELECT * FROM roles
+        """
+
+        try:
+            cursor.execute(query)
+            result = cursor.fetchall()
+            roles = []
+
+            for row in result:
+                rol = Rol(
+                    row['id'],
+                    row['rol']
+                )
+                roles.append(rol)
+
+            return roles
+        except Exception as e:
+            print(f"Error al obtener todos los roles: {e}")
+        finally:
+            cursor.close()
+            self.__connection.close()
+
     def update(self, rol: Rol):
         cursor = self.__connection.cursor()
         query = """

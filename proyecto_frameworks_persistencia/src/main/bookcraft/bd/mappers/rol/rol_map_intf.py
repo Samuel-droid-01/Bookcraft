@@ -11,6 +11,10 @@ class RolMapperInterface(metaclass=ABCMeta):
         pass
 
     @abstractmethod
+    def get_all(self):
+        pass
+
+    @abstractmethod
     def update(self, rol: Rol):
         pass
 
