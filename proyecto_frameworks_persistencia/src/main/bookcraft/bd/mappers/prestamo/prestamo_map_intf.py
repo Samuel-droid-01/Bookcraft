@@ -1,15 +1,24 @@
 from ...domain.prestamo import Prestamo
 from abc import ABCMeta, abstractmethod
 from typing import List
+
 class PrestamoMapperInterface(metaclass=ABCMeta):
     @abstractmethod
-    def insert(self, Prestamo):
+    def insert(self, prestamo: Prestamo):
         pass
-    def delete(self, Prestamo):
+
+    @abstractmethod
+    def delete(self, id: int):
         pass
-    def update(self, Prestamo):
+
+    @abstractmethod
+    def update(self,prestamo: Prestamo):
         pass
-    def get_by_id(self, id)-> Prestamo:
+
+    @abstractmethod
+    def get_by_id(self, id: int)-> Prestamo:
         pass
+
+    @abstractmethod
     def get_all(self)-> List[Prestamo]:
         pass

@@ -12,11 +12,11 @@ class LibroMapperInterface(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def delete(self, id):
+    def delete(self, id: int):
         pass
 
     @abstractmethod
-    def get_by_id(self, id) -> Libro:
+    def get_by_id(self, id: int) -> Libro:
         pass
 
     @abstractmethod
@@ -24,13 +24,13 @@ class LibroMapperInterface(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def get_by_title(self, title) -> List[Libro]:
+    def get_by_title(self, title: str) -> List[Libro]:
         pass
 
     @abstractmethod
-    def get_by_author(self, author) -> List[Libro]:
+    def get_by_author(self, author: str) -> List[Libro]:
         pass
 
     @abstractmethod
-    def get_by_category(self, category) -> List[Libro]:
+    def get_by_category(self, category: str) -> List[Libro]:
         pass

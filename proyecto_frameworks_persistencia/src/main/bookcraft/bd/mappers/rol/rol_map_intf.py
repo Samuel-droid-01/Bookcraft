@@ -7,7 +7,11 @@ class RolMapperInterface(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def get_by_id(self, id: int):
+    def get_by_id(self, id: int) -> Rol:
+        pass
+
+    @abstractmethod
+    def get_all(self):
         pass
 
     @abstractmethod

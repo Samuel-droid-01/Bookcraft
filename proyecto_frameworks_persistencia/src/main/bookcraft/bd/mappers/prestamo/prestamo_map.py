@@ -6,18 +6,18 @@ class PrestamoMapper(PrestamoMapperInterface):
     def __init__(self):
         self.__connection = DBConnector().get_connection()
 
-    def insert(self, Prestamo):
+    def insert(self, prestamo:  Prestamo):
         cursor = self.__connection.cursor()
         query = """INSERT INTO prestamos (id_usuario, id_libro, fecha_prestamo, fecha_devolucion,id_sancion,activo) VALUES (%s, %s, %s, %s,%s,%s)
             """
         try:
             cursor.execute(query, (
-                Prestamo.get_id_usuario(),
-                Prestamo.get_id_libro(),
-                Prestamo.get_fecha_prestamo(),
-                Prestamo.get_fecha_devolucion(),
-                Prestamo.get_id_sancion(),
-                Prestamo.get_activo()
+                prestamo.get_id_usuario(),
+                prestamo.get_id_libro(),
+                prestamo.get_fecha_prestamo(),
+                prestamo.get_fecha_devolucion(),
+                prestamo.get_id_sancion(),
+                prestamo.get_activo()
             ))
             self.__connection.commit()
             print("Prestamo insertado correctamente.")
@@ -27,19 +27,19 @@ class PrestamoMapper(PrestamoMapperInterface):
         finally:
             cursor.close()
         
-    def update(self, Prestamo):
+    def update(self, prestamo: Prestamo):
         cursor = self.__connection.cursor()
         query = """UPDATE prestamos SET id_usuario = %s, id_libro = %s, fecha_prestamo = %s, fecha_devolucion = %s, id_sancion = %s, activo = %s WHERE id = %s
             """
         try:
             cursor.execute(query, (
-                Prestamo.get_id_usuario(),
-                Prestamo.get_id_libro(),
-                Prestamo.get_fecha_prestamo(),
-                Prestamo.get_fecha_devolucion(),
-                Prestamo.get_id_sancion(),
-                Prestamo.get_activo(),
-                Prestamo.get_id()
+                prestamo.get_id_usuario(),
+                prestamo.get_id_libro(),
+                prestamo.get_fecha_prestamo(),
+                prestamo.get_fecha_devolucion(),
+                prestamo.get_id_sancion(),
+                prestamo.get_activo(),
+                prestamo.get_id()
             ))
             self.__connection.commit()
             print("Prestamo actualizado correctamente.")
@@ -49,12 +49,12 @@ class PrestamoMapper(PrestamoMapperInterface):
         finally:
             cursor.close()
 
-    def delete(self, Prestamo):
+    def delete(self, id: int):
         cursor = self.__connection.cursor()
         query = """DELETE FROM prestamos WHERE id = %s
             """
         try:
-            cursor.execute(query, (Prestamo.get_id(),))
+            cursor.execute(query, (id,))
             self.__connection.commit()
             print("Prestamo eliminado correctamente.")
         except Exception as e:
@@ -77,7 +77,7 @@ class PrestamoMapper(PrestamoMapperInterface):
         finally:
             cursor.close()
     
-    def get_by_id(self, id):
+    def get_by_id(self, id: int):
         cursor = self.__connection.cursor()
         query = """SELECT * FROM prestamos WHERE id = %s
             """

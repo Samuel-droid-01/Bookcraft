@@ -105,3 +105,21 @@ class UsuarioMapper(UsuarioMapperInterface):
         finally:
             cursor.close()
             self.__connection.close()
+
+    def validar_credenciales(self, correo: str, contrasena: str):
+        cursor = self.__connection.cursor()
+        query = """
+            SELECT * FROM usuarios WHERE correo = %s AND contrasena = %s
+        """
+        try:
+            cursor.execute(query, (correo, contrasena))
+            result = cursor.fetchone()
+            if result:
+                print("Credenciales válidas.")
+                return Usuario(*result)
+            else:
+                return None
+        except Exception as e:
+            print(f"Error al validar credenciales: {e}")
+        finally:
+            cursor.close()

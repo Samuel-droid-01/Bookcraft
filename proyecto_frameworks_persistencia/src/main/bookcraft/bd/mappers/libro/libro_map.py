@@ -76,7 +76,7 @@ class LibroMapper(LibroMapperInterface):
         finally:
             cursor.close()
 
-    def delete(self, id):
+    def delete(self, id: int):
         cursor = self.__connection.cursor()
         query = """
             DELETE FROM libros WHERE id = %s
@@ -92,7 +92,7 @@ class LibroMapper(LibroMapperInterface):
         finally:
             cursor.close()
 
-    def get_by_id(self, id):
+    def get_by_id(self, id: int):
         cursor = self.__connection.cursor()
         query = """
             SELECT * FROM libros WHERE id = %s
@@ -124,7 +124,7 @@ class LibroMapper(LibroMapperInterface):
         finally:
             cursor.close()
 
-    def get_by_title(self, title) -> List[Libro]:
+    def get_by_title(self, title: str) -> List[Libro]:
         cursor = self.__connection.cursor()
         query = """
             SELECT * FROM libros WHERE titulo LIKE %s
@@ -143,7 +143,7 @@ class LibroMapper(LibroMapperInterface):
         finally:
             cursor.close()
 
-    def get_by_author(self, author) -> List[Libro]:
+    def get_by_author(self, author: str) -> List[Libro]:
         cursor = self.__connection.cursor()
         query = """
             SELECT * FROM libros WHERE autor LIKE %s
@@ -162,7 +162,7 @@ class LibroMapper(LibroMapperInterface):
         finally:
             cursor.close()
 
-    def get_by_category(self, category) -> List[Libro]:
+    def get_by_category(self, category: str) -> List[Libro]:
         cursor = self.__connection.cursor()
         query = """
             SELECT libros.id, libros.titulo, libros.isbn, libros.autor, libros.editorial, 

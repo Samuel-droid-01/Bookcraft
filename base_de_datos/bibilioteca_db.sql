@@ -128,28 +128,31 @@ INSERT INTO `prestamos` (`id`, `id_usuario`, `id_libro`, `fecha_prestamo`, `fech
 -- Estructura de tabla para la tabla `reservas`
 --
 
-DROP TABLE IF EXISTS `reservas`;
-CREATE TABLE IF NOT EXISTS `reservas` (
-  `id_reserva` int NOT NULL AUTO_INCREMENT,
-  `id_usuario` int NOT NULL,
-  `id_libro` int NOT NULL,
-  `posicion_cola` int NOT NULL,
-  PRIMARY KEY (`id_reserva`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
-
---
--- Volcado de datos para la tabla `reservas`
---
-
-INSERT INTO `reservas` (`id_reserva`, `id_usuario`, `id_libro`, `posicion_cola`) VALUES
-(1, 2, 4, 2),
-(2, 1, 6, 1);
-
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `roles`
+-- Estructura de tabla para la tabla `reservaciones`
 --
+
+DROP TABLE IF EXISTS `reservaciones`;
+CREATE TABLE IF NOT EXISTS `reservaciones` (
+  `id_reservacion` int NOT NULL AUTO_INCREMENT,
+  `id_usuario` int DEFAULT NULL,
+  `id_libro` int DEFAULT NULL,
+  `fecha_reservacion` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_reservacion`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `reservaciones`
+--
+
+INSERT INTO `reservaciones` (`id_reservacion`, `id_usuario`, `id_libro`, `fecha_reservacion`) VALUES
+(1, 1, 1, '2021-10-10 00:00:00'),
+(2, 2, 1, '2024-10-10 10:10:10'),
+(4, 1, 1, '2024-10-10 10:10:10'),
+(5, 1, 1, '2024-10-10 10:10:10');
+
 
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE IF NOT EXISTS `roles` (
