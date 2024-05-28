@@ -86,7 +86,7 @@ class PrestamoMapper(PrestamoMapperInterface):
     
     def find_by_id(self, id):#no recibe un objeto, sino un id,pero retorna un objeto de la clase Prestamo
         cursor = self.__connection.cursor()
-        query = """SELECT * FROM prestamos WHERE id = %s
+        query = """SELECT * FROM prestamos WHERE id_reservacion = %s
             """
         try:
             cursor.execute(query, (id,))

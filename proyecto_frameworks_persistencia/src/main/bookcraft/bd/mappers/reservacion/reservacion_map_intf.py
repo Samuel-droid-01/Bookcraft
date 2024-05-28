@@ -2,7 +2,7 @@ from ...domain.reservacion import Reservacion
 from abc import ABCMeta, abstractmethod
 from typing import List
 
-class PrestamoMapper(metaclass=ABCMeta):
+class ReservacionMapperInterface(metaclass=ABCMeta):
     @abstractmethod
     def insert(self, Prestamo):
         pass
