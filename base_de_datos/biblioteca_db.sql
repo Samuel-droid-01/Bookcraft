@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 28-05-2024 a las 04:35:13
+-- Tiempo de generación: 28-05-2024 a las 07:03:52
 -- Versión del servidor: 8.0.31
 -- Versión de PHP: 8.0.26
 
@@ -79,7 +79,14 @@ CREATE TABLE IF NOT EXISTS `prestamos` (
   `id_sancion` int NOT NULL,
   `activo` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `prestamos`
+--
+
+INSERT INTO `prestamos` (`id`, `id_usuario`, `id_libro`, `fecha_prestamo`, `fecha_devolucion`, `id_sancion`, `activo`) VALUES
+(1, 1, 1, '2024-10-10', '2026-10-10', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -132,7 +139,19 @@ CREATE TABLE IF NOT EXISTS `sanciones` (
   `fecha_fin` date NOT NULL,
   `descripcion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `sanciones`
+--
+
+INSERT INTO `sanciones` (`id`, `fecha_inicio`, `fecha_fin`, `descripcion`) VALUES
+(1, '2024-10-10', '2026-10-10', 'No devolver libro'),
+(2, '2027-10-10', '2028-10-10', 'No devolver libro1'),
+(3, '2024-10-10', '2026-10-10', 'No devolver libro1'),
+(4, '2024-10-10', '2026-10-10', 'No devolver libro1'),
+(5, '2024-10-10', '2026-10-10', 'No devolver libro1'),
+(6, '2024-10-10', '2026-10-10', 'No devolver libro1');
 
 -- --------------------------------------------------------
 
@@ -147,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `apellidos` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
   `id_rol` int NOT NULL,
   `correo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `contransena` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `contrasena` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
@@ -155,8 +174,8 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nombres`, `apellidos`, `id_rol`, `correo`, `contransena`) VALUES
-(1, 'Alan', 'Lopez', 1, 'lora@gs.utm-mx', 'xd');
+INSERT INTO `usuarios` (`id`, `nombres`, `apellidos`, `id_rol`, `correo`, `contrasena`) VALUES
+(1, 'Alan', 'Lopez', 1, 'alan@gmail.com', 'xd');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
