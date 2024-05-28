@@ -5,7 +5,7 @@ class PrestamoMapperInterface(metaclass=ABCMeta):
     @abstractmethod
     def insert(self, Prestamo):
         pass
-    def delete(self, Prestamo):
+    def delete(self, id:int):
         pass
     def update(self, Prestamo):
         pass

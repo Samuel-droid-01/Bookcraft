@@ -11,5 +11,5 @@ test_prestamo = Prestamo(
 )
 prestamo_mapper = PrestamoMapper()
 #prestamo_mapper.insert(test_prestamo)
-prestamo_mapper.delete(test_prestamo)
+prestamo_mapper.delete(10)
 print(prestamo_mapper.get_by_id(2))

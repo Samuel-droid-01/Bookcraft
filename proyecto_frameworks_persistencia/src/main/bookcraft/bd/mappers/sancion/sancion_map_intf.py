@@ -3,13 +3,13 @@ from ...domain.sancion import Sancion
 from typing import List
 class SancionMapperInterface(metaclass=ABCMeta):
     @abstractmethod
-    def insert(self, sancion):
+    def insert(self, sancion:Sancion):
         pass
 
-    def update(self, sancion):
+    def update(self, sancion:Sancion):
         pass
 
-    def delete(self, sancion):
+    def delete(self, id:int):
         pass
 
     def get_by_id(self, id)-> Sancion:

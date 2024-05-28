@@ -49,12 +49,12 @@ class PrestamoMapper(PrestamoMapperInterface):
         finally:
             cursor.close()
 
-    def delete(self, Prestamo):
+    def delete(self, id:int):
         cursor = self.__connection.cursor()
         query = """DELETE FROM prestamos WHERE id = %s
             """
         try:
-            cursor.execute(query, (Prestamo.get_id(),))
+            cursor.execute(query, (id,))
             self.__connection.commit()
             print("Prestamo eliminado correctamente.")
         except Exception as e:
