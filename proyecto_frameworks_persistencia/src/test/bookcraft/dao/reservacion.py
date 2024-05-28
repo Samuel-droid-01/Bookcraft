@@ -10,6 +10,7 @@ test_reservacion = Reservacion(
 )
 
 reservacion_mapper = ReservacionMapper()
+reservacion_mapper.insert(test_reservacion)
 aux=reservacion_mapper.getnombreUsuario(1)
 print(aux)
 aux2=reservacion_mapper.getnombreLibro(1)

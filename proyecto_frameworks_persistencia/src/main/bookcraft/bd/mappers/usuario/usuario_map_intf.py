@@ -17,3 +17,7 @@ class UsuarioMapperInterface(metaclass=ABCMeta):
     @abstractmethod
     def delete(self, id: int):
         pass
+
+    @abstractmethod
+    def validar_credenciales(self, correo: str, contrasena: str):
+        pass
