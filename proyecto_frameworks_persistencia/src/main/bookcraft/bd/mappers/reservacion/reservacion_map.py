@@ -53,7 +53,7 @@ class ReservacionMapper(ReservacionMapperInterface):
         finally:
             cursor.close()
 
-    def delete(self, id):
+    def delete(self, id : int):
         cursor = self.__connection.cursor()
         query = "DELETE FROM reservaciones WHERE id_reservacion = %s"
 
@@ -67,7 +67,7 @@ class ReservacionMapper(ReservacionMapperInterface):
         finally:
             cursor.close()
 
-    def get_by_id(self, id) -> Reservacion:
+    def get_by_id(self, id : int) -> Reservacion:
         cursor = self.__connection.cursor()
         query = "SELECT * FROM reservaciones WHERE id_reservacion = %s"
 
@@ -94,7 +94,7 @@ class ReservacionMapper(ReservacionMapperInterface):
         finally:
             cursor.close()
 
-    def getnombreUsuario(self, id_reservacion):
+    def get_nombre_usuario(self, id_reservacion : int):
         cursor = self.__connection.cursor()
         query = "SELECT nombres FROM reservaciones join usuarios on reservaciones.id_usuario = usuarios.id where id_reservacion = %s"
         try:
@@ -106,7 +106,7 @@ class ReservacionMapper(ReservacionMapperInterface):
         finally:
             cursor.close()
 
-    def getnombreLibro(self, id_reservacion):
+    def get_nombre_libro(self, id_reservacion : int):
         cursor = self.__connection.cursor()
         query = "SELECT titulo FROM reservaciones join libros on reservaciones.id_libro = libros.id where id_reservacion = %s"
         try:
