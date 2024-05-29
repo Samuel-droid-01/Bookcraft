@@ -4,11 +4,7 @@ from proyecto_frameworks_persistencia.src.main.bookcraft.bd.domain.usuario impor
 from proyecto_frameworks_persistencia.src.main.bookcraft.bd.mappers.libro.libro_map import LibroMapper
 from proyecto_frameworks_persistencia.src.main.bookcraft.bd.domain.libro import Libro
 class AdministradorDAO(UsuarioDAO):
-    def __init__(self, nombre, apellido, email, contrasena):
-        self.__nombre = nombre
-        self.__apellido = apellido
-        self.__email = email
-        self.__contrasena = contrasena
+    def __init__(self):
         self.__rol = "Administrador"
 
     def get_rol(self):
