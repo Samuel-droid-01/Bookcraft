@@ -18,11 +18,9 @@ class SancionDAO:
         fecha_inicio = datetime.now()
         fecha_fin = fecha_inicio + timedelta(days=3)
 
-        fecha_inicio_modificada = fecha_inicio.strftime('%Y-%m-%d %H:%M:%S')
-        fecha_fin_modificada = fecha_fin.strftime('%Y-%m-%d %H:%M:%S')
-        print(fecha_inicio_modificada)
+        fecha_inicio_modificada = fecha_inicio.strftime('%Y-%m-%d')
+        fecha_fin_modificada = fecha_fin.strftime('%Y-%m-%d')
         
-
         self.__sancion = Sancion(fecha_inicio=fecha_inicio_modificada, fecha_fin=fecha_fin_modificada, descripcion=descripcion)
         id_sancion = self.set_sancion(self.__sancion)
         return id_sancion
