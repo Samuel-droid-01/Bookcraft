@@ -4,7 +4,8 @@ from .sancion_map_intf import SancionMapperInterface
 class SancionMapper(SancionMapperInterface):
     def __init__(self):
         self.__connection = DBConnector().get_connection()
-    def insert(self, sancion):
+        
+    def insert(self, sancion: Sancion):
         cursor = self.__connection.cursor()
         query = """
             INSERT INTO sanciones (
@@ -15,7 +16,7 @@ class SancionMapper(SancionMapperInterface):
             cursor.execute(query, (
                 sancion.get_fecha_inicio(), 
                 sancion.get_fecha_fin(), 
-                sancion.get_descripcion()
+                sancion.get_descripcion(),
             ))
             self.__connection.commit()
             # Recupera el último id insertado
@@ -33,7 +34,7 @@ class SancionMapper(SancionMapperInterface):
             cursor.close()
             
 
-    def update(self, sancion):
+    def update(self, sancion: Sancion):
         cursor = self.__connection.cursor()
         query = """
             UPDATE sanciones SET 
@@ -56,7 +57,7 @@ class SancionMapper(SancionMapperInterface):
             cursor.close()
             
             
-    def delete(self, id:str):
+    def delete(self, id:int):
         cursor = self.__connection.cursor()
         query = """
             DELETE FROM sanciones WHERE id = %s
@@ -72,7 +73,7 @@ class SancionMapper(SancionMapperInterface):
             cursor.close()
             
 
-    def get_by_id(self, id):#No recibe un objeto pero retorna uno de la clase Sancion
+    def get_by_id(self, id: int):#No recibe un objeto pero retorna uno de la clase Sancion
         cursor = self.__connection.cursor()
         query = """
             SELECT * FROM sanciones WHERE id = %s

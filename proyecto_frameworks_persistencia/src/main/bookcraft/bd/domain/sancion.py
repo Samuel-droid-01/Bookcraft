@@ -4,6 +4,9 @@ class Sancion:
         self.__fecha_fin = fecha_fin
         self.__descripcion = descripcion
 
+    def get_id(self):
+        return self.__id
+    
     def get_fecha_inicio(self):
         return self.__fecha_inicio
     
