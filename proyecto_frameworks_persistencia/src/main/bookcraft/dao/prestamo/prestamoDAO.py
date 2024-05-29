@@ -23,10 +23,3 @@ class PrestamoDAO:
         id_sancion = nuevaSancion.crear_sancion(descripcion)
         self.__prestamo.set_id_sancion(id_sancion)
         mapper.update(self.__prestamo)
-
-print("Hola")
-#nuevoDao = PrestamoDAO(8, 1, "2024-05-31", "0000-00-00", 0, 1)
-#nuevoDao.set_prestamo()
-verDao = PrestamoDAO(id=5)
-print(verDao.get_prestamo())
-verDao.sancionar("Entregó tarde el libro")
