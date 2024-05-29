@@ -28,9 +28,6 @@ class Prestamo:
     
     def get_activo(self):
         return self.__activo
-    
-    def set_id(self,id):
-        self.__id = id
 
     def set_id_usuario(self,id_usuario):
         self.__id_usuario = id_usuario
@@ -49,5 +46,3 @@ class Prestamo:
         
     def set_activo(self,activo):
         self.__activo = activo
-    
-    
