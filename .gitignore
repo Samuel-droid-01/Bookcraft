@@ -6,3 +6,4 @@ my_modules/
 *.pyc
 # Ignorar el archivo especifico
 #mi_archivo.txt
+__pycache__

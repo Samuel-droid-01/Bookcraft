@@ -1,13 +1,9 @@
 class Sancion:
-    def __init__(self, id, fechaInicio, fechaFin, descripcion):
-        self.__id = id
-        self.__fecha_inicio = fechaInicio
-        self.__fecha_fin = fechaFin
+    def __init__(self, fecha_inicio, fecha_fin, descripcion):
+        self.__fecha_inicio = fecha_inicio
+        self.__fecha_fin = fecha_fin
         self.__descripcion = descripcion
 
-    def get_id(self):
-        return self.__id
-    
     def get_fecha_inicio(self):
         return self.__fecha_inicio
     
@@ -25,5 +21,3 @@ class Sancion:
         
     def set_descripcion(self,descripcion):
         self.__descripcion = descripcion
-    
-    
