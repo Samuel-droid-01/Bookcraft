@@ -10,7 +10,6 @@ class SancionMapper(SancionMapperInterface):
             INSERT INTO sanciones (
                 fecha_inicio, fecha_fin, descripcion
             ) VALUES (%s, %s, %s)
-            RETURNING id
         """
         try:
             cursor.execute(query, (
@@ -19,6 +18,9 @@ class SancionMapper(SancionMapperInterface):
                 sancion.get_descripcion()
             ))
             self.__connection.commit()
+            # Recupera el último id insertado
+            ultimo_id = "SELECT LAST_INSERT_ID()"
+            cursor.execute(ultimo_id)
             inserted_id = cursor.fetchone()[0]
             print("Sancion insertada correctamente.")
             return inserted_id
