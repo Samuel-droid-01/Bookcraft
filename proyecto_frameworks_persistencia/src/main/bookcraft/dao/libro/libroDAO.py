@@ -5,8 +5,11 @@ class LibroDAO:
     def __init__(self, titulo = None, isbn = None, autor = None, editorial = None, fecha_publicacion = None, id_categoria = None, 
                 edicion = None, numero_paginas = None, numero_copias = None, copias_disponibles = None, id = None):
         if id != None:
-            mapper = LibroMapper()
-            self.__libro = mapper.get_by_id(id)
+            if id != 0:
+                mapper = LibroMapper()
+                self.__libro = mapper.get_by_id(id)
+            else:
+                self.__libro = None
         else:
             self.__libro = Libro(id, titulo, isbn, autor, editorial, fecha_publicacion, id_categoria, edicion, numero_paginas,
             numero_copias, copias_disponibles)
@@ -14,6 +17,20 @@ class LibroDAO:
     def set_libro(self):
         mapper = LibroMapper()
         mapper.insert(self.__libro)
-
+    
     def get_libro(self):
-        return self.__libro.get_titulo()
+        return self.__libro
+
+    def delete_libro(self):
+        mapper = LibroMapper()
+        mapper.delete(self.__libro.get_id())
+        self.__libro = None
+
+    def update_libro(self):
+        mapper = LibroMapper()
+        mapper.update(self.__libro)
+
+    def get_libros(self):
+        mapper = LibroMapper()
+        lista_ids = mapper.get_all()
+        return lista_ids

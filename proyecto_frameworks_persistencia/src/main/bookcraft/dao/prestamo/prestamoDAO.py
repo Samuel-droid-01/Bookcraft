@@ -15,7 +15,16 @@ class PrestamoDAO:
         mapper.insert(self.__prestamo)
 
     def get_prestamo(self):
-        return str(self.__prestamo.get_id_usuario())+" : "+ str(self.__prestamo.get_id_libro())
+        return self.__prestamo
+    
+    def delete_prestamo(self):
+        mapper = PrestamoMapper()
+        mapper.delete(self.__prestamo.get_id())
+        self.__prestamo = None
+
+    def update_prestamo(self):
+        mapper = PrestamoMapper()
+        mapper.update(self.__prestamo)
 
     def sancionar(self, descripcion):
         mapper = PrestamoMapper()
