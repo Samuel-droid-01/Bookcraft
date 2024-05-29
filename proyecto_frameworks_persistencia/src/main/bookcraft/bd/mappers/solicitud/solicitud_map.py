@@ -99,3 +99,17 @@ class SolicitudMapper(SolicitudMapperInterface):
             print(f"Error al obtener todas las solicitudes: {e}")
         finally:
             cursor.close()
+
+    def select_by_tipo(self, category):
+        cursor = self.__connection.cursor()
+        query = """
+            SELECT * FROM solicitudes WHERE tipo = %s
+        """
+        try:
+            cursor.execute(query, (category,))
+            result = cursor.fetchall()
+            return [Solicitud(*row) for row in result]
+        except Exception as e:
+            print(f"Error al obtener todas las solicitudes por categoría: {e}")
+        finally:
+            cursor.close()
