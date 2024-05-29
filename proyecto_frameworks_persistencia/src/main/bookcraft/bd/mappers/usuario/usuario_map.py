@@ -42,19 +42,29 @@ class UsuarioMapper(UsuarioMapperInterface):
             result = cursor.fetchone()
 
             if result:
-                usuario = Usuario(
-                    result['id'],
-                    result['nombres'],
-                    result['apellidos'],
-                    result['id_rol'],
-                    result['correo'],
-                    result['contrasena']
-                )
+                usuario = Usuario(*result)
                 return usuario
             else:
                 return None
         except Exception as e:
             print(f"Error al obtener el usuario por ID: {e}")
+        finally:
+            cursor.close()
+            self.__connection.close()
+
+    def get_all(self) -> list[Usuario]:
+        cursor = self.__connection.cursor()
+        query = """
+            SELECT * FROM usuarios
+        """
+
+        try:
+            cursor.execute(query)
+            result = cursor.fetchall()
+            usuarios = [Usuario(*data) for data in result]
+            return usuarios
+        except Exception as e:
+            print(f"Error al obtener todos los usuarios: {e}")
         finally:
             cursor.close()
             self.__connection.close()
@@ -123,3 +133,21 @@ class UsuarioMapper(UsuarioMapperInterface):
             print(f"Error al validar credenciales: {e}")
         finally:
             cursor.close()
+
+    def validar_correo(self, correo: str):
+        cursor = self.__connection.cursor()
+        query = """
+            SELECT * FROM usuarios WHERE correo = %s
+        """
+        try:
+            cursor.execute(query, (correo,))
+            result = cursor.fetchone()
+            if result:
+                return False
+            else:
+                return True
+        except Exception as e:
+            print(f"Error al validar correo: {e}")
+        finally:
+            cursor.close()
+    
