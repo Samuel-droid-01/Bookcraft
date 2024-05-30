@@ -29,15 +29,24 @@ class RegistroDAO:
             prestamoaf.update_prestamo()
             
     def extender_prestamo(self, id_usuario,id_libro,fecha_prestamo,fecha_devolucion):
-        prestamoaf = PrestamoDAO(id_usuario, id_libro, fecha_prestamo, fecha_devolucion, 0, 1)
-        prestamoaf.set_prestamo()
+        try:
+            prestamoaf = PrestamoDAO(id_usuario, id_libro, fecha_prestamo, fecha_devolucion, 0, 1)
+            prestamoaf.set_prestamo()
+        except:
+            print("datos incorrectos")
     
     def realizar_prestamo(self, id_usuario,id_libro,fecha_prestamo,fecha_devolucion):
-        prestamoaf = PrestamoDAO(id_usuario, id_libro, fecha_prestamo, fecha_devolucion, 0, 1)
-        prestamoaf.set_prestamo()
+        try:
+            prestamoaf = PrestamoDAO(id_usuario, id_libro, fecha_prestamo, fecha_devolucion, 0, 1)
+            prestamoaf.set_prestamo()
+        except:
+            print("datos incorrectos")
     
     def reservar_prestamo(self,id_usuario,id_libro,fecha_reservacion):
-        mapper = ReservacionMapper()
-        reserva = Reservacion(id_usuario, id_libro,fecha_reservacion)
-        mapper.insert(reserva)
+        try:
+            mapper = ReservacionMapper()
+            reserva = Reservacion(id_usuario, id_libro,fecha_reservacion)
+            mapper.insert(reserva)
+        except:
+            print("datos incorrectos")
 
