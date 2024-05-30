@@ -19,12 +19,18 @@ class PrestamoDAO:
     
     def delete_prestamo(self):
         mapper = PrestamoMapper()
-        mapper.delete(self.__prestamo.get_id())
-        self.__prestamo = None
+        try:
+            mapper.delete(self.__prestamo.get_id())
+            self.__prestamo = None
+        except:
+            print("El id no existe.")
 
     def update_prestamo(self):
-        mapper = PrestamoMapper()
-        mapper.update(self.__prestamo)
+        try:
+            mapper = PrestamoMapper()
+            mapper.update(self.__prestamo)
+        except:
+            print("El id no existe.")
 
     def sancionar(self, descripcion):
         mapper = PrestamoMapper()
