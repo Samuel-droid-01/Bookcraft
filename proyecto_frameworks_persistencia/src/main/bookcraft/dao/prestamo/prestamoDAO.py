@@ -15,11 +15,16 @@ class PrestamoDAO:
         mapper.insert(self.__prestamo)
 
     def get_prestamo(self):
-        return self.__prestamo
+        if isinstance(self.__prestamo, Prestamo):
+            return self.__prestamo
+        else:
+            print("No hay una instancia válida.")
+            return None
     
     def delete_prestamo(self):
         mapper = PrestamoMapper()
         try:
+            
             mapper.delete(self.__prestamo.get_id())
             self.__prestamo = None
         except:

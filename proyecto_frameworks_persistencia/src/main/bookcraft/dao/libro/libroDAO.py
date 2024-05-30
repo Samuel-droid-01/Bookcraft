@@ -45,3 +45,13 @@ class LibroDAO:
     def get_copias(self):
         copia_libro = CopiaDAO(self.get_libro().get_id(), self.get_libro().get_copias_disponibles())
         return copia_libro
+    
+    def filtrar_autor(self, autor):
+        mapper = LibroMapper()
+        lista_ids = mapper.get_by_author(autor)
+        return lista_ids
+    
+    def filtrar_categoria(self, categoria):
+        mapper = LibroMapper()
+        lista_ids = mapper.get_by_category(categoria)
+        return lista_ids
