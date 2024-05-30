@@ -18,14 +18,10 @@ class CatalogoDAO:
         lista_autor = []
         lista_categoria = []
         if autor != None:
-            lista_autor = self.__aux.filtrar_autor()
+            if isinstance(self.__aux.filtrar_autor(autor), list):
+                lista_autor = self.__aux.filtrar_autor(autor)
         if categoria != None:
-            lista_categoria = self.__aux.filtrar_categoria()
+            if isinstance(self.__aux.filtrar_categoria(categoria), list):
+                lista_categoria = self.__aux.filtrar_categoria(categoria)
         filtro_final = lista_autor + lista_categoria
         return filtro_final
-
-catalogoMain = CatalogoDAO()
-catalogo_de_Libros = catalogoMain.get_catalogo()
-
-for libro in catalogo_de_Libros:
-    print(libro.get_libro().get_id(), " | ", libro.get_libro().get_titulo())
