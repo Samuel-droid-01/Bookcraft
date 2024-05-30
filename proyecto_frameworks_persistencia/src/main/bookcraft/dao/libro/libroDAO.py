@@ -23,13 +23,19 @@ class LibroDAO:
         return self.__libro
 
     def delete_libro(self):
-        mapper = LibroMapper()
-        mapper.delete(self.__libro.get_id())
-        self.__libro = None
+        try:
+            mapper = LibroMapper()
+            mapper.delete(self.__libro.get_id())
+            self.__libro = None
+        except:
+            print("El id no existe.")
 
     def update_libro(self):
-        mapper = LibroMapper()
-        mapper.update(self.__libro)
+        try:
+            mapper = LibroMapper()
+            mapper.update(self.__libro)
+        except:
+            print("El id no existe.")
 
     def get_libros(self):
         mapper = LibroMapper()
