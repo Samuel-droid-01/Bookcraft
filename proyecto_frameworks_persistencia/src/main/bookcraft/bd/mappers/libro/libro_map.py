@@ -2,6 +2,7 @@ from typing import List
 from ...domain.libro import Libro
 from ...config.db_connector import DBConnector
 from .libro_map_intf import LibroMapperInterface
+import itertools
 
 class LibroMapper(LibroMapperInterface):
     def __init__(self):
@@ -111,14 +112,13 @@ class LibroMapper(LibroMapperInterface):
     def get_all(self):
         cursor = self.__connection.cursor()
         query = """
-            SELECT * FROM libros
+            SELECT id FROM libros
         """
 
         try:
             cursor.execute(query)
-            libros = cursor.fetchall()
-            libros = [Libro(*data) for data in libros]
-            return libros
+            libros_ids = list(itertools.chain.from_iterable(cursor.fetchall()))  # Flatten tuples
+            return libros_ids
         except Exception as e:
             print(f"Error al obtener los libros: {e}")
         finally:

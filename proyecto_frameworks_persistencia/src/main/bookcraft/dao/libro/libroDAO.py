@@ -1,5 +1,6 @@
 from ...bd.mappers.libro.libro_map import LibroMapper
 from ...bd.domain.libro import Libro
+from ...dao.copia.copiaDAO import CopiaDAO
 
 class LibroDAO:
     def __init__(self, titulo = None, isbn = None, autor = None, editorial = None, fecha_publicacion = None, id_categoria = None, 
@@ -34,3 +35,7 @@ class LibroDAO:
         mapper = LibroMapper()
         lista_ids = mapper.get_all()
         return lista_ids
+    
+    def get_copias(self):
+        copia_libro = CopiaDAO(self.get_libro().get_id(), self.get_libro().get_copias_disponibles())
+        return copia_libro
