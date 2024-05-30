@@ -1,16 +1,11 @@
 import unittest
-from unittest.mock import patch, MagicMock
+
 from ....main.bookcraft.dao.prestamo.prestamoDAO import PrestamoDAO
-from ....main.bookcraft.bd.domain.usuario import Usuario
 from ....main.bookcraft.bd.mappers.prestamo.prestamo_map import PrestamoMapper
 
-class TestPrestamo(unittest.TestCase):
-    def setUp(self):
-        self.prestamo = PrestamoDAO()
-    
-
+class Test_prestamo(unittest.TestCase):
     def test_set_prestamo(self):
-        print("test_set_prestamo")
+        
         mappers= PrestamoMapper()
         registro=mappers.get_all()
         tamaño=len(registro)
@@ -20,22 +15,53 @@ class TestPrestamo(unittest.TestCase):
             self.assertEqual(len(mappers.get_all()), tamaño+1)
         except Exception as e:
             self.fail(f"\tError al insertar el prestamo: {e}")
+
     def test_get_prestamo(self):
-        print("test_get_prestamo")
+
         prestamo=PrestamoDAO(id=9)
         try:
             info_prestamo=prestamo.get_prestamo()
-            print("\tprestamo{",info_prestamo,"}")
+            #print("\tprestamo{",info_prestamo,"}")
         except Exception as e:
             self.fail(f"\tError al obtener el prestamo: {e}")
     def test_sancionar(self):
-        print("test_sancionar")
+
         prestamo=PrestamoDAO(id=9)
         try:
             prestamo.sancionar("Sancion por retraso")
         except Exception as e:
             self.fail(f"\tError al sancionar el prestamo: {e}")
+    #@unittest.skip("no se puede eliminar un prestamo que no existe")
+    def test_delete_prestamo(self):
+        mappers= PrestamoMapper()
+        tamaño=len(mappers.get_all())
+        print(tamaño)
+        prestamo=PrestamoDAO(id=13)#------>asignar un id existente
+        try:
+            prestamo.delete_prestamo()
+            print("\tprestamo eliminado correctamente")
+            tamaño1=len(mappers.get_all())
+            print(tamaño1)
+            
+            if tamaño1 != tamaño-1:
+                self.fail("Puede que el id usado no exista, verifique y vuelva a intentarlo")
+            self.assertEqual(tamaño1,tamaño-1)
+        except Exception as e:
+                self.fail(f"\tError al eliminar el prestamo: {e}")
+    def test_update_prestamo(self):
+        id=10
+        mappers=PrestamoMapper
+        try:
+            data=mappers.get_by_id(id)
+        except:
+            self.fail("dato inexiste, imposible actualizar")
 
-if __name__ == '__main__':
-    unittest.main()
+        prestamo=PrestamoDAO(id=10 )
+        prestamo.get_prestamo().set_fecha_devolucion('1500-10-10')
+        try:
+            prestamo.update_prestamo()
+            print("\tprestamo actualizado correctamente")
+        except Exception as e:
+            self.fail(f"\tError al actualizar el prestamo: {e}")
+
 
