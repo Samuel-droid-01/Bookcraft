@@ -55,4 +55,18 @@ class TestLibro(unittest.TestCase):
             print(copia.get_estado())
         except Exception as e:
             self.fail("Error al obtener las copias:",e)
-
+    def test_filtrar_autor(self):
+        libro=LibroDAO()
+        autor="mario bennedeti"
+        try:
+            libro.filtrar_autor(autor)
+        except:
+            self.fail(f"error al filtrar")
+    @unittest.skip("funcionando")
+    def test_filtrar_categoria(self):
+        libro=LibroDAO()
+        category="fantasia"
+        try:
+            libro.filtrar_categoria(category)
+        except:
+            self.fail(f"error al filtrar con categoria")
