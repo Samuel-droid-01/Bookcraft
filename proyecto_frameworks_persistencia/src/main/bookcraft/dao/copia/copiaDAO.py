@@ -7,3 +7,10 @@ class CopiaDAO:
         self.__estado = estado
         self.__copiaLibro = LibroDAO(id_libro)
         self.__copia = Copia(id_libro, estado)
+        
+    def get_estado(self):
+        return self.__estado
+    
+    def set_estado(self, estado):
+        self.__estado = estado
+    
