@@ -8,7 +8,7 @@ class RegistroDAO:
     def __init__(self):
         pass
     
-    def finalizar_prestamo(self, id_prestamo):
+    def finalizar_prestamo(self, id_prestamo,descripcion):
         prestamoaf = PrestamoDAO(id=id_prestamo)
         prestamoaf.get_prestamo().set_activo(0)
         
@@ -24,7 +24,7 @@ class RegistroDAO:
     
         
         if fecha_actual_entero > fecha_fin_entero:
-            prestamoaf.sancionar("sancion")
+            prestamoaf.sancionar(descripcion)
         else:
             prestamoaf.update_prestamo()
             
