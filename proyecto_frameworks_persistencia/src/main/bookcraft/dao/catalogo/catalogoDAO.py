@@ -18,8 +18,10 @@ class CatalogoDAO:
         lista_autor = []
         lista_categoria = []
         if autor != None:
-            lista_autor = self.__aux.filtrar_autor(autor)
+            if isinstance(self.__aux.filtrar_autor(autor), list):
+                lista_autor = self.__aux.filtrar_autor(autor)
         if categoria != None:
-            lista_categoria = self.__aux.filtrar_categoria(categoria)
+            if isinstance(self.__aux.filtrar_categoria(categoria), list):
+                lista_categoria = self.__aux.filtrar_categoria(categoria)
         filtro_final = lista_autor + lista_categoria
         return filtro_final
