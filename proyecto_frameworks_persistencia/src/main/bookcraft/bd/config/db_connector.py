@@ -5,8 +5,8 @@ class DBConnector:
         self.__connection = mysql.connector.connect(
             host="localhost",
             user="root", 
-            password="",
-            database="biblioteca_db"
+            password="utm2024",
+            database="bibilioteca_db"
         )
     
     def get_connection(self):

@@ -1,3 +1,5 @@
+# Podra cambiar las credenciales acediendo a la carpeta confing que se encuetra en la carpeta de "db" base de datos
+
 # Bookcraft
 BookCraft es un sistema de gestión bibliotecaria que simplifica el préstamo, devolución y búsqueda de libros. Ofrece una interfaz intuitiva para usuarios y funciones de catalogación para bibliotecarios. Ideal para bibliotecas escolares, universitarias y comunitarias.
 ## Preparación del entorno: --->Solo para linux, en windows no es nesesario
@@ -83,3 +85,5 @@ Recuerda que los usuarios deben tener Python y `pip` instalados en sus sistemas 
     "**/__init__.py": true,
   }
   ```
+  
+

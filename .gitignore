@@ -1,5 +1,6 @@
 # Ignorar el directorio del entorno virtual
 my_modules/
+nuevo_entorno/
 
 # Ignorar todos los archivos .log
 #.log
