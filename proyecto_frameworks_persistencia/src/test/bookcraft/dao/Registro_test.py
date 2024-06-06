@@ -3,6 +3,7 @@ from unittest.mock import patch, MagicMock
 from ....main.bookcraft.dao.registro.registroDAO import RegistroDAO
 
 class Test_registro(unittest.TestCase):
+    
     def test_finalizar_prestamo(self):
         registro=RegistroDAO()
         id=1
