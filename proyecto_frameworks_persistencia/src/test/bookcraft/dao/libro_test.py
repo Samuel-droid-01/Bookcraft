@@ -5,6 +5,7 @@ from ....main.bookcraft.bd.domain.usuario import Usuario
 from ....main.bookcraft.bd.mappers.libro.libro_map import LibroMapper
 
 class TestLibro(unittest.TestCase):
+    print("Test de Libro")
     def setUp(self):
         self.libro = LibroDAO()
     
@@ -28,7 +29,8 @@ class TestLibro(unittest.TestCase):
            print("libro{",info_libro,"}")
        except Exception as e:
            self.fail(f"\tError al obtener el libro: {e}")
-
+    
+    @unittest.skip("funcionando con un id existente")
     def test_delete_libro(self):
        print("test_delete_libro")
        libro=LibroDAO(id=12)
@@ -37,7 +39,7 @@ class TestLibro(unittest.TestCase):
            print("libro eliminado correctamente")
        except Exception as e:
            self.fail(f"\tError al eliminar el libro: {e}")
-
+    @unittest.skip("funcionando con un id existente")
     def test_update_libro(self):
         print("test_update_libro")
         libro = LibroDAO(id=10)
@@ -62,7 +64,7 @@ class TestLibro(unittest.TestCase):
             libro.filtrar_autor(autor)
         except:
             self.fail(f"error al filtrar")
-    @unittest.skip("funcionando")
+    
     def test_filtrar_categoria(self):
         libro=LibroDAO()
         category="fantasia"
