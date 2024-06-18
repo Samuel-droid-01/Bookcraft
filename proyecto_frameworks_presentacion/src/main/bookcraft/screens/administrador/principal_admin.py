@@ -33,7 +33,7 @@ class PrincipalAdmin:
 
         # Construir la ruta relativa a partir de la ubicación del script actual
         # IMPORTANTE: EJECUTAR DESDE BOOKCRATF
-        img_path = script_dir / "proyecto_framework_presentacion" / "src"/ "main" / "bookcraft" / "img" / "lectura-de-libros.png"
+        img_path = "proyecto_frameworks_presentacion/src/main/bookcraft/img/lectura-de-libros.png"
         if os.path.exists(img_path):
             # Redimensionar la imagen
             img = Image.open(img_path)

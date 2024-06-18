@@ -26,7 +26,7 @@ class PrincipalLector:
         Superior.columnconfigure(1, weight=1)
 
         # Imagen y texto "Lector" en la parte superior izquierda
-        img_path = "C:/Users/Leo/OneDrive/Documentos/proyectoDavid/Bookcraft/proyecto_frameworks_presentacion/src/main/bookcraft/img/lectura-de-libros.png"
+        img_path = "proyecto_frameworks_presentacion/src/main/bookcraft/img/lectura-de-libros.png"
         if os.path.exists(img_path):
             # Redimensionar la imagen
             img = Image.open(img_path)
