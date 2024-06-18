@@ -5,13 +5,6 @@ from PIL import Image, ImageTk
 from pathlib import Path
 
 # Clase principal
-"""
-class PrincipalAdmin:
-    def __init__(self, maestro):
-        # Ventana
-        self.maestro = maestro
-        aplicacion = Principal(maestro)
-"""
 class PrincipalAdmin:
     def __init__(self, raiz):
         self.raiz = raiz

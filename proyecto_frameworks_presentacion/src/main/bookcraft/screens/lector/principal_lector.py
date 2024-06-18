@@ -3,13 +3,6 @@ from tkinter import messagebox as ms
 import os
 from PIL import Image, ImageTk
 
-# Clase principal
-class biblioteca:
-    def __init__(self, maestro):
-        # Ventana
-        self.maestro = maestro
-        aplicacion = principal(maestro)
-
 class principal:
     def __init__(self, raiz):
         self.raiz = raiz
