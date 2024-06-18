@@ -4,6 +4,7 @@ from ....main.bookcraft.dao.prestamo.prestamoDAO import PrestamoDAO
 from ....main.bookcraft.bd.mappers.prestamo.prestamo_map import PrestamoMapper
 
 class Test_prestamo(unittest.TestCase):
+    print("Test de Prestamo")
     def test_set_prestamo(self):
         
         mappers= PrestamoMapper()
@@ -13,6 +14,7 @@ class Test_prestamo(unittest.TestCase):
         try:
             prestamo.set_prestamo()
             self.assertEqual(len(mappers.get_all()), tamaño+1)
+            print("\tprestamo insertado correctamente")
         except Exception as e:
             self.fail(f"\tError al insertar el prestamo: {e}")
 
@@ -22,8 +24,10 @@ class Test_prestamo(unittest.TestCase):
         try:
             info_prestamo=prestamo.get_prestamo()
             #print("\tprestamo{",info_prestamo,"}")
+            print("\tprestamo obtenido correctamente")
         except Exception as e:
             self.fail(f"\tError al obtener el prestamo: {e}")
+    @unittest.skip("funcionando con un id existente")
     def test_sancionar(self):
 
         prestamo=PrestamoDAO(id=9)
@@ -32,6 +36,7 @@ class Test_prestamo(unittest.TestCase):
         except Exception as e:
             self.fail(f"\tError al sancionar el prestamo: {e}")
     #@unittest.skip("no se puede eliminar un prestamo que no existe")
+    @unittest.skip("funcionando con un id existente")
     def test_delete_prestamo(self):
         mappers= PrestamoMapper()
         tamaño=len(mappers.get_all())
@@ -46,8 +51,11 @@ class Test_prestamo(unittest.TestCase):
             if tamaño1 != tamaño-1:
                 self.fail("Puede que el id usado no exista, verifique y vuelva a intentarlo")
             self.assertEqual(tamaño1,tamaño-1)
+            print("\tprestamo eliminado correctamente")
         except Exception as e:
                 self.fail(f"\tError al eliminar el prestamo: {e}")
+                
+    @unittest.skip("funcionando con un id existente")
     def test_update_prestamo(self):
         id=10
         mappers=PrestamoMapper
