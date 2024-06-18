@@ -39,7 +39,7 @@ class principal:
             img = Image.open(img_path)
             img = img.resize((50, 50), Image.LANCZOS)  # Redimensionar a 50x50 píxeles
             self.imgLector = ImageTk.PhotoImage(img)
-            self.lblLector = Label(Superior, image=self.imgLector, text="Lector", compound=LEFT, font=('arial', 18, 'bold'), fg="white", bg="black")
+            self.lblLector = Label(Superior, image=self.imgLector, text="Admin", compound=LEFT, font=('arial', 18, 'bold'), fg="white", bg="black")
         else:
             self.lblLector = Label(Superior, text="Lector", font=('arial', 18, 'bold'), fg="white")
             ms.showerror("Error", f"No se pudo encontrar el archivo de imagen: {img_path}")
