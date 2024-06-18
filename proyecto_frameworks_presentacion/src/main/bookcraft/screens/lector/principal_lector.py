@@ -33,13 +33,13 @@ class principal:
         Superior.columnconfigure(1, weight=1)
 
         # Imagen y texto "Lector" en la parte superior izquierda
-        img_path = "C:/Users/Leo/OneDrive/Documentos/proyectoDavid/Bookcraft/img/lectura-de-libros.png"
+        img_path = "C:/Users/Leo/OneDrive/Documentos/proyectoDavid/Bookcraft/proyecto_frameworks_presentacion/src/main/bookcraft/img/lectura-de-libros.png"
         if os.path.exists(img_path):
             # Redimensionar la imagen
             img = Image.open(img_path)
             img = img.resize((50, 50), Image.LANCZOS)  # Redimensionar a 50x50 píxeles
             self.imgLector = ImageTk.PhotoImage(img)
-            self.lblLector = Label(Superior, image=self.imgLector, text="Admin", compound=LEFT, font=('arial', 18, 'bold'), fg="white", bg="black")
+            self.lblLector = Label(Superior, image=self.imgLector, text="Lector", compound=LEFT, font=('arial', 18, 'bold'), fg="white", bg="black")
         else:
             self.lblLector = Label(Superior, text="Admin", font=('arial', 18, 'bold'), fg="white")
             ms.showerror("Error", f"No se pudo encontrar el archivo de imagen: {img_path}")
@@ -59,62 +59,77 @@ class principal:
         self.BarraNavegacion.pack(side=TOP, fill=X)  # Fill X para expandirse horizontalmente
 
         # Configurar columnas para que se expandan uniformemente
-        for i in range(5):
+        for i in range(4):
             self.BarraNavegacion.grid_columnconfigure(i, weight=1)
 
         # Botones de navegación
-        self.btnLibros = Button(self.BarraNavegacion, padx=10, pady=5, bd=5, font=('arial', 9, 'bold'), text='Libros', bg="#B9BED3", command=self.mostrar_libros)
+        self.btnLibros = Button(self.BarraNavegacion, padx=3, pady=3, bd=5, font=('arial', 9, 'bold'), text='Libros', bg="#B9BED3", command=self.mostrar_libros)
         self.btnLibros.grid(row=0, column=0, sticky=NSEW, padx=5, pady=5)
+        
+        self.btnReservar = Button(self.BarraNavegacion, padx=3, pady=3, bd=5, font=('arial', 9, 'bold'), text='Reservar', bg="#B9BED3", command=self.reservar_libro)
+        self.btnReservar.grid(row=0, column=1, sticky=NSEW, padx=5, pady=5)
 
-        self.btnUsuarios = Button(self.BarraNavegacion, padx=10, pady=5, bd=5, font=('arial', 9, 'bold'), text='Usuarios', bg="#B9BED3", command=self.mostrar_usuarios)
-        self.btnUsuarios.grid(row=0, column=1, sticky=NSEW, padx=5, pady=5)
-
-        self.btnSanciones = Button(self.BarraNavegacion, padx=10, pady=5, bd=5, font=('arial', 9, 'bold'), text='Sanciones', bg="#B9BED3", command=self.mostrar_sanciones)
+        self.btnSanciones = Button(self.BarraNavegacion, padx=3, pady=3, bd=5, font=('arial', 9, 'bold'), text='Sanciones', bg="#B9BED3", command=self.mostrar_sanciones)
         self.btnSanciones.grid(row=0, column=2, sticky=NSEW, padx=5, pady=5)
 
-        self.btnPrestamos = Button(self.BarraNavegacion, padx=10, pady=5, bd=5, font=('arial', 9, 'bold'), text='Préstamos', bg="#B9BED3", command=self.mostrar_prestamos)
+        self.btnPrestamos = Button(self.BarraNavegacion, padx=3, pady=3, bd=5, font=('arial', 9, 'bold'), text='Préstamos', bg="#B9BED3", command=self.mostrar_prestamos)
         self.btnPrestamos.grid(row=0, column=3, sticky=NSEW, padx=5, pady=5)
 
-        self.btnCategoria = Button(self.BarraNavegacion, padx=10, pady=5, bd=5, font=('arial', 9, 'bold'), text='Categoría', bg="#B9BED3", command=self.mostrar_categoria)
-        self.btnCategoria.grid(row=0, column=4, sticky=NSEW, padx=5, pady=5)
+        # Filtrar búsqueda
+        self.MarcoBusqueda = Frame(self.MarcoPrincipal, bd=0, relief=RIDGE)
+        self.MarcoBusqueda.pack(side=TOP, fill=X, padx=10, pady=10)
+
+        lblFiltrar = Label(self.MarcoBusqueda, text="Filtrar búsqueda por:", font=('arial', 12, 'bold'))
+        lblFiltrar.grid(row=0, column=0, padx=10, pady=10, sticky=W)
+
+        opciones = ["Autor", "ISBN", "Título", "Categoria"]
+        self.opcionSeleccionada = StringVar()
+        self.opcionSeleccionada.set(opciones[0])  # Valor por defecto
+
+        self.menuOpciones = OptionMenu(self.MarcoBusqueda, self.opcionSeleccionada, *opciones)
+        self.menuOpciones.grid(row=0, column=1, padx=10, pady=10)
+
+        self.entryBusqueda = Entry(self.MarcoBusqueda, font=('arial', 12))
+        self.entryBusqueda.grid(row=0, column=2, padx=10, pady=10)
+
+        btnBuscar = Button(self.MarcoBusqueda, padx=10, pady=5, bd=5, font=('arial', 9, 'bold'), text='Buscar', bg="#2E4053",fg="white", command=self.buscar_libro)
+        btnBuscar.grid(row=0, column=3, padx=10, pady=10)
 
         # Marco para detalles de contenido
         self.MarcoDetallesLector = LabelFrame(self.MarcoPrincipal, bd=20, pady=5, relief=RIDGE, bg="#B9BED3")
         self.MarcoDetallesLector.pack(side=BOTTOM, fill=BOTH, expand=True)
 
-        self.MarcoDetalles = Frame(self.MarcoDetallesLector, bd=10, relief=RIDGE,bg="#CACFD2")
+        self.MarcoDetalles = Frame(self.MarcoDetallesLector, bd=10, relief=RIDGE, bg="#CACFD2")
         self.MarcoDetalles.pack(side=LEFT, fill=BOTH, expand=True)
 
 
     def mostrar_libros(self):
         self.limpiar_detalles()
         # Aquí iría la lógica para mostrar los detalles de libros
-        btn1 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text='Listar Libros', bg="#2E4053",fg="white")
+        btn1 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text='Listar Libros', bg="#2E4053", fg="white")
         btn1.grid(row=0, column=0, padx=10, pady=10)
-        btn2 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Agregar libros", bg="#2E4053",fg="white")
+        btn2 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Ver Información", bg="#2E4053", fg="white")
         btn2.grid(row=0, column=1, padx=10, pady=10)
-        btn3 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Eliminar Libro", bg="#2E4053",fg="white")
+        btn3 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Disponibilidad", bg="#2E4053", fg="white")
         btn3.grid(row=0, column=2, padx=10, pady=10)
 
-    def mostrar_usuarios(self):
+
+    def buscar_libro(self):
+        criterio = self.opcionSeleccionada.get()
+        termino = self.entryBusqueda.get()
+        # Aquí iría la lógica para buscar libros según el criterio y término
+        ms.showinfo("Buscar", f"Buscando {criterio.lower()}: {termino}")
+    
+    def reservar_libro(self):
         self.limpiar_detalles()
-        # Aquí iría la lógica para mostrar los detalles de usuarios
-        btn1 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Crear Usuario", bg="#2E4053",fg="white")
-        btn1.grid(row=0, column=0, padx=10, pady=10)
-        btn2 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Editar Usuario", bg="#2E4053",fg="white")
-        btn2.grid(row=0, column=1, padx=10, pady=10)
-        btn3 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Eliminar Usuario", bg="#2E4053",fg="white")
-        btn3.grid(row=0, column=2, padx=10, pady=10)
+        # Aquí iría la lógica para mostrar los detalles de reservar
+
 
     def mostrar_sanciones(self):
         self.limpiar_detalles()
         # Aquí iría la lógica para mostrar los detalles de sanciones
-        btn1 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Aplicar Sanción", bg="#2E4053",fg="white")
-        btn1.grid(row=0, column=0, padx=10, pady=10)
-        btn2 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Quitar Sanción", bg="#2E4053",fg="white")
-        btn2.grid(row=0, column=1, padx=10, pady=10)
-        btn3 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Ver Historial", bg="#2E4053",fg="white")
-        btn3.grid(row=0, column=2, padx=10, pady=10)
+        btn1 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Ver Historial", bg="#2E4053",fg="white")
+        btn1.grid(row=0, column=2, padx=10, pady=10)
 
     def mostrar_prestamos(self):
         self.limpiar_detalles()
@@ -123,18 +138,6 @@ class principal:
         btn1.grid(row=0, column=0, padx=10, pady=10)
         btn2 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="historial prestamos", bg="#2E4053",fg="white")
         btn2.grid(row=0, column=1, padx=10, pady=10)
-        btn3 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Renovar prestamo", bg="#2E4053",fg="white")
-        btn3.grid(row=0, column=2, padx=10, pady=10)
-
-    def mostrar_categoria(self):
-        self.limpiar_detalles()
-        # Aquí iría la lógica para mostrar los detalles de categoría
-        btn1 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Mostar Categorias", bg="#2E4053",fg="white")
-        btn1.grid(row=0, column=0, padx=10, pady=10)
-        btn2 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Eliminar Categoria", bg="#2E4053",fg="white")
-        btn2.grid(row=0, column=1, padx=10, pady=10)
-        btn3 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Agregar Categoria", bg="#2E4053",fg="white")
-        btn3.grid(row=0, column=2, padx=10, pady=10)
 
     def limpiar_detalles(self):
         # Limpiar el marco de detalles antes de mostrar nuevos contenidos
