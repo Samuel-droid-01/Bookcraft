@@ -3,7 +3,7 @@ from tkinter import messagebox as ms
 import os
 from PIL import Image, ImageTk
 
-class principal:
+class PrincipalLector:
     def __init__(self, raiz):
         self.raiz = raiz
         self.raiz.title("Sistema de biblioteca Bookcraft")
@@ -143,5 +143,5 @@ class principal:
 
 if __name__ == '__main__':
     raiz = Tk()
-    aplicacion = principal(raiz)
+    aplicacion = PrincipalLector(raiz)
     raiz.mainloop()
