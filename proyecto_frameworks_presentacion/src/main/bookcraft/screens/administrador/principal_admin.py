@@ -146,7 +146,3 @@ class PrincipalAdmin:
         self.raiz.quit()
 
 
-if __name__ == '__main__':
-    raiz = Tk()
-    aplicacion = PrincipalAdmin(raiz)
-    raiz.mainloop()
