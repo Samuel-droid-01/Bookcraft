@@ -33,3 +33,12 @@ class SancionDAO:
     def obtener_sanciones(self):
         mapper = SancionMapper()
         return mapper.get_all()
+    
+    def eliminar_sancion(self, id):
+        mapper = SancionMapper()
+        mapper.delete(id)
+        return True
+    
+    def filtrar_sanciones(self, fecha):
+        mapper = SancionMapper()
+        return mapper.get_by_date(fecha)

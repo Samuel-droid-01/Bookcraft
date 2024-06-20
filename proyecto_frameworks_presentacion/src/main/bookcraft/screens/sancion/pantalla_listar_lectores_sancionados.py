@@ -64,14 +64,6 @@ class PantallaListarLectoresSancionados:
 
         self.MarcoDetalles = self.scrollable_frame
 
-        # Lista de sanciones de ejemplo
-        """self.sanciones = [
-            {'nombre': 'Juan Pérez', 'fecha_inicio': '2023-01-01', 'fecha_fin': '2023-01-10', 'descripcion': 'Retraso en la devolución de libros'},
-            {'nombre': 'Ana Gómez', 'fecha_inicio': '2023-02-15', 'fecha_fin': '2023-02-20', 'descripcion': 'Daño en material bibliográfico'},
-            {'nombre': 'Luis Martínez', 'fecha_inicio': '2023-03-05', 'fecha_fin': '2023-03-15', 'descripcion': 'Pérdida de libros'},
-            {'nombre': 'María Rodríguez', 'fecha_inicio': '2023-04-01', 'fecha_fin': '2023-04-10', 'descripcion': 'Uso inapropiado de instalaciones'},
-            {'nombre': 'Carlos López', 'fecha_inicio': '2023-05-01', 'fecha_fin': '2023-05-10', 'descripcion': 'Comportamiento inapropiado'},
-        ]"""
         sancionDAO = SancionDAO()
         self.sanciones = sancionDAO.obtener_sanciones()
 
@@ -92,19 +84,28 @@ class PantallaListarLectoresSancionados:
             
             Label(frame_sancion, text=f"Nombre: {sancion.get_nombre()}", bg="white").pack(anchor="w")
             Label(frame_sancion, text=f"Fecha de Inicio: {sancion.get_fecha_inicio()}", bg="white").pack(anchor="w")
-            Label(frame_sancion, text=f"Fecha de Fin: {sancion.get_fecha_fin()}", bg="white").pack(anchor="w")
+            #Label(frame_sancion, text=f"Fecha de Fin: {sancion.get_fecha_fin()}", bg="white").pack(anchor="w")
             Label(frame_sancion, text=f"Descripción: {sancion.get_fecha_fin()}", bg="white").pack(anchor="w")
+
+            # Botón para eliminar sanción
+            Button(frame_sancion, text="Eliminar", command=lambda s=sancion: self.eliminar_sancion(s)).pack(anchor="e", pady=5)
+
+    def eliminar_sancion(self, sancion):
+        respuesta = ms.askyesno("Eliminar Sanción", "¿Estás seguro de que deseas eliminar esta sanción?")
+        if respuesta:
+            sancionDAO = SancionDAO()
+            sancionDAO.eliminar_sancion(sancion)  # Aquí debes implementar el método eliminar_sancion en tu DAO
+            self.sanciones.remove(sancion)
+            self.mostrar_sanciones(self.sanciones)
+            ms.showinfo("Sanción Eliminada", "La sanción ha sido eliminada correctamente.")
 
     def filtrar_sanciones(self):
         fecha_seleccionada = self.date_entry.get_date().strftime('%Y-%m-%d')
-        sanciones_filtradas = [s for s in self.sanciones if s['fecha_inicio'] <= fecha_seleccionada <= s['fecha_fin']]
+        sancionDAO = SancionDAO()
+        sanciones_filtradas = sancionDAO.filtrar_sanciones(fecha_seleccionada)
 
         if sanciones_filtradas:
             self.mostrar_sanciones(sanciones_filtradas)
         else:
             ms.showinfo("Sin sanciones", "Al parecer nadie tiene sanciones en esta fecha")
 
-if __name__ == '__main__':
-    raiz = Tk()
-    aplicacion = PantallaListarLectoresSancionados(raiz)
-    raiz.mainloop()
