@@ -24,3 +24,12 @@ class SancionDAO:
         self.__sancion = Sancion(fecha_inicio=fecha_inicio_modificada, fecha_fin=fecha_fin_modificada, descripcion=descripcion)
         id_sancion = self.set_sancion(self.__sancion)
         return id_sancion
+
+    def buscar_sancion(self, id):
+        mapper = SancionMapper()
+        self.__sancion = mapper.get_by_id(id)
+        return self.__sancion
+    
+    def obtener_sanciones(self):
+        mapper = SancionMapper()
+        return mapper.get_all()
