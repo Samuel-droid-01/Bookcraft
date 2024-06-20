@@ -123,6 +123,23 @@ class LibroMapper(LibroMapperInterface):
             print(f"Error al obtener los libros: {e}")
         finally:
             cursor.close()
+    
+    def get_all_libros(self):
+        cursor = self.__connection.cursor()
+        query = """
+            SELECT * FROM libros
+        """
+
+        try:
+        
+            cursor.execute(query)
+            result = cursor.fetchall()
+            libros = [Libro(*data) for data in result]
+            return libros
+        except Exception as e:
+            print(f"Error al obtener los libros: {e}")
+        finally:
+            cursor.close()
 
     def get_by_title(self, title: str) -> List[Libro]:
         cursor = self.__connection.cursor()
