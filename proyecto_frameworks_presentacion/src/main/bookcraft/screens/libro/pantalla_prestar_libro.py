@@ -51,7 +51,7 @@ class PantallaPrestarLibro():
         self.lblTitulo.pack(side=TOP, fill=X, pady=10)
 
         # Botón de logout en la parte superior derecha
-        self.btnLogout = Button(Superior, text="Logout", font=('arial', 12, 'bold'))
+        self.btnLogout = Button(Superior, text="Logout", font=('arial', 12, 'bold'),command=self.logout)
         self.btnLogout.grid(row=0, column=1, sticky=E)
 
         # Barra de navegación
@@ -170,7 +170,11 @@ class PantallaPrestarLibro():
         self.btnPrestar.config(text="Continuar",command=lambda: self.continuar(self.MarcoDetalles,self.btnPrestar))
         self.tituloEntry.focus_set()
         self.fechaInicioEntry.insert(0,datetime.now().strftime("%Y-%m-%d"))
-        
+
+    def logout(self):
+        ms.showinfo("Logout", "Sesión cerrada exitosamente.")
+        self.raiz.quit()
+
 if __name__ == '__main__':
     raiz = Tk()
     aplicacion = PantallaPrestarLibro(raiz)
