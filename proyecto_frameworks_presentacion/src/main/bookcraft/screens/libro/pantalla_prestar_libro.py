@@ -1,13 +1,17 @@
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox as ms
+from tkcalendar import DateEntry
 import os
 from PIL import Image, ImageTk
 from datetime import datetime
 from proyecto_frameworks_persistencia.src.main.bookcraft.bd.domain.libro import Libro
 from proyecto_frameworks_persistencia.src.main.bookcraft.dao.libro.libroDAO import LibroDAO
+from proyecto_frameworks_persistencia.src.main.bookcraft.dao.lector.lectorDAO import LectorDAO
+from proyecto_frameworks_persistencia.src.main.bookcraft.dao.usuario.usuarioDAO import UsuarioDAO
+from proyecto_frameworks_persistencia.src.main.bookcraft.bd.mappers.usuario.usuario_map import UsuarioMapper
 
-
+from proyecto_frameworks_persistencia.src.main.bookcraft.bd.mappers.categoria.categoria_map import CategoriaMapper
 class PantallaPrestarLibro():
     def __init__(self,raiz) :
         self.raiz = raiz
@@ -86,7 +90,8 @@ class PantallaPrestarLibro():
         self.fechaFinLabel= Label(self.MarcoDetalles,text="Fecha devolución", bg="#CACFD2",anchor="w", width=15)
         self.fechaFinLabel.place(x=10,y=160)
 
-        self.fechaFinEntry=Entry(self.MarcoDetalles,width=15,bg="#CACFD2")
+
+        self.fechaFinEntry=DateEntry(self.MarcoDetalles,width=15,bg="#CACFD2",date_pattern='yyyy-mm-dd')
         self.fechaFinEntry.place(x=130,y=160)
 
         self.btnPrestar = Button(self.MarcoDetalles, text="Continuar", font=('arial', 10, 'bold'),command=lambda: self.continuar(self.MarcoDetalles,self.btnPrestar))
@@ -96,39 +101,65 @@ class PantallaPrestarLibro():
         self.btnCancelar.place(x=10,y=210)
         
     def continuar(self,frame,boton):
-        #libro=LibroDao().buscarPorIsbn(self.tituloEntry.get())
-        #if libro is None:
-        #    ms.showerror("Error", "El libro no existe")
-        #    return
-
-        boton.config(text="Realizar préstamo",command=lambda: self.realizarPrestamo(frame))
+        libro=LibroDAO().get_libro_by_id(self.tituloEntry.get())#retorna un objeto libro
+        lector=UsuarioMapper().get_by_id(self.nombreEntry.get())#retorna un objeto usuario
+        lectorDAO=LectorDAO()
+        lectorDAO.set_usuario(lector)
+        #
+        if not self.verificarEntradas():
+            return
+        if libro is None or lector is None:
+            ms.showerror("Error", "El libro o el lector no existen")
+            return
+        #comprobar si el libro esta disponible
+        if libro.get_copias_disponibles()<1:#al menos una copia disponible
+            ms.showerror("Error", "El libro no está disponible")
+            return
+        
+        boton.config(text="Realizar préstamo",command=lambda: self.realizarPrestamo(frame,lectorDAO))
         self.resumenFrame = Frame(frame, bd=10, relief=RIDGE, width=400,height=250,bg="#E6E5E4")
         self.resumenFrame.place(x=300,y=10)
         self.resumenLabel= Label(self.resumenFrame, text="Resumen de préstamo", bg="#E6E5E4", font=('arial', 12, 'bold'), anchor="center")
         self.resumenLabel.place(x=10,y=10)
 
-        self.isbnLabel= Label(self.resumenFrame, text=f"ISBN: {self.tituloEntry.get()}", bg="#E6E5E4", anchor="w", width=15)
+        self.isbnLabel= Label(self.resumenFrame, text=f"ISBN: {libro.get_id()}", bg="#E6E5E4", anchor="w", width=15)
         self.isbnLabel.place(x=10,y=40)
 
-        self.tituloLabel= Label(self.resumenFrame, text=f"Titulo {self.tituloEntry.get()}", bg="#E6E5E4", anchor="w", width=15)
+        self.tituloLabel= Label(self.resumenFrame, text=f"Titulo {libro.get_titulo()}", bg="#E6E5E4", anchor="w", width=50)
         self.tituloLabel.place(x=10,y=70)
 
-        self.autorLabel= Label(self.resumenFrame, text=f"Autor: ", bg="#E6E5E4", anchor="w", width=15)
-        self.autorLabel.place(x=10,y=100)
+        self.categoriaLabel= Label(self.resumenFrame, text=f"Categoría: {CategoriaMapper().get_categoria(libro.get_id_categoria())}", bg="#E6E5E4", anchor="w", width=20)
+        self.categoriaLabel.place(x=10,y=100)
 
-        self.nombreLabel= Label(self.resumenFrame, text=f"Nombre: {self.nombreEntry.get()}", bg="#E6E5E4", anchor="w", width=15)
-        self.nombreLabel.place(x=10,y=130)
+        self.autorLabel= Label(self.resumenFrame, text=f"Autor: {libro.get_autor()}", bg="#E6E5E4", anchor="w", width=30)
+        self.autorLabel.place(x=10,y=130)
+
+        self.nombreLabel= Label(self.resumenFrame, text=f"Nombre del lector: {lector.get_nombres()+" "+lector.get_apellidos()}", bg="#E6E5E4", anchor="w", width=50)
+        self.nombreLabel.place(x=10,y=160)
 
         self.fechaInicioLabel= Label(self.resumenFrame,text=f"Fecha préstamo: {self.fechaInicioEntry.get()}", bg="#E6E5E4",anchor="w", width=22)
-        self.fechaInicioLabel.place(x=10,y=160)
+        self.fechaInicioLabel.place(x=10,y=190)
 
         self.fechaFinLabel= Label(self.resumenFrame,text=f"Fecha devolución: {self.fechaFinEntry.get()}", bg="#E6E5E4",anchor="w", width=22)
-        self.fechaFinLabel.place(x=10,y=190)
+        self.fechaFinLabel.place(x=10,y=210)
         
-    def realizarPrestamo(self,frame):
-        ms.showinfo("Éxito", "Préstamo realizado con éxito")
+    def realizarPrestamo(self,frame,lectorDAO):
+        if self.fechaFinEntry.get()<self.fechaInicioEntry.get():
+            ms.showerror("Error", "La fecha de devolución no puede ser anterior a la fecha de préstamo")
+            return
+        
+        resultado=lectorDAO.solicitar_prestamo(self.tituloEntry.get(),self.fechaFinEntry.get(),0,1)
+        if resultado[0]:
+            ms.showinfo("Éxito", resultado[1])
+        else:
+            ms.showerror("Error", resultado[1])
         self.limpiar()
-        pass
+
+    def verificarEntradas(self):
+        if self.tituloEntry.get()=="" or self.nombreEntry.get()=="" or self.fechaInicioEntry.get()=="" or self.fechaFinEntry.get()=="":
+            ms.showerror("Error", "Todos los campos son requeridos")
+            return False
+        return True
 
     def limpiar(self):
         self.tituloEntry.delete(0,END)

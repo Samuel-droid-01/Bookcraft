@@ -2,5 +2,11 @@
     "editor.codeActionsOnSave": {
 
 
-    }
+
+    },
+    "files.exclude": {
+ "**/__pycache__": true,
+ "**/.vscode": true,
+ "**/__init__.py": true,
+}
 }

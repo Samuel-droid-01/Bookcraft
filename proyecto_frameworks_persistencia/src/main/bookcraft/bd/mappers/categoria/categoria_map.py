@@ -1,4 +1,4 @@
-from ...domain.rol import Categoria
+from ...domain.categoria import Categoria
 from ...config.db_connector import DBConnector
 from .categoria_map_intf import CategoriaMapperInterface
 
@@ -86,6 +86,22 @@ class CategoriaMapper(CategoriaMapperInterface):
         except Exception as e:
             self.__connection.rollback()
             print(f"Error al eliminar la categoría: {e}")
+        finally:
+            cursor.close()
+            self.__connection.close()
+
+    def get_categoria(self,id:int):
+        cursor = self.__connection.cursor()
+        query = """
+            SELECT categoria FROM categorias WHERE id = %s
+        """
+        try:
+            cursor.execute(query,(id,))
+            result = cursor.fetchone()
+            if result:
+                return result[0]
+        except Exception as e:
+            print(f"Error al obtener las categorías: {e}")
         finally:
             cursor.close()
             self.__connection.close()

@@ -21,6 +21,11 @@ class LibroDAO:
     
     def get_libro(self):
         return self.__libro
+        
+    def get_libro_by_id(self, id):
+        mapper = LibroMapper()
+        self.__libro = mapper.get_by_id(id)
+        return self.__libro
 
     def delete_libro(self):
         try:

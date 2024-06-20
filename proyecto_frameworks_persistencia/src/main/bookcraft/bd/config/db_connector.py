@@ -6,7 +6,7 @@ class DBConnector:
             host="localhost",
             user="root", 
             #password="utm2024",
-            password="root",
+            password="",
             port="3306",
             database="biblioteca_db"
         )

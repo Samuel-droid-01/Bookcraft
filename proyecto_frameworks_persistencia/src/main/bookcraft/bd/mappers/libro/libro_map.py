@@ -102,6 +102,9 @@ class LibroMapper(LibroMapperInterface):
         try:
             cursor.execute(query, (id, ))
             libro = cursor.fetchone()
+            if not libro:
+                print("No se encontró el libro.")
+                return None
             libro = Libro(*libro)
             return libro
         except Exception as e:
