@@ -60,3 +60,11 @@ class LibroDAO:
         mapper = LibroMapper()
         lista_ids = mapper.get_by_category(categoria)
         return lista_ids
+    
+    def listar_libros(self):
+        mapper = LibroMapper()
+        return mapper.get_all_libros()
+
+    def ver_libro(self,id: int):
+        mapper = LibroMapper()
+        return mapper.get_by_id(id)
