@@ -4,13 +4,14 @@ from tkinter import messagebox as ms
 import os
 from PIL import Image, ImageTk
 from datetime import datetime
+from proyecto_frameworks_persistencia.src.main.bookcraft.bd.domain.libro import Libro
+from proyecto_frameworks_persistencia.src.main.bookcraft.dao.libro.libroDAO import LibroDAO
 
 
 class PantallaPrestarLibro():
-    def __init__(self,raiz,libro) :
+    def __init__(self,raiz) :
         self.raiz = raiz
         self.raiz.title("Sistema de biblioteca Bookcraft")
-        self.libro=libro
         # Configurar geometría y fondo
         geometria = "775x450+320+200"
         self.raiz.geometry(geometria)
