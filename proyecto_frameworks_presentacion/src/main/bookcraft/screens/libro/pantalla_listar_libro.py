@@ -22,15 +22,14 @@ class ListarLibro:
         
         self.lblTitulo2 = Label(self.MarcoPrincipal, font=('arial', 24, 'bold'), text="Libros")
         self.lblTitulo2.pack(side=TOP, fill=X)
-        
 
         # Barra de navegación
         self.BarraNavegacion = Frame(self.MarcoPrincipal, bd=0, relief=RIDGE)
-        self.BarraNavegacion.pack(side=TOP, fill=X)  # Fill X para expandirse horizontalmente
+        self.BarraNavegacion.pack()  # Fill X para expandirse horizontalmente
 
         # Marco para detalles de contenido
         self.MarcoDetallesLector = LabelFrame(self.MarcoPrincipal, bd=20, pady=5, relief=RIDGE, bg="#B9BED3")
-        self.MarcoDetallesLector.pack(side=BOTTOM, fill=BOTH, expand=True)
+        self.MarcoDetallesLector.pack()
 
         # Canvas y scrollbar
         self.canvas = Canvas(self.MarcoDetallesLector, bg="#CACFD2")
@@ -57,6 +56,20 @@ class ListarLibro:
         
         # Mostrar tarjetas de usuarios obtenidos del servicio
         self.mostrar_libros(self.admin)
+
+        
+    def filtrar(self,opcion,valor):#opcion y nombre del libro o autor
+        if opcion=="Titulo":
+            libros=LibroDAO().filtrar_titulo(valor)
+            self.mostrar_libros(libros)
+        elif opcion=="Autor":
+            libros=LibroDAO().filtrar_autor(valor)
+            self.mostrar_libros(libros)
+        elif opcion=="Editorial":
+            libros=LibroDAO().filtrar_editorial(valor)
+            self.mostrar_libros(libros)
+
+
 
     def limpiar_detalles(self):
         # Limpiar el marco de detalles antes de mostrar nuevos contenidos

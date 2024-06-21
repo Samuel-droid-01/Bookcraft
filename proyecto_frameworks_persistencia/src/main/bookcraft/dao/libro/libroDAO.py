@@ -68,3 +68,12 @@ class LibroDAO:
     def ver_libro(self,id: int):
         mapper = LibroMapper()
         return mapper.get_by_id(id)
+    
+    def filtrar_titulo(self, title):
+        mapper = LibroMapper()
+        return mapper.get_by_title(title)
+    
+    def filtrar_editorial(self, editorial):
+        mapper = LibroMapper()
+        return mapper.get_by_editorial(editorial)
+    
