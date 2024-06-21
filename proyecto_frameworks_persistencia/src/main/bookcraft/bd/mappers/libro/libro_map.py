@@ -155,9 +155,10 @@ class LibroMapper(LibroMapperInterface):
             libros = cursor.fetchall()
             if libros:
                 libros = [Libro(*data) for data in libros]
-                return libros
+                return True,libros
             else:
                 print("No se encontraron libros con ese título.")
+                return None,"No se encontraron libros con ese título."
         except Exception as e:
             print(f"Error al obtener los libros: {e}")
         finally:
@@ -174,9 +175,10 @@ class LibroMapper(LibroMapperInterface):
             libros = cursor.fetchall()
             if libros:
                 libros = [Libro(*data) for data in libros]
-                return libros
+                return True,libros
             else:
                 print("No se encontraron libros con ese autor.")
+                return None,"No se encontraron libros con ese autor."
         except Exception as e:
             print(f"Error al obtener los libros: {e}")
         finally:
@@ -185,21 +187,59 @@ class LibroMapper(LibroMapperInterface):
     def get_by_category(self, category: str) -> List[Libro]:
         cursor = self.__connection.cursor()
         query = """
-            SELECT *
-            FROM libros 
-            JOIN categorias ON libros.id_categoria = categorias.id
-            WHERE categoria.categoria LIKE %s
+                SELECT ca.id,titulo,isbn,autor,editorial,fecha_publicacion,id_categoria,edicion,numero_paginas,numero_copias,copias_disponibles
+                FROM libros li
+                JOIN categorias ca  ON li.id_categoria = ca.id
+                WHERE ca.categoria = %s
+                    """
+
+        try:
+            cursor.execute(query, (category,))
+            libros = cursor.fetchall()
+            if libros:
+                result = [Libro(*data) for data in libros]
+                return True,result
+            else:
+                print("No se encontraron libros en esa categoría.")
+                return None,"No se encontraron libros en esa categoría."
+        except Exception as e:
+            print(f"Error al obtener los libros: {e}")
+        finally:
+            cursor.close()
+
+    def get_by_editorial(self,editorial:str)->List[Libro]:
+        cursor = self.__connection.cursor()
+        query = """
+            SELECT * FROM libros WHERE editorial = %s
         """
 
         try:
-            cursor.execute(query, (category, ))
+            cursor.execute(query, (editorial, ))
             libros = cursor.fetchall()
             if libros:
                 libros = [Libro(*data) for data in libros]
-                return libros
+                if libros:
+                    return True,libros
             else:
-                print("No se encontraron libros en esa categoría.")
+                print("No se encontraron libros con esa editorial.")
+                return None,"No se encontraron libros con esa editorial."
         except Exception as e:
             print(f"Error al obtener los libros: {e}")
+        finally:
+            cursor.close()
+
+    def get_editoriales(self):
+        cursor = self.__connection.cursor()
+        query = """
+            SELECT  editorial FROM libros
+        """
+
+        try:
+            cursor.execute(query)
+            editoriales = cursor.fetchall()
+            editoriales = [editorial[0] for editorial in editoriales]
+            return editoriales
+        except Exception as e:
+            print(f"Error al obtener las editoriales: {e}")
         finally:
             cursor.close()

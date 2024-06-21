@@ -77,3 +77,6 @@ class LibroDAO:
         mapper = LibroMapper()
         return mapper.get_by_editorial(editorial)
     
+    def ver_editoriales(self):
+        mapper=LibroMapper()
+        return mapper.get_editoriales()

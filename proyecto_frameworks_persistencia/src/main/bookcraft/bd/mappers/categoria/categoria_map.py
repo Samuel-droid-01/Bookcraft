@@ -105,3 +105,21 @@ class CategoriaMapper(CategoriaMapperInterface):
         finally:
             cursor.close()
             self.__connection.close()
+
+    def get_categorias(self):
+        cursor = self.__connection.cursor()
+        query = """
+            SELECT categoria FROM categorias
+        """
+        try:
+            cursor.execute(query)
+            result = cursor.fetchall()
+            categorias = []
+            for categoria in result:
+                categorias.append(categoria[0])
+            return categorias
+        except Exception as e:
+            print(f"Error al obtener las categorías: {e}")
+        finally:
+            cursor.close()
+            self.__connection.close()

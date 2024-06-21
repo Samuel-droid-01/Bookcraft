@@ -1,5 +1,6 @@
 from ...dao.libro.libroDAO import LibroDAO
-
+from ...bd.mappers.categoria.categoria_map import CategoriaMapper
+from ...bd.mappers.libro.libro_map import LibroMapper
 class CatalogoDAO:
     def __init__(self):
         self.__catalogo_libros = []
@@ -25,3 +26,11 @@ class CatalogoDAO:
                 lista_categoria = self.__aux.filtrar_categoria(categoria)
         filtro_final = lista_autor + lista_categoria
         return filtro_final
+    
+    def ver_categorias(self):
+        mapper = CategoriaMapper()
+        return mapper.get_categorias()
+    
+    def ver_editoriales(self):
+        return ["Planeta", "Santillana", "Norma", "McGraw-Hill"]
+    
