@@ -85,7 +85,7 @@ class ActualizarUsuario:
         self.entry_contrasena.grid(row=6, column=1, padx=10, pady=5, sticky="w")
 
         # Botón de envío
-        self.boton_enviar = Button(form_frame, text="Enviar", font=('arial', 12, 'bold'), command=self.enviar_formulario)
+        self.boton_enviar = Button(form_frame, text="Actualizar", font=('arial', 12, 'bold'), command=self.enviar_formulario)
         self.boton_enviar.grid(row=11, column=1, pady=10, sticky="e")
 
     def enviar_formulario(self):
