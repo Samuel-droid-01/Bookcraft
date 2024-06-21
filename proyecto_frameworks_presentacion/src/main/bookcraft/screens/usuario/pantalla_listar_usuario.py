@@ -72,8 +72,3 @@ class ListarUsuario:
             Label(frame_usuario, text=f"Apellidos: {usuario.get_apellidos()}", bg="white").pack(anchor="w")
             Label(frame_usuario, text=f"Correo: {usuario.get_correo()}", bg="white").pack(anchor="w")
             Label(frame_usuario, text=f"Teléfono: {usuario.get_contrasena()}", bg="white").pack(anchor="w")
-
-if __name__ == '__main__':
-    raiz = Tk()
-    aplicacion = ListarUsuario(raiz)
-    raiz.mainloop()

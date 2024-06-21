@@ -99,7 +99,4 @@ class InformacionLibro:
         Label(frame_libro, text=f"Numero de copias: {libro.get_numero_copias()}", bg="white").pack(anchor="w")
         Label(frame_libro, text=f"Copias disponibles: {libro.get_copias_disponibles()}", bg="white").pack(anchor="w")
 
-if __name__ == '__main__':
-    raiz = Tk()
-    aplicacion = InformacionLibro(raiz)
-    raiz.mainloop()
+

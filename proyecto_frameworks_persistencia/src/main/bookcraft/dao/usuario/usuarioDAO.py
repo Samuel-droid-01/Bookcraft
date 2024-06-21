@@ -14,7 +14,7 @@ class UsuarioDAO:
         aux = mapper.validar_credenciales(correo, contrasena)
         if aux:
             self.set_usuario(aux)
-            return True, "Sesion iniciada"
+            return True, aux
         else:
             return False, "Error al iniciar sesion"
             

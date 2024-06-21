@@ -19,7 +19,7 @@ class InformacionUsuario:
         self.lblTitulo = Label(self.MarcoPrincipal, font=('arial', 24, 'bold'), text="Bookcraft Library System", bg="black", fg="white")
         self.lblTitulo.pack(side=TOP, fill=X)
         
-        self.lblTitulo2 = Label(self.MarcoPrincipal, font=('arial', 24, 'bold'), text="Usuarios")
+        self.lblTitulo2 = Label(self.MarcoPrincipal, font=('arial', 24, 'bold'), text="Ver Usuario")
         self.lblTitulo2.pack(side=TOP, fill=X)
         
         # Filtrar búsqueda
