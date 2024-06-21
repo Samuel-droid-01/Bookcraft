@@ -96,7 +96,7 @@ class HistorialUsuario:
             }
             historia.append(informacion)
         if historia:
-                print(len(historia))
+                
                 self.mostrar_libro(historia)
         else:
             ms.showinfo("Buscar", f"No se le presto nigun el libro")
