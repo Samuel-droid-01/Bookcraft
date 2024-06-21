@@ -76,9 +76,9 @@ class RegistrarUsuario:
         self.entry_correo = Entry(form_frame, font=('arial', 12, 'bold'))
         self.entry_correo.grid(row=4, column=1, padx=10, pady=5, sticky="w")
 
-        Label(form_frame, text="Contraseña:", font=('arial', 12, 'bold'), bg="#CACFD2").grid(row=6, column=0, padx=10, pady=5, sticky="e")
+        Label(form_frame, text="Contraseña:", font=('arial', 12, 'bold'), bg="#CACFD2").grid(row=5, column=0, padx=10, pady=5, sticky="e")
         self.entry_contrasena = Entry(form_frame, font=('arial', 12, 'bold'), show='*')
-        self.entry_contrasena.grid(row=6, column=1, padx=10, pady=5, sticky="w")
+        self.entry_contrasena.grid(row=5, column=1, padx=10, pady=5, sticky="w")
 
         # Botón de envío
         self.boton_enviar = Button(form_frame, text="Enviar", font=('arial', 12, 'bold'), command=self.enviar_formulario)
@@ -97,7 +97,4 @@ class RegistrarUsuario:
             ms.showinfo("Éxito", "Usuario insertado correctamente")
         except Exception as e:
             ms.showerror("Error", f"Error al insertar el Usuario: {e}")
-if __name__ == '__main__':
-    raiz = Tk()
-    aplicacion = RegistrarUsuario(raiz)
-    raiz.mainloop()
+

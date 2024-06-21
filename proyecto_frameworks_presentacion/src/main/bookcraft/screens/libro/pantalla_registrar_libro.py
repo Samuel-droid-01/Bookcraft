@@ -62,43 +62,43 @@ class RegistrarLibro:
         form_frame.pack(expand=True)
 
         Label(form_frame, text="Título:", font=('arial', 12, 'bold'), bg="#CACFD2").grid(row=1, column=0, padx=10, pady=5, sticky="e")
-        self.entry_titulo = Entry(form_frame, font=('arial', 12, 'bold'))
+        self.entry_titulo = Entry(form_frame, font=('arial', 12, 'bold'), width=30)
         self.entry_titulo.grid(row=1, column=1, padx=10, pady=5, sticky="w")
 
         Label(form_frame, text="ISBN:", font=('arial', 12, 'bold'), bg="#CACFD2").grid(row=2, column=0, padx=10, pady=5, sticky="e")
-        self.entry_isbn = Entry(form_frame, font=('arial', 12, 'bold'))
+        self.entry_isbn = Entry(form_frame, font=('arial', 12, 'bold'), width=30)
         self.entry_isbn.grid(row=2, column=1, padx=10, pady=5, sticky="w")
 
         Label(form_frame, text="Autor:", font=('arial', 12, 'bold'), bg="#CACFD2").grid(row=3, column=0, padx=10, pady=5, sticky="e")
-        self.entry_autor = Entry(form_frame, font=('arial', 12, 'bold'))
+        self.entry_autor = Entry(form_frame, font=('arial', 12, 'bold'), width=30)
         self.entry_autor.grid(row=3, column=1, padx=10, pady=5, sticky="w")
 
         Label(form_frame, text="Editorial:", font=('arial', 12, 'bold'), bg="#CACFD2").grid(row=4, column=0, padx=10, pady=5, sticky="e")
-        self.entry_editorial = Entry(form_frame, font=('arial', 12, 'bold'))
+        self.entry_editorial = Entry(form_frame, font=('arial', 12, 'bold'), width=30)
         self.entry_editorial.grid(row=4, column=1, padx=10, pady=5, sticky="w")
 
         Label(form_frame, text="Fecha de Publicación:", font=('arial', 12, 'bold'), bg="#CACFD2").grid(row=5, column=0, padx=10, pady=5, sticky="e")
-        self.entry_fecha_publicacion = DateEntry(form_frame, font=('arial', 12, 'bold'), date_pattern='yyyy-mm-dd')  # Usar DateEntry para mostrar un calendario
+        self.entry_fecha_publicacion = DateEntry(form_frame, font=('arial', 12, 'bold'), width=30, date_pattern='yyyy-mm-dd')  # Usar DateEntry para mostrar un calendario
         self.entry_fecha_publicacion.grid(row=5, column=1, padx=10, pady=5, sticky="w")
 
         Label(form_frame, text="ID Categoría:", font=('arial', 12, 'bold'), bg="#CACFD2").grid(row=6, column=0, padx=10, pady=5, sticky="e")
-        self.entry_id_categoria = Entry(form_frame, font=('arial', 12, 'bold'))
+        self.entry_id_categoria = Entry(form_frame, font=('arial', 12, 'bold'), width=30)
         self.entry_id_categoria.grid(row=6, column=1, padx=10, pady=5, sticky="w")
 
         Label(form_frame, text="Edición:", font=('arial', 12, 'bold'), bg="#CACFD2").grid(row=7, column=0, padx=10, pady=5, sticky="e")
-        self.entry_edicion = Entry(form_frame, font=('arial', 12, 'bold'))
+        self.entry_edicion = Entry(form_frame, font=('arial', 12, 'bold'), width=30)
         self.entry_edicion.grid(row=7, column=1, padx=10, pady=5, sticky="w")
 
         Label(form_frame, text="Número de Páginas:", font=('arial', 12, 'bold'), bg="#CACFD2").grid(row=8, column=0, padx=10, pady=5, sticky="e")
-        self.entry_numero_paginas = Entry(form_frame, font=('arial', 12, 'bold'))
+        self.entry_numero_paginas = Entry(form_frame, font=('arial', 12, 'bold'), width=30)
         self.entry_numero_paginas.grid(row=8, column=1, padx=10, pady=5, sticky="w")
 
         Label(form_frame, text="Número de Copias:", font=('arial', 12, 'bold'), bg="#CACFD2").grid(row=9, column=0, padx=10, pady=5, sticky="e")
-        self.entry_numero_copias = Entry(form_frame, font=('arial', 12, 'bold'))
+        self.entry_numero_copias = Entry(form_frame, font=('arial', 12, 'bold'), width=30)
         self.entry_numero_copias.grid(row=9, column=1, padx=10, pady=5, sticky="w")
 
         Label(form_frame, text="Copias Disponibles:", font=('arial', 12, 'bold'), bg="#CACFD2").grid(row=10, column=0, padx=10, pady=5, sticky="e")
-        self.entry_copias_disponibles = Entry(form_frame, font=('arial', 12, 'bold'))
+        self.entry_copias_disponibles = Entry(form_frame, font=('arial', 12, 'bold'), width=30)
         self.entry_copias_disponibles.grid(row=10, column=1, padx=10, pady=5, sticky="w")
 
         # Botón de envío
@@ -124,7 +124,4 @@ class RegistrarLibro:
         except Exception as e:
             ms.showerror("Error", f"Error al insertar el libro: {e}")
 
-if __name__ == '__main__':
-    raiz = Tk()
-    aplicacion = RegistrarLibro(raiz)
-    raiz.mainloop()
+

@@ -1,3 +1,4 @@
+from proyecto_frameworks_persistencia.src.main.bookcraft.dao.administrador.administradorDAO import AdministradorDAO
 from tkinter import *
 from tkinter import messagebox as ms
 
@@ -7,8 +8,8 @@ class ActualizarUsuario:
         self.raiz.title("Sistema de biblioteca Bookcraft")
         
         # Configurar geometría y fondo
-        geometria = "600x400+220+200"
-        self.raiz.geometry(geometria)
+        geometría = "600x500+220+200"
+        self.raiz.geometry(geometría)
         self.raiz.configure(background='black')
 
         # Marco principal
@@ -18,17 +19,9 @@ class ActualizarUsuario:
         self.lblTitulo = Label(self.MarcoPrincipal, font=('arial', 24, 'bold'), text="Bookcraft Library System", bg="black", fg="white")
         self.lblTitulo.pack(side=TOP, fill=X)
         
-        self.lblTitulo2 = Label(self.MarcoPrincipal, font=('arial', 24, 'bold'), text="Usuarios")
+        self.lblTitulo2 = Label(self.MarcoPrincipal, font=('arial', 24, 'bold'), text="Actualizar Usuario")
         self.lblTitulo2.pack(side=TOP, fill=X)
         
-        # Filtrar búsqueda
-        self.MarcoBusqueda = Frame(self.MarcoPrincipal, bd=0, relief=RIDGE)
-        self.MarcoBusqueda.pack(side=TOP, fill=X, padx=10, pady=10)
-
-        # Barra de navegación
-        self.BarraNavegacion = Frame(self.MarcoPrincipal, bd=0, relief=RIDGE)
-        self.BarraNavegacion.pack(side=TOP, fill=X)  # Fill X para expandirse horizontalmente
-
         # Marco para detalles de contenido
         self.MarcoDetallesLector = LabelFrame(self.MarcoPrincipal, bd=20, pady=5, relief=RIDGE, bg="#B9BED3")
         self.MarcoDetallesLector.pack(side=BOTTOM, fill=BOTH, expand=True)
@@ -67,38 +60,46 @@ class ActualizarUsuario:
         form_frame = Frame(self.MarcoDetalles, bg="#CACFD2")
         form_frame.pack(expand=True)
         
-        Label(form_frame, text="Id:", font=('arial', 12, 'bold'), bg="#CACFD2").grid(row=0, column=0, padx=10, pady=5, sticky="e")
-        self.entry_id = Entry(form_frame, font=('arial', 12, 'bold'))
-        self.entry_id.grid(row=0, column=1, padx=10, pady=5, sticky="w")
+        Label(form_frame, text="Id de usuario a Actualizar:", font=('arial', 12, 'bold'), bg="#CACFD2").grid(row=1, column=0, padx=10, pady=5, sticky="e")
+        self.entry_idUsuario = Entry(form_frame, font=('arial', 12, 'bold'))
+        self.entry_idUsuario.grid(row=1, column=1, padx=10, pady=5, sticky="w")
 
-        Label(form_frame, text="Nombres:", font=('arial', 12, 'bold'), bg="#CACFD2").grid(row=1, column=0, padx=10, pady=5, sticky="e")
-        self.entry_nombres = Entry(form_frame, font=('arial', 12, 'bold'))
-        self.entry_nombres.grid(row=1, column=1, padx=10, pady=5, sticky="w")
+        Label(form_frame, text="Nombres:", font=('arial', 12, 'bold'), bg="#CACFD2").grid(row=2, column=0, padx=10, pady=5, sticky="e")
+        self.entry_nombre = Entry(form_frame, font=('arial', 12, 'bold'))
+        self.entry_nombre.grid(row=2, column=1, padx=10, pady=5, sticky="w")
 
-        Label(form_frame, text="Apellidos:", font=('arial', 12, 'bold'), bg="#CACFD2").grid(row=2, column=0, padx=10, pady=5, sticky="e")
-        self.entry_apellidos = Entry(form_frame, font=('arial', 12, 'bold'))
-        self.entry_apellidos.grid(row=2, column=1, padx=10, pady=5, sticky="w")
+        Label(form_frame, text="Apellidos:", font=('arial', 12, 'bold'), bg="#CACFD2").grid(row=3, column=0, padx=10, pady=5, sticky="e")
+        self.entry_apellido = Entry(form_frame, font=('arial', 12, 'bold'))
+        self.entry_apellido.grid(row=3, column=1, padx=10, pady=5, sticky="w")
 
-        Label(form_frame, text="ID Rol:", font=('arial', 12, 'bold'), bg="#CACFD2").grid(row=3, column=0, padx=10, pady=5, sticky="e")
-        self.entry_id_rol = Entry(form_frame, font=('arial', 12, 'bold'))
-        self.entry_id_rol.grid(row=3, column=1, padx=10, pady=5, sticky="w")
+        Label(form_frame, text="id_rol:", font=('arial', 12, 'bold'), bg="#CACFD2").grid(row=4, column=0, padx=10, pady=5, sticky="e")
+        self.entry_rol = Entry(form_frame, font=('arial', 12, 'bold'))
+        self.entry_rol.grid(row=4, column=1, padx=10, pady=5, sticky="w")
 
-        Label(form_frame, text="Correo:", font=('arial', 12, 'bold'), bg="#CACFD2").grid(row=4, column=0, padx=10, pady=5, sticky="e")
+        Label(form_frame, text="Correo:", font=('arial', 12, 'bold'), bg="#CACFD2").grid(row=5, column=0, padx=10, pady=5, sticky="e")
         self.entry_correo = Entry(form_frame, font=('arial', 12, 'bold'))
-        self.entry_correo.grid(row=4, column=1, padx=10, pady=5, sticky="w")
+        self.entry_correo.grid(row=5, column=1, padx=10, pady=5, sticky="w")
 
-        Label(form_frame, text="Contraseña:", font=('arial', 12, 'bold'), bg="#CACFD2").grid(row=5, column=0, padx=10, pady=5, sticky="e")
-        self.entry_contrasena = Entry(form_frame, show="*", font=('arial', 12, 'bold'))
-        self.entry_contrasena.grid(row=5, column=1, padx=10, pady=5, sticky="w")
+        Label(form_frame, text="Contraseña:", font=('arial', 12, 'bold'), bg="#CACFD2").grid(row=6, column=0, padx=10, pady=5, sticky="e")
+        self.entry_contrasena = Entry(form_frame, font=('arial', 12, 'bold'), show='*')
+        self.entry_contrasena.grid(row=6, column=1, padx=10, pady=5, sticky="w")
 
         # Botón de envío
         self.boton_enviar = Button(form_frame, text="Enviar", font=('arial', 12, 'bold'), command=self.enviar_formulario)
-        self.boton_enviar.grid(row=6, column=1, pady=10, sticky="e")
+        self.boton_enviar.grid(row=11, column=1, pady=10, sticky="e")
 
     def enviar_formulario(self):
-        ms.showinfo("Formulario","Usuario registrado")
+        usuario = AdministradorDAO()
+        try:
+            usuario.actualizar_usuario(
+                self.entry_idUsuario.get(),
+                self.entry_nombre.get(),
+                self.entry_apellido.get(),
+                int(self.entry_rol.get()),
+                self.entry_correo.get(),
+                self.entry_contrasena.get()
+            )
+            ms.showinfo("Éxito", "Usuario actualizado correctamente")
+        except Exception as e:
+            ms.showerror("Error", f"Error al actualizar el Usuario: {e}")
 
-if __name__ == '__main__':
-    raiz = Tk()
-    aplicacion = ActualizarUsuario(raiz)
-    raiz.mainloop()
