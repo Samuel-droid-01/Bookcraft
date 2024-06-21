@@ -99,4 +99,35 @@ class PrestamoMapper(PrestamoMapperInterface):
             print(f"Error al buscar el prestamo: {e}")
         finally:
             cursor.close()
-           
+    def get_by_user_and_book(self, id_usuario: int, id_libro: int):
+        cursor = self.__connection.cursor()
+        query = """SELECT prestamos.*
+        FROM prestamos
+        JOIN usuarios ON prestamos.id_usuario = usuarios.id
+        JOIN libros ON prestamos.id_libro = libros.id
+        WHERE prestamos.id_usuario = %s AND prestamos.id_libro = %s ;"""
+        try:
+            cursor.execute(query, (id_libro, id_usuario))
+            prestamo = cursor.fetchone()
+            prestamo = Prestamo(*prestamo)
+            return prestamo
+        except Exception as e:
+            print(f"Error al buscar el prestamo: {e}")
+        finally:
+            cursor.close()
+    def get_by_user(self, id_usuario: int):
+        cursor = self.__connection.cursor()
+        query = """SELECT prestamos.id,prestamos.id_libro,prestamos.fecha_devolucion
+        FROM prestamos
+        JOIN usuarios ON prestamos.id_usuario = usuarios.id
+        JOIN libros ON prestamos.id_libro = libros.id
+        WHERE prestamos.id_usuario = %s;"""
+        try:
+            cursor.execute(query, (id_usuario,))
+            prestamos = cursor.fetchall()
+            return prestamos
+        except Exception as e:
+            print(f"Error al buscar el prestamos: {e}")
+        finally:
+            cursor.close()
+    
