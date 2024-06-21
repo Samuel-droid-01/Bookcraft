@@ -4,9 +4,12 @@ class DBConnector:
     def __init__(self):
         self.__connection = mysql.connector.connect(
             host="localhost",
-            port="3306", 
             user="root", 
-            passwd="root",
+            #password="utm2024",
+            password="root",
+            #password="utm2024",
+            #password="",
+            port="3306",
             database="biblioteca_db"
         )
     

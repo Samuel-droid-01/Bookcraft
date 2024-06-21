@@ -1,8 +1,10 @@
 # Ignorar el directorio del entorno virtual
 my_modules/
+nuevo_entorno/
 
 # Ignorar todos los archivos .log
 #.log
 *.pyc
 # Ignorar el archivo especifico
 #mi_archivo.txt
+__pycache__
