@@ -26,7 +26,12 @@ class LibroDAO:
         mapper = LibroMapper()
         self.__libro = mapper.get_by_id(id)
         return self.__libro
-
+    
+    def get_libro_by_isbn(self, isbn):
+        mapper = LibroMapper()
+        self.__libro = mapper.get_by_isbn(isbn)
+        return self.__libro
+    
     def delete_libro(self):
         try:
             mapper = LibroMapper()

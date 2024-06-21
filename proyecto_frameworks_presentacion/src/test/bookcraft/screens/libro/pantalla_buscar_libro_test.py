@@ -1,4 +1,4 @@
-from .....main.bookcraft.screens.libro.pantalla_buscar_libro import PantallaBuscarLibro
+from .....main.bookcraft.screens.libro.pantalla_eliminar_libro import PantallaBuscarLibro
 from tkinter import Tk
 
 def test_Pantalla_Eliminar_Libro():

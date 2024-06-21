@@ -31,6 +31,8 @@ class CatalogoDAO:
         mapper = CategoriaMapper()
         return mapper.get_categorias()
     
-    def ver_editoriales(self):
-        return ["Planeta", "Santillana", "Norma", "McGraw-Hill"]
+    def ver_disponibilidad(self):
+        mapper = LibroMapper()
+        return mapper.get_disponibilidad()
+    
     

@@ -40,7 +40,7 @@ class ListarLibro:
         self.lblBusqueda = Label(self.marcoBusqueda, text="Buscar por:", bg="#B9BED3", font=self.fuente)
         self.lblBusqueda.grid(row=0, column=0, padx=10, pady=10)
 
-        self.opciones = ["Titulo", "Autor", "Editorial","Categoria"]
+        self.opciones = ["Titulo", "Autor", "Editorial","Categoria","Disponibilidad"]
         self.comboBusqueda = Combobox(self.marcoBusqueda, values=self.opciones, state="readonly",font=self.fuente)
         self.comboBusqueda.grid(row=0, column=1, padx=10, pady=10)
         self.comboBusqueda.current(0)
@@ -108,16 +108,22 @@ class ListarLibro:
             else:
                 ms.showerror("Error", libros[1])
 
-        elif opcion=="Editorial":
+        elif opcion=="Editorial":#Solo muestra los libros de una editorial
             valor=self.comboCategorias.get()
             libros=LibroDAO().filtrar_editorial(valor)
             if libros[0]!=None:
                 self.mostrar_libros(libros[1])
             else:
                 ms.showerror("Error", libros[1])
-        elif opcion=="Categoria":
+        elif opcion=="Categoria":#Se filtra por categoria
             valor=self.comboCategorias.get()
             libros=LibroDAO().filtrar_categoria(valor)
+            if libros[0]!=None:
+                self.mostrar_libros(libros[1])
+            else:
+                ms.showerror("Error", libros[1])
+        elif opcion=="Disponibilidad":#Solo muestra los libros con al menos una copia disponible
+            libros=CatalogoDAO().ver_disponibilidad()
             if libros[0]!=None:
                 self.mostrar_libros(libros[1])
             else:

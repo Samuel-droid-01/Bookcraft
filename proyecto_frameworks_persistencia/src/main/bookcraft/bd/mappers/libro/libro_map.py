@@ -243,3 +243,42 @@ class LibroMapper(LibroMapperInterface):
             print(f"Error al obtener las editoriales: {e}")
         finally:
             cursor.close()
+
+    def get_by_isbn(self, isbn: str) -> Libro:
+        cursor = self.__connection.cursor()
+        query = """
+            SELECT * FROM libros WHERE isbn = %s
+        """
+
+        try:
+            cursor.execute(query, (isbn, ))
+            libro = cursor.fetchone()
+            if not libro:
+                
+                return None,"No se encontró el libro."
+            libro = Libro(*libro)
+            return True,libro
+        except Exception as e:
+            print(f"Error al obtener el libro: {e}")
+            return None,"Error al obtener el libro."
+        finally:
+            cursor.close()
+
+    def get_disponibilidad(self):
+        cursor = self.__connection.cursor()
+        query = """
+            SELECT * FROM libros WHERE copias_disponibles > 0
+        """
+        try:
+            cursor.execute(query)
+            libros = cursor.fetchall()
+            if libros:
+                libros = [Libro(*data) for data in libros]
+                return True,libros
+            else:
+                print("No se encontraron libros disponibles.")
+                return None,"No se encontraron libros disponibles."
+        except Exception as e:
+            print(f"Error al obtener los libros: {e}")
+        finally:
+            cursor.close()
