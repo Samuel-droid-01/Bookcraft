@@ -3,6 +3,7 @@ from proyecto_frameworks_presentacion.src.main.bookcraft.screens.libro.pantalla_
 from proyecto_frameworks_presentacion.src.main.bookcraft.screens.libro.pantalla_actualizar_libro import ActualizarLibro
 from proyecto_frameworks_presentacion.src.main.bookcraft.screens.libro.pantalla_registrar_libro import RegistrarLibro
 from proyecto_frameworks_presentacion.src.main.bookcraft.screens.libro.pantalla_ver_informacion_libro import InformacionLibro
+from proyecto_frameworks_presentacion.src.main.bookcraft.screens.libro.pantalla_eliminar_libro import EliminarLibro
 
 # -------para sanciones-----
 from proyecto_frameworks_presentacion.src.main.bookcraft.screens.sancion.pantalla_ver_sancion import PantallaIDSancion
@@ -102,7 +103,7 @@ class PrincipalBibliotecario:
         btn1.grid(row=0, column=0, padx=10, pady=10)
         btn2 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Registrar libros", bg="#2E4053",fg="white",command=self.ventana_registrar_libro)
         btn2.grid(row=0, column=1, padx=10, pady=10)
-        btn3 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Eliminar Libro", bg="#2E4053",fg="white")
+        btn3 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Eliminar Libro", bg="#2E4053",fg="white",command=self.ventana_eliminar_libro)
         btn3.grid(row=0, column=2, padx=10, pady=10)
         btn4 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Ver informacion Libro", bg="#2E4053",fg="white",command=self.ventana_ver_informacion_libro)
         btn4.grid(row=0, column=3, padx=10, pady=10)
@@ -172,6 +173,11 @@ class PrincipalBibliotecario:
         # Crear una ventana secundaria con Toplevel en lugar de Tk()
         ventana_secundaria = Toplevel(self.raiz)
         InformacionLibro(ventana_secundaria)
+
+    def ventana_eliminar_libro(self):
+        # Crear una ventana secundaria con Toplevel en lugar de Tk()
+        ventana_secundaria = Toplevel(self.raiz)
+        EliminarLibro(ventana_secundaria)
 
     def ventana_ver_sancion(self):
         # Crear una ventana secundaria con Toplevel en lugar de Tk()
