@@ -76,7 +76,9 @@ class SancionMapper(SancionMapperInterface):
     def get_by_id(self, id: int):#No recibe un objeto pero retorna uno de la clase Sancion
         cursor = self.__connection.cursor()
         query = """
-            SELECT * FROM sanciones WHERE id = %s
+            SELECT CONCAT(usuarios.nombres, ' ', usuarios.apellidos) AS nombre, sanciones.fecha_inicio, sanciones.fecha_fin, sanciones.descripcion 
+            FROM prestamos JOIN sanciones ON prestamos.id_sancion = sanciones.id JOIN usuarios ON prestamos.id_usuario = usuarios.id
+            WHERE sanciones.id = %s
         """
         try:
             cursor.execute(query, (id,))
@@ -93,7 +95,8 @@ class SancionMapper(SancionMapperInterface):
     def get_all(self):
         cursor = self.__connection.cursor()
         query = """
-            SELECT * FROM sanciones
+            SELECT CONCAT(usuarios.nombres, ' ', usuarios.apellidos) AS nombre, sanciones.fecha_inicio, sanciones.fecha_fin, sanciones.descripcion 
+            FROM prestamos JOIN sanciones ON prestamos.id_sancion = sanciones.id JOIN usuarios ON prestamos.id_usuario = usuarios.id
         """
         try:
             cursor.execute(query)
@@ -104,4 +107,21 @@ class SancionMapper(SancionMapperInterface):
             print(f"Error al buscar las sanciones: {e}")
         finally:
             cursor.close()
-            
+    
+    def get_by_date(self, fecha: str):
+        cursor = self.__connection.cursor()
+        query = """
+            SELECT CONCAT(usuarios.nombres, ' ', usuarios.apellidos) AS nombre, sanciones.fecha_inicio, sanciones.fecha_fin, sanciones.descripcion 
+            FROM prestamos JOIN sanciones ON prestamos.id_sancion = sanciones.id JOIN usuarios ON prestamos.id_usuario = usuarios.id
+            WHERE sanciones.fecha_inicio = %s
+        """
+        try:
+            cursor.execute(query, (fecha,))
+            sanciones = cursor.fetchall()
+            sanciones = [Sancion(*data) for data in sanciones]
+            return sanciones
+        except Exception as e:
+            print(fecha)
+            print(f"Error al buscar las sanciones: {e}")
+        finally:
+            cursor.close()

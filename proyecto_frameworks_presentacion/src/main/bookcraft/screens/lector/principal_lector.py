@@ -141,7 +141,3 @@ class PrincipalLector:
         ms.showinfo("Logout", "Sesión cerrada exitosamente.")
         self.raiz.quit()
 
-if __name__ == '__main__':
-    raiz = Tk()
-    aplicacion = PrincipalLector(raiz)
-    raiz.mainloop()

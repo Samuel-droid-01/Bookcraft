@@ -21,6 +21,11 @@ class LibroDAO:
     
     def get_libro(self):
         return self.__libro
+        
+    def get_libro_by_id(self, id):
+        mapper = LibroMapper()
+        self.__libro = mapper.get_by_id(id)
+        return self.__libro
 
     def delete_libro(self):
         try:
@@ -55,3 +60,20 @@ class LibroDAO:
         mapper = LibroMapper()
         lista_ids = mapper.get_by_category(categoria)
         return lista_ids
+    
+    def listar_libros(self):
+        mapper = LibroMapper()
+        return mapper.get_all_libros()
+
+    def ver_libro(self,id: int):
+        mapper = LibroMapper()
+        return mapper.get_by_id(id)
+    
+    def filtrar_titulo(self, title):
+        mapper = LibroMapper()
+        return mapper.get_by_title(title)
+    
+    def filtrar_editorial(self, editorial):
+        mapper = LibroMapper()
+        return mapper.get_by_editorial(editorial)
+    

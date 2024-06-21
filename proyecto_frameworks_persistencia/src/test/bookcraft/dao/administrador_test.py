@@ -1,7 +1,6 @@
 import unittest
 from unittest.mock import patch, MagicMock
 from ....main.bookcraft.dao.administrador.administradorDAO import AdministradorDAO
-
 class TestAbministrador(unittest.TestCase):
     print("Test de Administrador")
     def test_registrar_usuario(self):

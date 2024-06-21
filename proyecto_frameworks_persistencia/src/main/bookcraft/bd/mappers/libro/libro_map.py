@@ -102,6 +102,9 @@ class LibroMapper(LibroMapperInterface):
         try:
             cursor.execute(query, (id, ))
             libro = cursor.fetchone()
+            if not libro:
+                print("No se encontró el libro.")
+                return None
             libro = Libro(*libro)
             return libro
         except Exception as e:
@@ -119,6 +122,23 @@ class LibroMapper(LibroMapperInterface):
             cursor.execute(query)
             libros_ids = list(itertools.chain.from_iterable(cursor.fetchall()))  # Flatten tuples
             return libros_ids
+        except Exception as e:
+            print(f"Error al obtener los libros: {e}")
+        finally:
+            cursor.close()
+    
+    def get_all_libros(self):
+        cursor = self.__connection.cursor()
+        query = """
+            SELECT * FROM libros
+        """
+
+        try:
+        
+            cursor.execute(query)
+            result = cursor.fetchall()
+            libros = [Libro(*data) for data in result]
+            return libros
         except Exception as e:
             print(f"Error al obtener los libros: {e}")
         finally:
@@ -146,7 +166,7 @@ class LibroMapper(LibroMapperInterface):
     def get_by_author(self, author: str) -> List[Libro]:
         cursor = self.__connection.cursor()
         query = """
-            SELECT libros.id FROM libros WHERE autor LIKE %s
+            SELECT * FROM libros WHERE autor LIKE %s
         """
 
         try:
@@ -165,10 +185,10 @@ class LibroMapper(LibroMapperInterface):
     def get_by_category(self, category: str) -> List[Libro]:
         cursor = self.__connection.cursor()
         query = """
-            SELECT libros.id
+            SELECT *
             FROM libros 
             JOIN categorias ON libros.id_categoria = categorias.id
-            WHERE categoria LIKE %s
+            WHERE categoria.categoria LIKE %s
         """
 
         try:

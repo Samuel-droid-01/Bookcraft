@@ -20,10 +20,18 @@ class PrestamoMapper(PrestamoMapperInterface):
                 prestamo.get_activo()
             ))
             self.__connection.commit()
+            # Actualizar copias disponibles
+            libroQuery = """UPDATE libros SET copias_disponibles = copias_disponibles - 1 WHERE id = %s
+                """
+            cursor.execute(libroQuery, (prestamo.get_id_libro(),))
+            self.__connection.commit()
+
             print("Prestamo insertado correctamente.")
+            return True,"Prestamo insertado correctamente."
         except Exception as e:
             self.__connection.rollback()
             print(f"Error al insertar el prestamo: {e}")
+            return False,f"Error al insertar el prestamo: {e}"
         finally:
             cursor.close()
         
