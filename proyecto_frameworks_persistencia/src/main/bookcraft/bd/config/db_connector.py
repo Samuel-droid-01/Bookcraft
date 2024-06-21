@@ -5,13 +5,10 @@ class DBConnector:
         self.__connection = mysql.connector.connect(
             host="localhost",
             user="root", 
-<<<<<<< HEAD
             #password="utm2024",
             password="root",
-=======
-            password="utm2024",
+            #password="utm2024",
             #password="",
->>>>>>> Ruben
             port="3306",
             database="biblioteca_db"
         )
