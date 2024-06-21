@@ -1,3 +1,7 @@
+# -------para libros-----
+from proyecto_frameworks_presentacion.src.main.bookcraft.screens.libro.pantalla_listar_libro import ListarLibro
+from proyecto_frameworks_presentacion.src.main.bookcraft.screens.libro.pantalla_ver_informacion_libro import InformacionLibro
+
 from tkinter import *
 from tkinter import messagebox as ms
 import os
@@ -99,14 +103,23 @@ class PrincipalLector:
     def mostrar_libros(self):
         self.limpiar_detalles()
         # Aquí iría la lógica para mostrar los detalles de libros
-        btn1 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text='Listar Libros', bg="#2E4053", fg="white")
+        btn1 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text='Listar Libros', bg="#2E4053", fg="white",command=self.ventana_listar_libros)
         btn1.grid(row=0, column=0, padx=10, pady=10)
-        btn2 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Ver Información", bg="#2E4053", fg="white")
+        btn2 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Ver Información libro", bg="#2E4053", fg="white",command=self.ventana_ver_informacion_libro)
         btn2.grid(row=0, column=1, padx=10, pady=10)
         btn3 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Disponibilidad", bg="#2E4053", fg="white")
         btn3.grid(row=0, column=2, padx=10, pady=10)
 
-
+    def ventana_listar_libros(self):
+        # Crear una ventana secundaria con Toplevel en lugar de Tk()
+        ventana_secundaria = Toplevel(self.raiz)
+        ListarLibro(ventana_secundaria)
+    
+    def ventana_ver_informacion_libro(self):
+        # Crear una ventana secundaria con Toplevel en lugar de Tk()
+        ventana_secundaria = Toplevel(self.raiz)
+        InformacionLibro(ventana_secundaria)
+        
     def buscar_libro(self):
         criterio = self.opcionSeleccionada.get()
         termino = self.entryBusqueda.get()
@@ -138,6 +151,8 @@ class PrincipalLector:
             widget.destroy()
 
     def logout(self):
-        ms.showinfo("Logout", "Sesión cerrada exitosamente.")
+
         self.raiz.quit()
+        #ventana_secundaria = Toplevel(self.raiz)
+        #Login(ventana_secundaria)
 

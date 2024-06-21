@@ -1,3 +1,12 @@
+# ------admin------
+from proyecto_frameworks_presentacion.src.main.bookcraft.screens.administrador.principal_admin import PrincipalAdmin
+
+# ------lector------
+from proyecto_frameworks_presentacion.src.main.bookcraft.screens.lector.principal_lector import PrincipalLector
+
+# ------bibliotecario------
+from proyecto_frameworks_presentacion.src.main.bookcraft.screens.bibliotecario.principal_bibliotecario import PrincipalBibliotecario
+
 from proyecto_frameworks_persistencia.src.main.bookcraft.dao.usuario.usuarioDAO import UsuarioDAO
 from tkinter import *
 from tkinter import messagebox as ms
@@ -59,11 +68,35 @@ class Login:
         login_exitoso, resultado = usuarioDAO.iniciar_sesion(correo, contrasena)
         
         if login_exitoso:
-            ms.showinfo("Login Exitoso", f"Sesión iniciada. ID Rol: {resultado.get_id_rol()}, {resultado.get_nombres()}")
+            self.raiz.withdraw()  # Ocultar la ventana de login
+
+            if resultado.get_id_rol() == 1:
+                self.ventana_principal_admin()
+            elif resultado.get_id_rol() == 2:
+                self.ventana_principal_bibliotecario()
+            elif resultado.get_id_rol() == 3:
+                self.ventana_principal_lector()
         else:
             ms.showerror("Error de Login", resultado)  # 'resultado' contiene el mensaje de error en caso de fallo
+            
+    def ventana_principal_admin(self):
+        ventana_secundaria = Toplevel(self.raiz)
+        PrincipalAdmin(ventana_secundaria)
+        ventana_secundaria.protocol("WM_DELETE_WINDOW", self.cerrar_ventana)
 
-if __name__ == '__main__':
-    raiz = Tk()
-    aplicacion = Login(raiz)
-    raiz.mainloop()
+    def ventana_principal_bibliotecario(self):
+        ventana_secundaria = Toplevel(self.raiz)
+        PrincipalBibliotecario(ventana_secundaria)
+        ventana_secundaria.protocol("WM_DELETE_WINDOW", self.cerrar_ventana)
+
+    def ventana_principal_lector(self):
+        ventana_secundaria = Toplevel(self.raiz)
+        PrincipalLector(ventana_secundaria)
+        ventana_secundaria.protocol("WM_DELETE_WINDOW", self.cerrar_ventana)
+
+    def cerrar_ventana(self):
+        self.raiz.deiconify()  # Mostrar la ventana de login nuevamente si se cierra la ventana secundaria
+        for widget in self.raiz.winfo_children():
+            if isinstance(widget, Toplevel):
+                widget.destroy()
+

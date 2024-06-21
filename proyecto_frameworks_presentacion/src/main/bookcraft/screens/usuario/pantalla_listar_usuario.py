@@ -68,6 +68,7 @@ class ListarUsuario:
             frame_usuario = Frame(self.MarcoDetalles, bd=2, relief=SOLID, bg="white", padx=10, pady=10)
             frame_usuario.grid(row=index // 2, column=index % 2, padx=10, pady=10, sticky="nsew")
             
+            Label(frame_usuario, text=f"Id: {usuario.get_id()}", bg="white").pack(anchor="w")
             Label(frame_usuario, text=f"Nombre: {usuario.get_nombres()}", bg="white").pack(anchor="w")
             Label(frame_usuario, text=f"Apellidos: {usuario.get_apellidos()}", bg="white").pack(anchor="w")
             Label(frame_usuario, text=f"Correo: {usuario.get_correo()}", bg="white").pack(anchor="w")
