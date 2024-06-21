@@ -22,11 +22,10 @@ class ListarLibro:
         
         self.lblTitulo2 = Label(self.MarcoPrincipal, font=('arial', 24, 'bold'), text="Libros")
         self.lblTitulo2.pack(side=TOP, fill=X)
-        
 
         # Barra de navegación
         self.BarraNavegacion = Frame(self.MarcoPrincipal, bd=0, relief=RIDGE)
-        self.BarraNavegacion.pack(side=TOP, fill=X)  # Fill X para expandirse horizontalmente
+        self.BarraNavegacion.pack( side=TOP, fill=X)  # Fill X para expandirse horizontalmente
 
         # Marco para detalles de contenido
         self.MarcoDetallesLector = LabelFrame(self.MarcoPrincipal, bd=20, pady=5, relief=RIDGE, bg="#B9BED3")
@@ -34,23 +33,16 @@ class ListarLibro:
 
         # Canvas y scrollbar
         self.canvas = Canvas(self.MarcoDetallesLector, bg="#CACFD2")
+        self.canvas.pack(side=LEFT, fill=BOTH, expand=True, padx=10, pady=10)
+
         self.scrollbar = Scrollbar(self.MarcoDetallesLector, orient=VERTICAL, command=self.canvas.yview)
-        self.scrollable_frame = Frame(self.canvas, bg="#CACFD2")
-
-        self.scrollable_frame.bind(
-            "<Configure>",
-            lambda e: self.canvas.configure(
-                scrollregion=self.canvas.bbox("all")
-            )
-        )
-
-        self.canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
-        self.canvas.configure(yscrollcommand=self.scrollbar.set)
-
-        self.canvas.pack(side=LEFT, fill=BOTH, expand=True)
         self.scrollbar.pack(side=RIGHT, fill=Y)
+        self.canvas.configure(yscrollcommand=self.scrollbar.set)
+        self.scrollable_frame = Frame(self.canvas, bg="#CACFD2")
+        self.canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
 
-        self.MarcoDetalles = self.scrollable_frame
+        self.scrollable_frame.bind("<Configure>", self.on_frame_configure)
+        self.scrollable_frame.bind_all("<MouseWheel>", self._on_mousewheel)
 
         libroDAO = LibroDAO()
         self.admin = libroDAO.listar_libros()
@@ -58,16 +50,34 @@ class ListarLibro:
         # Mostrar tarjetas de usuarios obtenidos del servicio
         self.mostrar_libros(self.admin)
 
+        
+    def filtrar(self,opcion,valor):#opcion y nombre del libro o autor
+        if opcion=="Titulo":
+            libros=LibroDAO().filtrar_titulo(valor)
+            self.mostrar_libros(libros)
+        elif opcion=="Autor":
+            libros=LibroDAO().filtrar_autor(valor)
+            self.mostrar_libros(libros)
+        elif opcion=="Editorial":
+            libros=LibroDAO().filtrar_editorial(valor)
+            self.mostrar_libros(libros)
+    def _on_mousewheel(self, event):
+        self.canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
+
+    def on_frame_configure(self, event):
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+
+
     def limpiar_detalles(self):
         # Limpiar el marco de detalles antes de mostrar nuevos contenidos
-        for widget in self.MarcoDetalles.winfo_children():
+        for widget in self.scrollable_frame.winfo_children():
             widget.destroy()
 
     def mostrar_libros(self, libros):
         self.limpiar_detalles()
         
         for index, libro in enumerate(libros):
-            frame_libro = Frame(self.MarcoDetalles, bd=2, relief=SOLID, bg="white", padx=10, pady=10)
+            frame_libro = Frame(self.scrollable_frame, bd=2, relief=SOLID, bg="white", padx=10, pady=10)
             frame_libro.grid(row=index // 2, column=index % 2, padx=10, pady=10, sticky="nsew")
             
             Label(frame_libro, text=f"id: {libro.get_id()}", bg="white").pack(anchor="w")

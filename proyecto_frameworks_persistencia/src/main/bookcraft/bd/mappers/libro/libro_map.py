@@ -166,7 +166,7 @@ class LibroMapper(LibroMapperInterface):
     def get_by_author(self, author: str) -> List[Libro]:
         cursor = self.__connection.cursor()
         query = """
-            SELECT libros.id FROM libros WHERE autor LIKE %s
+            SELECT * FROM libros WHERE autor LIKE %s
         """
 
         try:
@@ -185,10 +185,10 @@ class LibroMapper(LibroMapperInterface):
     def get_by_category(self, category: str) -> List[Libro]:
         cursor = self.__connection.cursor()
         query = """
-            SELECT libros.id
+            SELECT *
             FROM libros 
             JOIN categorias ON libros.id_categoria = categorias.id
-            WHERE categoria LIKE %s
+            WHERE categoria.categoria LIKE %s
         """
 
         try:
