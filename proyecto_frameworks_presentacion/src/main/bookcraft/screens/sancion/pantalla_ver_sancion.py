@@ -35,10 +35,10 @@ class PantallaIDSancion:
     def ver_sancion(self):
         sancion_id = self.id_entry.get()
         sancion_dao = SancionDAO()
-        sancion = sancion_dao.buscar_sancion(sancion_id)
+        sancion = sancion_dao.obtener_sancion_usuario(sancion_id)
 
         if not sancion_id.isdigit() or not sancion:
-            ms.showerror("Error", "Por favor, ingrese un ID válido")
+            ms.showerror("Error", "Al parecer el usuario no es valido o no cuenta con sanciones!")
             return
 
         root = Tk()
@@ -76,7 +76,7 @@ class PantallaVerSancion:
         if sancion:
             self.mostrar_sancion(sancion)
         else:
-            ms.showerror("Error", f"No se encontró ninguna sanción para el lector con ID {self.id_lector}")
+            ms.showerror("Error", f"No se encontró ninguna sanción para el lector")
 
     def mostrar_sancion(self, sancion):
         Label(self.MarcoDetallesSancion, font=('Arial', 12, 'bold'), text="Nombre:", bg="white", fg="#333333").grid(row=0, column=0, sticky="w", padx=10, pady=5)

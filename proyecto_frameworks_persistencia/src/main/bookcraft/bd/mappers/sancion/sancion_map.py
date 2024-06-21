@@ -57,13 +57,13 @@ class SancionMapper(SancionMapperInterface):
             cursor.close()
             
             
-    def delete(self, id:int):
+    def delete(self, fecha_fin: str, fecha_inicio: str):
         cursor = self.__connection.cursor()
         query = """
-            DELETE FROM sanciones WHERE id = %s
+            DELETE FROM sanciones WHERE fecha_fin = %s AND fecha_inicio = %s
         """
         try:
-            cursor.execute(query, (id,))
+            cursor.execute(query, (fecha_fin, fecha_inicio))
             self.__connection.commit()
             print("Sancion eliminada correctamente.")
         except Exception as e:
@@ -113,15 +113,33 @@ class SancionMapper(SancionMapperInterface):
         query = """
             SELECT CONCAT(usuarios.nombres, ' ', usuarios.apellidos) AS nombre, sanciones.fecha_inicio, sanciones.fecha_fin, sanciones.descripcion 
             FROM prestamos JOIN sanciones ON prestamos.id_sancion = sanciones.id JOIN usuarios ON prestamos.id_usuario = usuarios.id
-            WHERE sanciones.fecha_inicio = %s
+            WHERE sanciones.fecha_inicio = %s OR sanciones.fecha_fin = %s
         """
         try:
-            cursor.execute(query, (fecha,))
+            cursor.execute(query, (fecha, fecha))
             sanciones = cursor.fetchall()
             sanciones = [Sancion(*data) for data in sanciones]
             return sanciones
         except Exception as e:
             print(fecha)
+            print(f"Error al buscar las sanciones: {e}")
+        finally:
+            cursor.close()
+
+    def get_by_user(self, id_usuario: int):
+        cursor = self.__connection.cursor()
+        query = """
+            SELECT CONCAT(usuarios.nombres, ' ', usuarios.apellidos) AS nombre, sanciones.fecha_inicio, sanciones.fecha_fin, sanciones.descripcion 
+            FROM prestamos JOIN sanciones ON prestamos.id_sancion = sanciones.id JOIN usuarios ON prestamos.id_usuario = usuarios.id
+            WHERE usuarios.id = %s LIMIT 1
+        """
+        try:
+            cursor.execute(query, (id_usuario,))
+            sancion = cursor.fetchone()
+            print(sancion)
+            sanciones = Sancion(*sancion)
+            return sanciones
+        except Exception as e:
             print(f"Error al buscar las sanciones: {e}")
         finally:
             cursor.close()

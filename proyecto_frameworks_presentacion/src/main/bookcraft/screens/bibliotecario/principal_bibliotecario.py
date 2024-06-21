@@ -4,6 +4,9 @@ from proyecto_frameworks_presentacion.src.main.bookcraft.screens.libro.pantalla_
 from proyecto_frameworks_presentacion.src.main.bookcraft.screens.libro.pantalla_registrar_libro import RegistrarLibro
 from proyecto_frameworks_presentacion.src.main.bookcraft.screens.libro.pantalla_ver_informacion_libro import InformacionLibro
 
+# -------para sanciones-----
+from proyecto_frameworks_presentacion.src.main.bookcraft.screens.sancion.pantalla_ver_sancion import PantallaIDSancion
+from proyecto_frameworks_presentacion.src.main.bookcraft.screens.sancion.pantalla_listar_lectores_sancionados import PantallaListarLectoresSancionados
 
 from tkinter import *
 from tkinter import messagebox as ms
@@ -121,9 +124,9 @@ class PrincipalBibliotecario:
         # Aquí iría la lógica para mostrar los detalles de sanciones
         btn1 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Aplicar Sanción", bg="#2E4053",fg="white")
         btn1.grid(row=0, column=0, padx=10, pady=10)
-        btn2 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Quitar Sanción", bg="#2E4053",fg="white")
+        btn2 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Ver Sanción", bg="#2E4053",fg="white", command=self.ventana_ver_sancion)
         btn2.grid(row=0, column=1, padx=10, pady=10)
-        btn3 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Ver Historial", bg="#2E4053",fg="white")
+        btn3 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Ver Historial", bg="#2E4053",fg="white", command=self.ventana_listar_sanciones)
         btn3.grid(row=0, column=2, padx=10, pady=10)
 
     def mostrar_prestamos(self):
@@ -169,6 +172,15 @@ class PrincipalBibliotecario:
         # Crear una ventana secundaria con Toplevel en lugar de Tk()
         ventana_secundaria = Toplevel(self.raiz)
         InformacionLibro(ventana_secundaria)
+
+    def ventana_ver_sancion(self):
+        # Crear una ventana secundaria con Toplevel en lugar de Tk()
+        ventana_secundaria = Toplevel(self.raiz)
+        PantallaIDSancion(ventana_secundaria)
+
+    def ventana_listar_sanciones(self):
+        ventana_secundaria = Toplevel(self.raiz)
+        PantallaListarLectoresSancionados(ventana_secundaria)
 
     def logout(self):
         ms.showinfo("Logout", "Sesión cerrada exitosamente.")

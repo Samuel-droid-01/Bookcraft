@@ -8,9 +8,6 @@ class Sancion:
     def get_nombre(self):    
         return self.__nombre
     
-    def get_id(self):
-        return self.__id
-    
     def get_fecha_inicio(self):
         return self.__fecha_inicio
     

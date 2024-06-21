@@ -9,7 +9,7 @@ class PrestamoDAO:
             self.__prestamo = mapper.get_by_id(id)
         else:
             self.__prestamo = Prestamo(id, id_usuario, id_libro, fecha_prestamo, fecha_devolucion, id_sancion, activo)
-
+        self.prestamo=[]
     def set_prestamo(self):
         mapper = PrestamoMapper()
         mapper.insert(self.__prestamo)
@@ -43,3 +43,12 @@ class PrestamoDAO:
         id_sancion = nuevaSancion.crear_sancion(descripcion)
         self.__prestamo.set_id_sancion(id_sancion)
         mapper.update(self.__prestamo)
+    def obtener_id(self, id_usuario, id_libro):
+        mapper = PrestamoMapper()
+        self.__prestamo =mapper.get_by_user_and_book(id_usuario, id_libro)
+        return self.__prestamo
+        # print("prestamo=",self.__prestamo.get_id())
+    def obtener_prestamos_usuario(self, id_usuario):
+        mapper = PrestamoMapper()
+        id=mapper.get_by_user(id_usuario)
+        return id
