@@ -93,6 +93,22 @@ class LibroMapper(LibroMapperInterface):
         finally:
             cursor.close()
 
+    def delete_by_isbn(self, isbn: str):
+        cursor = self.__connection.cursor()
+        query = """
+            DELETE FROM libros WHERE isbn = %s
+        """
+
+        try:
+            cursor.execute(query, (isbn, ))
+            self.__connection.commit()
+            print("Libro eliminado correctamente")
+        except Exception as e:
+            self.__connection.rollback()
+            print(f"Error al eliminar el libro: {e}")
+        finally:
+            cursor.close()
+
     def get_by_id(self, id: int):
         cursor = self.__connection.cursor()
         query = """

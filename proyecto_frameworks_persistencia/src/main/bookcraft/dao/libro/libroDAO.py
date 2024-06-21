@@ -39,6 +39,12 @@ class LibroDAO:
             self.__libro = None
         except:
             print("El id no existe.")
+    def delete_libro_by_isbn(self, id):
+        try:
+            mapper = LibroMapper()
+            mapper.delete_by_isbn(id)
+        except:
+            print("El id no existe.")
 
     def update_libro(self):
         try:

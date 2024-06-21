@@ -21,6 +21,8 @@ class EliminarLibro:
         
         self.lblTitulo2 = Label(self.MarcoPrincipal, font=('arial', 24, 'bold'), text="Eliminar Libro")
         self.lblTitulo2.pack(side=TOP, fill=X)
+
+        
         
         # Marco para detalles de contenido
         self.MarcoDetallesLector = LabelFrame(self.MarcoPrincipal, bd=20, pady=5, relief=RIDGE, bg="#B9BED3")#Aqui va el contenido
@@ -39,6 +41,16 @@ class EliminarLibro:
         self.btnEliminar = Button(self.MarcoDetallesLector, text="Eliminar", font=self.fuente, command=self.eliminar_libro)
         self.btnEliminar.grid(row=0, column=3, padx=10, pady=10)
 
+        self.limpiarButton = Button(self.MarcoDetallesLector, text="Limpiar", font=self.fuente, command=self.limpiar_detalles)
+        self.limpiarButton.grid(row=0, column=4, padx=10, pady=10)
+
+
+    def limpiar_detalles(self):
+        for widget in self.MarcoDetallesLector.winfo_children():
+            if  isinstance(widget, Frame):
+                widget.destroy()
+        self.txtTitulo.delete(0, END)
+
     def buscar_libro(self):
         cadena=self.txtTitulo.get()
         if len(cadena)==17:#Si es un ISBN
@@ -56,33 +68,62 @@ class EliminarLibro:
             for i,j in enumerate(aux):
                 libroFrame = Frame(self.MarcoDetallesLector, bg="#CACFD2")
                 libroFrame.grid(row=i+1, column=0, padx=10, pady=10)
+                libroFrame.bind("<Button-1>", self.on_frame_click)#Se agrega evento de click
+
+                lblISBN = Label(libroFrame, text="ISBN:", bg="#CACFD2", anchor="w", width=20)
+                lblISBN.grid(row=0, column=0,padx=10, pady=10)
+                lblISBN = Label(libroFrame, text=j.get_isbn(), bg="#CACFD2", anchor="w", width=40)
+                lblISBN.grid(row=0, column=1)
 
                 lblTitulo = Label(libroFrame, text="Titulo:", bg="#CACFD2", anchor="w", width=20)
-                lblTitulo.grid(row=0, column=0)
-                lblTitulo = Label(libroFrame, text=j.get_titulo(), bg="#CACFD2", anchor="w", width=20)
-                lblTitulo.grid(row=0, column=1)
+                lblTitulo.grid(row=1, column=0)
+                lblTitulo = Label(libroFrame, text=j.get_titulo(), bg="#CACFD2", anchor="w", width=40)
+                lblTitulo.grid(row=1, column=1)
 
                 lblAutor = Label(libroFrame, text="Autor:", bg="#CACFD2", anchor="w", width=20)
-                lblAutor.grid(row=1, column=0)
-                lblAutor = Label(libroFrame, text=j.get_autor(), bg="#CACFD2", anchor="w", width=20)
-                lblAutor.grid(row=1, column=1)
+                lblAutor.grid(row=2, column=0)
+                lblAutor = Label(libroFrame, text=j.get_autor(), bg="#CACFD2", anchor="w", width=40)
+                lblAutor.grid(row=2, column=1)
 
                 lblEditorial = Label(libroFrame, text="Editorial:", bg="#CACFD2", anchor="w", width=20)
-                lblEditorial.grid(row=2, column=0)
-                lblEditorial = Label(libroFrame, text=j.get_editorial(), bg="#CACFD2", anchor="w", width=20)
-                lblEditorial.grid(row=2, column=1)
+                lblEditorial.grid(row=3, column=0)
+                lblEditorial = Label(libroFrame, text=j.get_editorial(), bg="#CACFD2", anchor="w", width=40)
+                lblEditorial.grid(row=3, column=1)
 
                 lblCopias = Label(libroFrame, text="Copias disponibles:", bg="#CACFD2", anchor="w", width=20)
-                lblCopias.grid(row=3, column=0)
-                lblCopias = Label(libroFrame, text=j.get_copias_disponibles(), bg="#CACFD2", anchor="w", width=20)
-                lblCopias.grid(row=3, column=1)
+                lblCopias.grid(row=4, column=0)
+                lblCopias = Label(libroFrame, text=j.get_copias_disponibles(), bg="#CACFD2", anchor="w", width=40)
+                lblCopias.grid(row=4, column=1)
 
+                #Se agrega evento de click a todos los widgets del frame libroFrame
+                for widget in libroFrame.winfo_children():
+                     widget.bind("<Button-1>", self.on_frame_click)
                 
 
         else:
             ms.showerror("Error","No se encontró el libro")
             return
 
+    def on_frame_click(self, event):
+        frame = event.widget
+        i=0
+        while not isinstance(frame, Frame):#Se busca el frame padre del widget clickeado que dispara el evento
+            frame = frame.master
+            
+        for widget in frame.winfo_children():
+            if  widget.grid_info()['row'] == 0 and widget.grid_info()['column'] == 1:
+                self.txtTitulo.delete(0, END)
+                self.txtTitulo.insert(0, widget.cget('text'))
+                break
+
 
     def eliminar_libro(self):
-        pass
+        isbn=self.txtTitulo.get()
+        if len(isbn)==0:
+            ms.showerror("Error","Ingrese un ISBN")
+            return
+        LibroDAO().delete_libro_by_isbn(isbn)
+        ms.showinfo("Información","Libro eliminado correctamente")
+        self.txtTitulo.delete(0, END)
+        self.limpiar_detalles()
+
