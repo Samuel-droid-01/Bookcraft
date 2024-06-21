@@ -22,28 +22,50 @@ class EliminarLibro:
         self.lblTitulo2 = Label(self.MarcoPrincipal, font=('arial', 24, 'bold'), text="Eliminar Libro")
         self.lblTitulo2.pack(side=TOP, fill=X)
 
+        self.marcoBusqueda = Frame(self.MarcoPrincipal, bd=20, pady=5, bg="#B9BED3",height=100)
+        self.marcoBusqueda.pack(side=TOP, fill=X, expand=False)
         
-        
+        self.marcoDetalles=Frame(self.MarcoPrincipal, bd=20, pady=5, bg="#B9BED3",height=100, relief=RIDGE)
+        self.marcoDetalles.pack(side=BOTTOM, fill=BOTH, expand=True)
+
+        self.canvas = Canvas(self.marcoDetalles, bg="#F1EFED")
+        self.canvas.pack(side=LEFT, fill=BOTH, expand=True, padx=10, pady=10)
+
+        self.scrollbar = Scrollbar(self.marcoDetalles, orient="vertical", command=self.canvas.yview)
+        self.scrollbar.pack(side="right", fill="y")
+        self.canvas.configure(yscrollcommand=self.scrollbar.set)
+        self.MarcoDetallesLector = Frame(self.canvas,bg="#F1EFED")
+        self.canvas.create_window((0, 0), window=self.MarcoDetallesLector, anchor="nw")
         # Marco para detalles de contenido
-        self.MarcoDetallesLector = LabelFrame(self.MarcoPrincipal, bd=20, pady=5, relief=RIDGE, bg="#B9BED3")#Aqui va el contenido
-        self.MarcoDetallesLector.pack(side=BOTTOM, fill=BOTH, expand=True)
+        #self.MarcoDetallesLector = LabelFrame(self.canvas, bd=20, pady=5, relief=RIDGE, bg="#B9BED3")#Aqui va el contenido
+        #self.MarcoDetallesLector.pack(side=BOTTOM, fill=BOTH, expand=True)
+        self.MarcoDetallesLector.bind("<Configure>", self.on_frame_configure)
+        self.MarcoDetallesLector.bind_all("<MouseWheel>", self._on_mousewheel)
 
         self.fuente=("Arial", 14)
-        self.lblTitulo = Label(self.MarcoDetallesLector, text="Ingrese el ISBN o nombre del libro:", bg="#B9BED3", font=self.fuente)
+        self.lblTitulo = Label(self.marcoBusqueda, text="Ingrese el ISBN o nombre del libro:", bg="#B9BED3", font=self.fuente)
         self.lblTitulo.grid(row=0, column=0, padx=10, pady=10)
 
-        self.txtTitulo = Entry(self.MarcoDetallesLector, font=self.fuente)
+        self.txtTitulo = Entry(self.marcoBusqueda, font=self.fuente)
         self.txtTitulo.grid(row=0, column=1, padx=10, pady=10)
         self.txtTitulo.focus_set()
 
-        self.btnBuscar = Button(self.MarcoDetallesLector, text="Buscar", font=self.fuente, command=self.buscar_libro)
+        self.btnBuscar = Button(self.marcoBusqueda, text="Buscar", font=self.fuente, command=self.buscar_libro)
         self.btnBuscar.grid(row=0, column=2, padx=10, pady=10)
-        self.btnEliminar = Button(self.MarcoDetallesLector, text="Eliminar", font=self.fuente, command=self.eliminar_libro)
+        self.btnEliminar = Button(self.marcoBusqueda, text="Eliminar", font=self.fuente, command=self.eliminar_libro)
         self.btnEliminar.grid(row=0, column=3, padx=10, pady=10)
 
-        self.limpiarButton = Button(self.MarcoDetallesLector, text="Limpiar", font=self.fuente, command=self.limpiar_detalles)
+        self.limpiarButton = Button(self.marcoBusqueda, text="Limpiar", font=self.fuente, command=self.limpiar_detalles)
         self.limpiarButton.grid(row=0, column=4, padx=10, pady=10)
 
+
+
+        #agregar scrollbar
+    def _on_mousewheel(self, event):
+        self.canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
+
+    def on_frame_configure(self, event):
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
 
     def limpiar_detalles(self):
         for widget in self.MarcoDetallesLector.winfo_children():

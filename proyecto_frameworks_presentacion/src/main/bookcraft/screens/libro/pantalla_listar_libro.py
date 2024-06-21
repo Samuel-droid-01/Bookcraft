@@ -40,14 +40,15 @@ class ListarLibro:
         self.lblBusqueda = Label(self.marcoBusqueda, text="Buscar por:", bg="#B9BED3", font=self.fuente)
         self.lblBusqueda.grid(row=0, column=0, padx=10, pady=10)
 
-        self.opciones = ["Titulo", "Autor", "Editorial","Categoria","Disponibilidad"]
+        self.opciones = ["Titulo", "Autor", "Editorial","Categoria","Disponibles","No Disponibles"]
         self.comboBusqueda = Combobox(self.marcoBusqueda, values=self.opciones, state="readonly",font=self.fuente)
         self.comboBusqueda.grid(row=0, column=1, padx=10, pady=10)
         self.comboBusqueda.current(0)
 
         self.comboBusqueda.bind("<<ComboboxSelected>>", self.on_combo_change)
-        self.comboCategorias = Combobox()#Se inicializa vacio
-        self.txtBusqueda = Entry(self.marcoBusqueda,font=self.fuente)
+        self.comboCategorias = Combobox(self.marcoBusqueda,font=self.fuente)#Se inicializa vacio
+
+        self.txtBusqueda = Entry(self.marcoBusqueda,font=self.fuente,width=25)
         self.txtBusqueda.grid(row=0, column=2, padx=10, pady=10)
 
         self.btnBuscar = Button(self.marcoBusqueda, text="Buscar",font=self.fuente ,command=lambda: self.filtrar(self.comboBusqueda.get(), self.txtBusqueda.get()))
@@ -83,17 +84,21 @@ class ListarLibro:
             categorias = CatalogoDAO().ver_categorias()
             editoriales=LibroDAO().ver_editoriales()
             if seleccion == "Editorial":
-                self.comboCategorias = Combobox(self.marcoBusqueda, values=editoriales, state="readonly",font=self.fuente)
+                self.comboCategorias.config(values=editoriales)
             else:
-                self.comboCategorias = Combobox(self.marcoBusqueda, values=categorias, state="readonly",font=self.fuente)
+                self.comboCategorias.config(values=categorias)
+
             self.comboCategorias.grid(row=0, column=2, padx=10, pady=10)
             self.comboCategorias.current(0)
-        else:
+        elif seleccion == "Titulo" or seleccion == "Autor":
             # Reemplazar Combobox con un Entry
             self.comboCategorias.grid_forget()  # Oculta el Combobox de categorías si existe
-            self.txtBusqueda = Entry(self.marcoBusqueda, font=self.fuente)
+            #self.txtBusqueda = Entry(self.marcoBusqueda, font=self.fuente,width=25)
             self.txtBusqueda.grid(row=0, column=2, padx=10, pady=10)
-        
+        elif seleccion == "Disponibles" or seleccion == "No Disponibles":
+            self.txtBusqueda.grid_forget()
+            self.comboCategorias.grid_forget()
+
     def filtrar(self,opcion,valor):#opcion y nombre del libro o autor
         if opcion=="Titulo":
             libros=LibroDAO().filtrar_titulo(valor)
@@ -122,8 +127,15 @@ class ListarLibro:
                 self.mostrar_libros(libros[1])
             else:
                 ms.showerror("Error", libros[1])
-        elif opcion=="Disponibilidad":#Solo muestra los libros con al menos una copia disponible
-            libros=CatalogoDAO().ver_disponibilidad()
+        elif opcion=="Disponibles":#Solo muestra los libros con al menos una copia disponible
+            libros=CatalogoDAO().ver_disponibles()
+            if libros[0]!=None:
+                self.mostrar_libros(libros[1])
+            else:
+                ms.showerror("Error", libros[1])
+
+        elif opcion=="No Disponibles":#Solo muestra los libros sin copias disponibles   
+            libros=CatalogoDAO().ver_no_disponibles()
             if libros[0]!=None:
                 self.mostrar_libros(libros[1])
             else:

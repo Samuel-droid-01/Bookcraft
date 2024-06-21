@@ -298,3 +298,22 @@ class LibroMapper(LibroMapperInterface):
             print(f"Error al obtener los libros: {e}")
         finally:
             cursor.close()
+
+    def get_no_disponibles(self):
+        cursor = self.__connection.cursor()
+        query = """
+            SELECT * FROM libros WHERE copias_disponibles = 0
+        """
+        try:
+            cursor.execute(query)
+            libros = cursor.fetchall()
+            if libros:
+                libros = [Libro(*data) for data in libros]
+                return True,libros
+            else:
+                print("No se encontraron libros no disponibles.")
+                return None,"No se encontraron libros no disponibles."
+        except Exception as e:
+            print(f"Error al obtener los libros: {e}")
+        finally:
+            cursor.close()

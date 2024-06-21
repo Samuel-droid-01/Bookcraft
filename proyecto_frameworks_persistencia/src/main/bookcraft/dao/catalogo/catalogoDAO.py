@@ -31,8 +31,12 @@ class CatalogoDAO:
         mapper = CategoriaMapper()
         return mapper.get_categorias()
     
-    def ver_disponibilidad(self):
+    def ver_disponibles(self):
         mapper = LibroMapper()
         return mapper.get_disponibilidad()
+    
+    def ver_no_disponibles(self):
+        mapper = LibroMapper()
+        return mapper.get_no_disponibles()
     
     
