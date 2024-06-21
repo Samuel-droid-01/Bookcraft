@@ -94,7 +94,7 @@ class PantallaListarLectoresSancionados:
         respuesta = ms.askyesno("Eliminar Sanción", "¿Estás seguro de que deseas eliminar esta sanción?")
         if respuesta:
             sancionDAO = SancionDAO()
-            sancionDAO.eliminar_sancion(sancion)  # Aquí debes implementar el método eliminar_sancion en tu DAO
+            sancionDAO.eliminar_sancion(sancion.get_fecha_inicio(), sancion.get_fecha_fin())  
             self.sanciones.remove(sancion)
             self.mostrar_sanciones(self.sanciones)
             ms.showinfo("Sanción Eliminada", "La sanción ha sido eliminada correctamente.")

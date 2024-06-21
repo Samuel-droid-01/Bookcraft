@@ -34,11 +34,15 @@ class SancionDAO:
         mapper = SancionMapper()
         return mapper.get_all()
     
-    def eliminar_sancion(self, id):
+    def eliminar_sancion(self, fecha_inicio, fecha_fin):
         mapper = SancionMapper()
-        mapper.delete(id)
+        mapper.delete(fecha_fin, fecha_inicio)
         return True
     
     def filtrar_sanciones(self, fecha):
         mapper = SancionMapper()
         return mapper.get_by_date(fecha)
+    
+    def obtener_sancion_usuario(self, id_usuario):
+        mapper = SancionMapper()
+        return mapper.get_by_user(id_usuario)

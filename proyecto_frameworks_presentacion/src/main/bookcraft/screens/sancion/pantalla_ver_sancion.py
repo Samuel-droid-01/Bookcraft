@@ -76,7 +76,7 @@ class PantallaVerSancion:
         if sancion:
             self.mostrar_sancion(sancion)
         else:
-            ms.showerror("Error", f"No se encontró ninguna sanción para el lector con ID {self.id_lector}")
+            ms.showerror("Error", f"No se encontró ninguna sanción para el lector")
 
     def mostrar_sancion(self, sancion):
         Label(self.MarcoDetallesSancion, font=('Arial', 12, 'bold'), text="Nombre:", bg="white", fg="#333333").grid(row=0, column=0, sticky="w", padx=10, pady=5)

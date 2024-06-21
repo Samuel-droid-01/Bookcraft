@@ -2,6 +2,10 @@
 from proyecto_frameworks_presentacion.src.main.bookcraft.screens.libro.pantalla_listar_libro import ListarLibro
 from proyecto_frameworks_presentacion.src.main.bookcraft.screens.libro.pantalla_ver_informacion_libro import InformacionLibro
 
+# ------- para sanciones -----
+from proyecto_frameworks_presentacion.src.main.bookcraft.screens.sancion.pantalla_ver_sancion import PantallaVerSancion
+from proyecto_frameworks_persistencia.src.main.bookcraft.dao.sancion.sancionDAO import SancionDAO
+
 from tkinter import *
 from tkinter import messagebox as ms
 import os
@@ -134,7 +138,7 @@ class PrincipalLector:
     def mostrar_sanciones(self):
         self.limpiar_detalles()
         # Aquí iría la lógica para mostrar los detalles de sanciones
-        btn1 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Ver Historial", bg="#2E4053",fg="white")
+        btn1 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Ver Historial", bg="#2E4053",fg="white", command=self.mostrar_sancion)
         btn1.grid(row=0, column=2, padx=10, pady=10)
 
     def mostrar_prestamos(self):
@@ -150,8 +154,16 @@ class PrincipalLector:
         for widget in self.MarcoDetalles.winfo_children():
             widget.destroy()
 
-    def logout(self):
+    def mostrar_sancion(self):
+        sancionDAO = SancionDAO()
+        sancion = sancionDAO.obtener_sancion_usuario(6)
+        if sancion:
+            ventana_secundaria = Toplevel(self.raiz)
+            PantallaVerSancion(ventana_secundaria, sancion)
+        else:
+            ms.showerror("Error", f"No se encontró ninguna sanción para el lector")
 
+    def logout(self):
         self.raiz.quit()
         #ventana_secundaria = Toplevel(self.raiz)
         #Login(ventana_secundaria)
