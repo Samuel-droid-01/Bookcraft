@@ -138,7 +138,7 @@ class PrincipalLector:
     def mostrar_sanciones(self):
         self.limpiar_detalles()
         # Aquí iría la lógica para mostrar los detalles de sanciones
-        btn1 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Ver Historial", bg="#2E4053",fg="white", command=self.mostrar_sancion)
+        btn1 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Ver Sancion", bg="#2E4053",fg="white", command=self.mostrar_sancion)
         btn1.grid(row=0, column=2, padx=10, pady=10)
 
     def mostrar_prestamos(self):
