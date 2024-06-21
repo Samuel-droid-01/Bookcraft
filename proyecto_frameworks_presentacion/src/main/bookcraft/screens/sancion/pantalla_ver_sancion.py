@@ -1,5 +1,50 @@
 from tkinter import *
 from tkinter import messagebox as ms
+from proyecto_frameworks_persistencia.src.main.bookcraft.dao.sancion.sancionDAO import SancionDAO
+
+class PantallaIDSancion:
+    def __init__(self, raiz):
+        self.raiz = raiz
+        self.raiz.title("Ver Sanción - Bookcraft Library System")
+        
+        # Configurar geometría y fondo
+        geometria = "450x200+220+200"
+        self.raiz.geometry(geometria)
+        self.raiz.configure(background='black')
+
+        # Marco principal
+        self.MarcoPrincipal = Frame(self.raiz)
+        self.MarcoPrincipal.pack(fill=BOTH, expand=True)
+
+        self.lblTitulo = Label(self.MarcoPrincipal, font=('arial', 24, 'bold'), text="Eliminar Sanción", bg="black", fg="white")
+        self.lblTitulo.pack(side=TOP, fill=X)
+
+        # Marco para el contenido
+        self.MarcoContenido = Frame(self.MarcoPrincipal, bg="#B9BED3", pady=20)
+        self.MarcoContenido.pack(fill=BOTH, expand=True)
+
+        self.lblID = Label(self.MarcoContenido, text="ID de la Sanción:", bg="#B9BED3")
+        self.lblID.pack(side=LEFT, padx=10)
+
+        self.id_entry = Entry(self.MarcoContenido)
+        self.id_entry.pack(side=LEFT, padx=10)
+
+        self.btnEliminar = Button(self.MarcoContenido, text="Aceptar", command=self.ver_sancion)
+        self.btnEliminar.pack(side=LEFT, padx=10)
+
+    def ver_sancion(self):
+        sancion_id = self.id_entry.get()
+        sancion_dao = SancionDAO()
+        sancion = sancion_dao.buscar_sancion(sancion_id)
+
+        if not sancion_id.isdigit() or not sancion:
+            ms.showerror("Error", "Por favor, ingrese un ID válido")
+            return
+
+        root = Tk()
+        app = PantallaVerSancion(root, sancion)
+        root.mainloop()
+
 
 class PantallaVerSancion:
     def __init__(self, raiz, sancion):
