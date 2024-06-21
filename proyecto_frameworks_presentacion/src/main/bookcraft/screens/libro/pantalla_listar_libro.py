@@ -143,6 +143,7 @@ class ListarLibro:
             frame_libro = Frame(self.scrollable_frame, bd=2, relief=SOLID, bg="white", padx=10, pady=10,width=250,height=250)
             frame_libro.grid(row=index // 2, column=index % 2, padx=10, pady=10, sticky="nsew")#
             
+            Label(frame_libro, text=f"id: {libro.get_id()}", bg="white").pack(anchor="w")
             Label(frame_libro, text=f"Titulo: {libro.get_titulo()}", bg="white").pack(anchor="w")
             Label(frame_libro, text=f"Isbn: {libro.get_isbn()}", bg="white").pack(anchor="w")
             Label(frame_libro, text=f"Autor: {libro.get_autor()}", bg="white").pack(anchor="w")

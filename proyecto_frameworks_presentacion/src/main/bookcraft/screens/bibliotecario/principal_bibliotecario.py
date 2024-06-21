@@ -1,3 +1,10 @@
+# -------para libros-----
+from proyecto_frameworks_presentacion.src.main.bookcraft.screens.libro.pantalla_listar_libro import ListarLibro
+from proyecto_frameworks_presentacion.src.main.bookcraft.screens.libro.pantalla_actualizar_libro import ActualizarLibro
+from proyecto_frameworks_presentacion.src.main.bookcraft.screens.libro.pantalla_registrar_libro import RegistrarLibro
+from proyecto_frameworks_presentacion.src.main.bookcraft.screens.libro.pantalla_ver_informacion_libro import InformacionLibro
+
+
 from tkinter import *
 from tkinter import messagebox as ms
 import os
@@ -88,12 +95,16 @@ class PrincipalBibliotecario:
     def mostrar_libros(self):
         self.limpiar_detalles()
         # Aquí iría la lógica para mostrar los detalles de libros
-        btn1 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text='Listar Libros', bg="#2E4053",fg="white")
+        btn1 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text='Listar Libros', bg="#2E4053",fg="white",command=self.ventana_listar_libros)
         btn1.grid(row=0, column=0, padx=10, pady=10)
-        btn2 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Agregar libros", bg="#2E4053",fg="white")
+        btn2 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Registrar libros", bg="#2E4053",fg="white",command=self.ventana_registrar_libro)
         btn2.grid(row=0, column=1, padx=10, pady=10)
         btn3 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Eliminar Libro", bg="#2E4053",fg="white")
         btn3.grid(row=0, column=2, padx=10, pady=10)
+        btn4 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Ver informacion Libro", bg="#2E4053",fg="white",command=self.ventana_ver_informacion_libro)
+        btn4.grid(row=0, column=3, padx=10, pady=10)
+        btn4 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Actualizar Libro", bg="#2E4053",fg="white",command=self.ventana_actualizar_libro)
+        btn4.grid(row=0, column=4, padx=10, pady=10)
 
     #def mostrar_usuarios(self):
     #    self.limpiar_detalles()
@@ -139,13 +150,26 @@ class PrincipalBibliotecario:
         # Limpiar el marco de detalles antes de mostrar nuevos contenidos
         for widget in self.MarcoDetalles.winfo_children():
             widget.destroy()
+    
+    def ventana_listar_libros(self):
+        # Crear una ventana secundaria con Toplevel en lugar de Tk()
+        ventana_secundaria = Toplevel(self.raiz)
+        ListarLibro(ventana_secundaria)
+    
+    def ventana_actualizar_libro(self):
+        ventana_secundaria = Toplevel(self.raiz)
+        ActualizarLibro(ventana_secundaria)
+        
+    def ventana_registrar_libro(self):
+        # Crear una ventana secundaria con Toplevel en lugar de Tk()
+        ventana_secundaria = Toplevel(self.raiz)
+        RegistrarLibro(ventana_secundaria)
+    
+    def ventana_ver_informacion_libro(self):
+        # Crear una ventana secundaria con Toplevel en lugar de Tk()
+        ventana_secundaria = Toplevel(self.raiz)
+        InformacionLibro(ventana_secundaria)
 
     def logout(self):
         ms.showinfo("Logout", "Sesión cerrada exitosamente.")
         self.raiz.quit()
-
-
-if __name__ == '__main__':
-    raiz = Tk()
-    aplicacion = PrincipalBibliotecario(raiz)
-    raiz.mainloop()
