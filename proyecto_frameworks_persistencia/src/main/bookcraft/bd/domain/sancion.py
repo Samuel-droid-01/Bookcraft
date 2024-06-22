@@ -1,5 +1,5 @@
 class Sancion:
-    def __init__(self, nombre, fecha_inicio, fecha_fin, descripcion):
+    def __init__(self, fecha_inicio, fecha_fin, descripcion,nombre=None):
         self.__nombre = nombre
         self.__fecha_inicio = fecha_inicio
         self.__fecha_fin = fecha_fin

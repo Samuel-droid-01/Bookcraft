@@ -45,7 +45,7 @@ class RegistroDAO:
     def reservar_prestamo(self,id_usuario,id_libro,fecha_reservacion):
         try:
             mapper = ReservacionMapper()
-            reserva = Reservacion(id_usuario, id_libro,fecha_reservacion)
+            reserva = Reservacion(0,id_usuario, id_libro,fecha_reservacion)
             mapper.insert(reserva)
         except:
             print("datos incorrectos")
