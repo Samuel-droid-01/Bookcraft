@@ -87,3 +87,5 @@ Recuerda que los usuarios deben tener Python y `pip` instalados en sus sistemas 
   ```
   
 
+## Comando para probar la parte de presentacion
+python -m proyecto_frameworks_presentacion.src.test.bookcraft.screens.login.pantalla_login_test
