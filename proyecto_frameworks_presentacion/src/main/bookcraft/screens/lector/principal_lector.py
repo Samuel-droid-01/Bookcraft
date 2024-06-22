@@ -1,10 +1,18 @@
 # -------para libros-----
 from proyecto_frameworks_presentacion.src.main.bookcraft.screens.libro.pantalla_listar_libro import ListarLibro
 from proyecto_frameworks_presentacion.src.main.bookcraft.screens.libro.pantalla_ver_informacion_libro import InformacionLibro
+from proyecto_frameworks_presentacion.src.main.bookcraft.screens.libro.pantalla_devolver_libro import DevolverLibro
+from proyecto_frameworks_presentacion.src.main.bookcraft.screens.libro.pantalla_reservar_libro import PantallaReservarLibro
+from proyecto_frameworks_presentacion.src.main.bookcraft.screens.libro.pantalla_renovar_prestamo import PantallaRenovarPrestamo
 
 # ------- para sanciones -----
 from proyecto_frameworks_presentacion.src.main.bookcraft.screens.sancion.pantalla_ver_sancion import PantallaVerSancion
 from proyecto_frameworks_persistencia.src.main.bookcraft.dao.sancion.sancionDAO import SancionDAO
+from proyecto_frameworks_presentacion.src.main.bookcraft.screens.usuario.pantalla_historial_usuario import HistorialUsuario
+from proyecto_frameworks_presentacion.src.main.bookcraft.screens.sancion.pantalla_sancionar_lector import SacionarLector
+from proyecto_frameworks_presentacion.src.main.bookcraft.screens.sancion.pantalla_estado_sancion import PantallaEstadoSancion
+
+
 
 from tkinter import *
 from tkinter import messagebox as ms
@@ -113,7 +121,20 @@ class PrincipalLector:
         btn2.grid(row=0, column=1, padx=10, pady=10)
         btn3 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Disponibilidad", bg="#2E4053", fg="white")
         btn3.grid(row=0, column=2, padx=10, pady=10)
-
+        btn2 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Devolver Libro", bg="#2E4053", fg="white",command=self.ventana_devolver_libro)
+        btn2.grid(row=0, column=3, padx=10, pady=10)
+        
+        
+    def ventana_devolver_libro(self):
+        # Crear una ventana secundaria con Toplevel en lugar de Tk()
+        id_usuario=2#<---aqui se debe obtener el id del usuario
+        ventana_secundaria = Toplevel(self.raiz)
+        DevolverLibro(ventana_secundaria,id_usuario=id_usuario)
+    def ventana_reservar_libro(self):
+        # Crear una ventana secundaria con Toplevel en lugar de Tk()
+        id_usuario=2#<---aqui se debe obtener el id del usuario
+        ventana_secundaria = Toplevel(self.raiz)
+        PantallaReservarLibro(ventana_secundaria,id_usuario=id_usuario)
     def ventana_listar_libros(self):
         # Crear una ventana secundaria con Toplevel en lugar de Tk()
         ventana_secundaria = Toplevel(self.raiz)
@@ -133,22 +154,40 @@ class PrincipalLector:
     def reservar_libro(self):
         self.limpiar_detalles()
         # Aquí iría la lógica para mostrar los detalles de reservar
-
+        btn2 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Reservar Libro", bg="#2E4053", fg="white",command=self.ventana_reservar_libro)
+        btn2.grid(row=0, column=4, padx=10, pady=10)
 
     def mostrar_sanciones(self):
         self.limpiar_detalles()
         # Aquí iría la lógica para mostrar los detalles de sanciones
         btn1 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Ver Historial", bg="#2E4053",fg="white", command=self.mostrar_sancion)
-        btn1.grid(row=0, column=2, padx=10, pady=10)
-
+        btn1.grid(row=0, column=0, padx=10, pady=10)
+        
+        btn1 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Ver estado Sansion", bg="#2E4053",fg="white", command=self.Sancionar_lector)
+        btn1.grid(row=0, column=1, padx=10, pady=10)
+    
     def mostrar_prestamos(self):
         self.limpiar_detalles()
         # Aquí iría la lógica para mostrar los detalles de préstamos
         btn1 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Mostar prestamos", bg="#2E4053",fg="white")
         btn1.grid(row=0, column=0, padx=10, pady=10)
-        btn2 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="historial prestamos", bg="#2E4053",fg="white")
+        btn2 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Ver prestamos", bg="#2E4053",fg="white")
         btn2.grid(row=0, column=1, padx=10, pady=10)
-
+        btn2 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Renovar prestamo", bg="#2E4053", fg="white",command=self.ventana_renovar_prestamo)
+        btn2.grid(row=0, column=2, padx=10, pady=10)
+        btn2 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Ver Historial", bg="#2E4053", fg="white",command=self.ventana_historial_prestamo)
+        btn2.grid(row=0, column=3, padx=10, pady=10)
+    def ventana_historial_prestamo(self):
+        # Crear una ventana secundaria con Toplevel en lugar de Tk()
+        id_usuario=1#<---aqui se debe obtener el id del usuario
+        ventana_secundaria = Toplevel(self.raiz)
+        HistorialUsuario(ventana_secundaria,id_usuario=id_usuario)
+    def ventana_renovar_prestamo(self):
+        # Crear una ventana secundaria con Toplevel en lugar de Tk()
+        id_usuario=1#<---aqui se debe obtener el id del usuario
+        ventana_secundaria = Toplevel(self.raiz)
+        PantallaRenovarPrestamo(ventana_secundaria,id_usuario=id_usuario)
+        
     def limpiar_detalles(self):
         # Limpiar el marco de detalles antes de mostrar nuevos contenidos
         for widget in self.MarcoDetalles.winfo_children():
