@@ -163,9 +163,21 @@ class PrincipalLector:
         btn1 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Ver Historial", bg="#2E4053",fg="white", command=self.mostrar_sancion)
         btn1.grid(row=0, column=0, padx=10, pady=10)
         
-        btn1 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Ver estado Sansion", bg="#2E4053",fg="white", command=self.Sancionar_lector)
+        btn1 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Ver estado Sansion", bg="#2E4053",fg="white", command=self.EstadodeSancion)
         btn1.grid(row=0, column=1, padx=10, pady=10)
-    
+    def mostrar_sancion(self):
+        sancionDAO = SancionDAO()
+        sancion = sancionDAO.obtener_sancion_usuario(6)
+        if sancion:
+            ventana_secundaria = Toplevel(self.raiz)
+            PantallaVerSancion(ventana_secundaria, sancion)
+        else:
+            ms.showerror("Error", f"No se encontró ninguna sanción para el lector")
+    def EstadodeSancion(self):
+        # Crear una ventana secundaria con Toplevel en lugar de Tk()
+        id_usuario=1
+        ventana_secundaria = Toplevel(self.raiz)
+        PantallaEstadoSancion(ventana_secundaria,id_usuario=1)
     def mostrar_prestamos(self):
         self.limpiar_detalles()
         # Aquí iría la lógica para mostrar los detalles de préstamos

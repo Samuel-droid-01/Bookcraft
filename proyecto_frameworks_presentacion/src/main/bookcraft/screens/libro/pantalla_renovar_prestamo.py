@@ -10,7 +10,7 @@ from tkinter import Label, Frame, Button, SOLID, BOTH
 from tkcalendar import Calendar
 
 class PantallaRenovarPrestamo():
-    def __init__(self, raiz, id_usuario):
+    def __init__(self, raiz, id_usuario=1):
         self.raiz = raiz
         self.id_usuario = id_usuario
         self.raiz.title("Sistema de biblioteca Bookcraft")
