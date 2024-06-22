@@ -4,7 +4,7 @@ from proyecto_frameworks_persistencia.src.main.bookcraft.dao.sancion.sancionDAO 
 from datetime import datetime
 
 class PantallaEstadoSancion:
-    def __init__(self, raiz, id_sancion):
+    def __init__(self, raiz, id_sancion=1):
         self.raiz = raiz
         self.id_sancion = id_sancion
         self.raiz.title("Ver Sanción - Bookcraft Library System")

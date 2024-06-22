@@ -8,7 +8,7 @@ from tkinter import *
 from tkinter import messagebox as ms
 
 class SacionarLector:
-    def __init__(self, raiz,id_libro,id_usuario):
+    def __init__(self, raiz,id_libro=1,id_usuario=1):
         self.raiz = raiz
         self.id_libro = id_libro
         self.id_usuario = id_usuario

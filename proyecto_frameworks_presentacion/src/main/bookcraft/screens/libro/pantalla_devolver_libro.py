@@ -8,7 +8,7 @@ from tkinter import *
 from tkinter import messagebox as ms
 from datetime import datetime
 class DevolverLibro:
-    def __init__(self, raiz,id_usuario):
+    def __init__(self, raiz,id_usuario=1):
         self.raiz = raiz
         self.id_usuario = id_usuario
         self.raiz.title("Sistema de biblioteca Bookcraft")
