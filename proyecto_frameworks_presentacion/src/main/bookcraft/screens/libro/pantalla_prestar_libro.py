@@ -12,7 +12,7 @@ from proyecto_frameworks_persistencia.src.main.bookcraft.dao.usuario.usuarioDAO 
 from proyecto_frameworks_persistencia.src.main.bookcraft.bd.mappers.usuario.usuario_map import UsuarioMapper
 
 from proyecto_frameworks_persistencia.src.main.bookcraft.bd.mappers.categoria.categoria_map import CategoriaMapper
-class PantallaPrestarLibro():
+class PrestarLibro():
     def __init__(self,raiz) :
         self.raiz = raiz
         self.raiz.title("Sistema de biblioteca Bookcraft")
@@ -39,7 +39,7 @@ class PantallaPrestarLibro():
             img = Image.open(img_path)
             img = img.resize((50, 50), Image.LANCZOS)  # Redimensionar a 50x50 píxeles
             self.imgLector = ImageTk.PhotoImage(img)
-            self.lblLector = Label(Superior, image=self.imgLector, text="Lector", compound=LEFT, font=('arial', 18, 'bold'), fg="white", bg="black")
+            self.lblLector = Label(Superior, image=self.imgLector, text="Admin", compound=LEFT, font=('arial', 18, 'bold'), fg="white", bg="black")
         else:
             self.lblLector = Label(Superior, text="Admin", font=('arial', 18, 'bold'), fg="white")
             ms.showerror("Error", f"No se pudo encontrar el archivo de imagen: {img_path}")
@@ -101,18 +101,18 @@ class PantallaPrestarLibro():
         self.btnCancelar.place(x=10,y=210)
         
     def continuar(self,frame,boton):
-        libro=LibroDAO().get_libro_by_id(self.tituloEntry.get())#retorna un objeto libro
+        libro=LibroDAO().get_libro_by_isbn(self.tituloEntry.get())#retorna un objeto libro
         lector=UsuarioMapper().get_by_id(self.nombreEntry.get())#retorna un objeto usuario
         lectorDAO=LectorDAO()
         lectorDAO.set_usuario(lector)
         #
         if not self.verificarEntradas():
             return
-        if libro is None or lector is None:
+        if libro[0] is None or lector is None:
             ms.showerror("Error", "El libro o el lector no existen")
             return
         #comprobar si el libro esta disponible
-        if libro.get_copias_disponibles()<1:#al menos una copia disponible
+        if libro[1].get_copias_disponibles()<1:#al menos una copia disponible
             ms.showerror("Error", "El libro no está disponible")
             return
         
@@ -122,16 +122,16 @@ class PantallaPrestarLibro():
         self.resumenLabel= Label(self.resumenFrame, text="Resumen de préstamo", bg="#E6E5E4", font=('arial', 12, 'bold'), anchor="center")
         self.resumenLabel.place(x=10,y=10)
 
-        self.isbnLabel= Label(self.resumenFrame, text=f"ISBN: {libro.get_id()}", bg="#E6E5E4", anchor="w", width=15)
+        self.isbnLabel= Label(self.resumenFrame, text=f"ISBN: {libro[1].get_isbn()}", bg="#E6E5E4", anchor="w", width=15)
         self.isbnLabel.place(x=10,y=40)
 
-        self.tituloLabel= Label(self.resumenFrame, text=f"Titulo {libro.get_titulo()}", bg="#E6E5E4", anchor="w", width=50)
+        self.tituloLabel= Label(self.resumenFrame, text=f"Titulo {libro[1].get_titulo()}", bg="#E6E5E4", anchor="w", width=50)
         self.tituloLabel.place(x=10,y=70)
 
-        self.categoriaLabel= Label(self.resumenFrame, text=f"Categoría: {CategoriaMapper().get_categoria(libro.get_id_categoria())}", bg="#E6E5E4", anchor="w", width=20)
+        self.categoriaLabel= Label(self.resumenFrame, text=f"Categoría: {CategoriaMapper().get_categoria(libro[1].get_id_categoria())}", bg="#E6E5E4", anchor="w", width=20)
         self.categoriaLabel.place(x=10,y=100)
 
-        self.autorLabel= Label(self.resumenFrame, text=f"Autor: {libro.get_autor()}", bg="#E6E5E4", anchor="w", width=30)
+        self.autorLabel= Label(self.resumenFrame, text=f"Autor: {libro[1].get_autor()}", bg="#E6E5E4", anchor="w", width=30)
         self.autorLabel.place(x=10,y=130)
 
         self.nombreLabel= Label(self.resumenFrame, text=f"Nombre del lector: {lector.get_nombres()+" "+lector.get_apellidos()}", bg="#E6E5E4", anchor="w", width=50)
@@ -177,5 +177,5 @@ class PantallaPrestarLibro():
 
 if __name__ == '__main__':
     raiz = Tk()
-    aplicacion = PantallaPrestarLibro(raiz)
+    aplicacion = PrestarLibro(raiz)
     raiz.mainloop()

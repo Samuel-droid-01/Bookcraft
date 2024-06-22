@@ -54,7 +54,7 @@ class ListarLibro:
         self.btnBuscar = Button(self.marcoBusqueda, text="Buscar",font=self.fuente ,command=lambda: self.filtrar(self.comboBusqueda.get(), self.txtBusqueda.get()))
         self.btnBuscar.grid(row=0, column=3, padx=10, pady=10)
 
-        self.btnLimpiar = Button(self.marcoBusqueda, text="Limpiar",font=self.fuente, command=self.limpiar_detalles)
+        self.btnLimpiar = Button(self.marcoBusqueda, text="Limpiar",font=self.fuente, command=self.limpiar)
         self.btnLimpiar.grid(row=0, column=4, padx=10, pady=10)
 
         # Canvas y scrollbar
@@ -147,11 +147,16 @@ class ListarLibro:
     def on_frame_configure(self, event):
         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
 
+    def limpiar(self):
+        self.txtBusqueda.delete(0, END)
+        for widget in self.scrollable_frame.winfo_children():
+            widget.destroy()
 
     def limpiar_detalles(self):
         # Limpiar el marco de detalles antes de mostrar nuevos contenidos
         for widget in self.scrollable_frame.winfo_children():
             widget.destroy()
+    
 
         
 

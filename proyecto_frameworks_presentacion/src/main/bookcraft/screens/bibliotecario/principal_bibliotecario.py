@@ -4,6 +4,7 @@ from proyecto_frameworks_presentacion.src.main.bookcraft.screens.libro.pantalla_
 from proyecto_frameworks_presentacion.src.main.bookcraft.screens.libro.pantalla_registrar_libro import RegistrarLibro
 from proyecto_frameworks_presentacion.src.main.bookcraft.screens.libro.pantalla_ver_informacion_libro import InformacionLibro
 from proyecto_frameworks_presentacion.src.main.bookcraft.screens.libro.pantalla_eliminar_libro import EliminarLibro
+from proyecto_frameworks_presentacion.src.main.bookcraft.screens.libro.pantalla_prestar_libro import PrestarLibro
 
 # -------para sanciones-----
 from proyecto_frameworks_presentacion.src.main.bookcraft.screens.sancion.pantalla_ver_sancion import PantallaIDSancion
@@ -133,12 +134,15 @@ class PrincipalBibliotecario:
     def mostrar_prestamos(self):
         self.limpiar_detalles()
         # Aquí iría la lógica para mostrar los detalles de préstamos
-        btn1 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Mostar prestamos", bg="#2E4053",fg="white")
+        btn1 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Realizar préstamo", bg="#2E4053",fg="white", command=self.ventana_prestar_libro)
         btn1.grid(row=0, column=0, padx=10, pady=10)
-        btn2 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="historial prestamos", bg="#2E4053",fg="white")
+
+        btn2 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Mostar prestamos", bg="#2E4053",fg="white")
         btn2.grid(row=0, column=1, padx=10, pady=10)
-        btn3 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Renovar prestamo", bg="#2E4053",fg="white")
+        btn3 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="historial prestamos", bg="#2E4053",fg="white")
         btn3.grid(row=0, column=2, padx=10, pady=10)
+        btn4 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Renovar prestamo", bg="#2E4053",fg="white")
+        btn4.grid(row=0, column=3, padx=10, pady=10)
 
     def mostrar_categoria(self):
         self.limpiar_detalles()
@@ -187,6 +191,10 @@ class PrincipalBibliotecario:
     def ventana_listar_sanciones(self):
         ventana_secundaria = Toplevel(self.raiz)
         PantallaListarLectoresSancionados(ventana_secundaria)
+    
+    def ventana_prestar_libro(self):
+        ventana_secundaria = Toplevel(self.raiz)
+        PrestarLibro(ventana_secundaria)
 
     def logout(self):
         ms.showinfo("Logout", "Sesión cerrada exitosamente.")
