@@ -9,6 +9,7 @@ from proyecto_frameworks_presentacion.src.main.bookcraft.screens.libro.pantalla_
 # -------para sanciones-----
 from proyecto_frameworks_presentacion.src.main.bookcraft.screens.sancion.pantalla_ver_sancion import PantallaIDSancion
 from proyecto_frameworks_presentacion.src.main.bookcraft.screens.sancion.pantalla_listar_lectores_sancionados import PantallaListarLectoresSancionados
+from proyecto_frameworks_presentacion.src.main.bookcraft.screens.sancion.pantalla_sancionar_lector import SacionarLector
 
 from tkinter import *
 from tkinter import messagebox as ms
@@ -130,7 +131,13 @@ class PrincipalBibliotecario:
         btn2.grid(row=0, column=1, padx=10, pady=10)
         btn3 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Ver Historial", bg="#2E4053",fg="white", command=self.ventana_listar_sanciones)
         btn3.grid(row=0, column=2, padx=10, pady=10)
-
+        btn1 = Button(self.MarcoDetalles, padx=2, pady=2, bd=4, font=('arial', 9, 'bold'), text="Sancionar lector", bg="#2E4053",fg="white", command=self.Sancionar_lector)
+        btn1.grid(row=0, column=3, padx=10, pady=10)
+    def Sancionar_lector(self):
+        id_usuario=1#<---aqui se debe obtener el id del usuario
+        id_libro=1#<---aqui se debe obtener el id del libro
+        ventana_secundaria = Toplevel(self.raiz)
+        SacionarLector(ventana_secundaria,id_usuario=id_usuario,id_libro=id_libro)
     def mostrar_prestamos(self):
         self.limpiar_detalles()
         # Aquí iría la lógica para mostrar los detalles de préstamos

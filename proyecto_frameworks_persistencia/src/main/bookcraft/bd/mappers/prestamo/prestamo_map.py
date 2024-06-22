@@ -107,10 +107,17 @@ class PrestamoMapper(PrestamoMapperInterface):
         JOIN libros ON prestamos.id_libro = libros.id
         WHERE prestamos.id_usuario = %s AND prestamos.id_libro = %s ;"""
         try:
-            cursor.execute(query, (id_libro, id_usuario))
-            prestamo = cursor.fetchone()
-            prestamo = Prestamo(*prestamo)
-            return prestamo
+            cursor.execute(query, (id_usuario, id_libro))
+            resultados = cursor.fetchall()  # Usar fetchall para asegurar que todos los resultados sean leídos
+            if resultados:
+                if len(resultados) == 1:
+                    prestamo = Prestamo(*resultados[0])
+                    return prestamo
+                else:
+                    # Manejar el caso de múltiples resultados, si es necesario
+                    print("Se encontraron múltiples préstamos para el usuario y libro especificados.")
+            else:
+                return None
         except Exception as e:
             print(f"Error al buscar el prestamo: {e}")
         finally:

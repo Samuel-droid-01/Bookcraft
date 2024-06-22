@@ -46,7 +46,7 @@ class PrestamoDAO:
     def obtener_id(self, id_usuario, id_libro):
         mapper = PrestamoMapper()
         self.__prestamo =mapper.get_by_user_and_book(id_usuario, id_libro)
-        return self.__prestamo
+        return mapper.get_by_user_and_book(id_usuario, id_libro)
         # print("prestamo=",self.__prestamo.get_id())
     def obtener_prestamos_usuario(self, id_usuario):
         mapper = PrestamoMapper()
